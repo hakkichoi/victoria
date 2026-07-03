@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VICTORIA — Trade Finance Blockchain</title>
+<meta name="description" content="VICTORIA is a blockchain project providing coin-based payment guarantees for global trade finance.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
+    <nav class="nav-links">
+      <a href="index.html#home" data-i18n="nav.home">홈</a>
+      <a href="index.html#project" data-i18n="nav.project">프로젝트</a>
+      <a href="index.html#exchange" data-i18n="nav.exchange">코인교환</a>
+      <a href="index.html#blc" data-i18n="nav.blc">BLC 코인</a>
+      <a href="index.html#company" data-i18n="nav.company">회사소개</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <select id="langSwitch" aria-label="Language">
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+          <option value="zh">中文</option>
+          <option value="ja">日本語</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <a href="login.html" class="btn btn-outline btn-sm nav-auth-out" data-i18n="nav.login">로그인</a>
+      <a href="signup.html" class="btn btn-gold btn-sm nav-auth-out" data-i18n="nav.signup">회원가입</a>
+      <a href="admin.html" class="btn btn-outline btn-sm nav-auth-in nav-auth-admin" style="display:none" data-i18n="nav.admin">관리자</a>
+      <a href="mypage.html" class="btn btn-outline btn-sm nav-auth-in" style="display:none" data-i18n="nav.mypage">마이페이지</a>
+      <a href="#" class="btn btn-gold btn-sm nav-auth-in" style="display:none" data-action="logout" data-i18n="nav.logout">로그아웃</a>
+    </div>
+  </div>
+</header>
+
+<section id="home" class="hero" style="border-bottom:none;">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="seal"></span> <span data-i18n="hero.eyebrow">전세계 무역 금융 블록체인 프로젝트</span></div>
+      <h1 data-i18n="hero.title">블록체인과 암호화폐가<br>지금의 금융을 대체합니다.</h1>
+      <p data-i18n="hero.subtitle">VICTORIA는 국경을 넘는 무역 거래에 코인 기반의 지급보증을 제공하여, 선적 전 대금을 떼일 걱정 없는 거래를 만듭니다.</p>
+      <div class="hero-actions">
+        <a href="#exchange" class="btn btn-gold" data-i18n="hero.cta_primary">교환하러 가기</a>
+        <a href="#project" class="btn btn-outline" data-i18n="hero.cta_secondary">VictoriaPlan 보기</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 360 360" width="100%" role="img" aria-label="VICTORIA guarantee seal">
+        <circle cx="180" cy="180" r="150" fill="none" stroke="#223055" stroke-width="1.5"/>
+        <circle cx="180" cy="180" r="118" fill="none" stroke="#E3B54A" stroke-width="1.4" stroke-dasharray="3 6"/>
+        <circle cx="180" cy="180" r="92" fill="#10182B" stroke="#2FD1B8" stroke-width="1.2"/>
+        <path d="M148 182L170 204L214 156" fill="none" stroke="#E3B54A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="180" y="252" text-anchor="middle" fill="#8C97B8" font-size="12" letter-spacing="3" font-family="Inter, sans-serif">VICT · GUARANTEED</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow" data-i18n="project.eyebrow">프로젝트</div>
+      <h2 data-i18n="project.title">VICTORIA Blockchain Project</h2>
+      <p data-i18n="project.desc">전세계 무역 거래 실패의 70% 이상은 지급 및 거래 보증의 실패에서 비롯됩니다.</p>
+    </div>
+
+    <div class="bridge">
+      <div class="bridge-node">
+        <div class="tag" data-i18n="project.node_a_tag">A 국가</div>
+        <div class="role" data-i18n="project.node_a_role">판매자</div>
+      </div>
+      <div class="bridge-mid">
+        <span class="seal"></span>
+        <div class="line"></div>
+        <span class="label" data-i18n="project.bridge_label">VICT Coin Exchange<br>거래 및 지급 보증</span>
+      </div>
+      <div class="bridge-node">
+        <div class="tag" data-i18n="project.node_b_tag">B 국가</div>
+        <div class="role" data-i18n="project.node_b_role">구매자</div>
+      </div>
+    </div>
+
+    <div class="cards-3">
+      <div class="card">
+        <span class="seal"></span>
+        <h3 data-i18n="project.card1_title">지급 거절 리스크 헤지</h3>
+        <p data-i18n="project.card1_desc">구매자의 대금 지급 거절 또는 실패에 대비한 지급 보증을 제공합니다.</p>
+      </div>
+      <div class="card">
+        <span class="seal"></span>
+        <h3 data-i18n="project.card2_title">보증서 기반 코인</h3>
+        <p data-i18n="project.card2_desc">실보증서 형식의 VICT 코인을 보유한 뒤, 필요 시 법정화폐로 교환할 수 있습니다.</p>
+      </div>
+      <div class="card">
+        <span class="seal"></span>
+        <h3 data-i18n="project.card3_title">선적 후 결제 가능</h3>
+        <p data-i18n="project.card3_desc">판매자는 불안한 선지급 대신, 지급 보증을 이용해 제품 선적 후 결제받을 수 있습니다.</p>
+      </div>
+    </div>
+
+    <div class="stat-line">
+      <div class="num" data-i18n="project.stat_number">70%+</div>
+      <div class="muted" data-i18n="project.stat_label" style="margin:0;">전세계 무역 거래 실패 중 지급·거래 보증 실패가 차지하는 비율</div>
+    </div>
+  </div>
+</section>
+
+<section id="exchange">
+  <div class="wrap exchange-two-col">
+    <div>
+      <div class="section-head" style="margin-bottom:24px;">
+        <div class="eyebrow" data-i18n="exchange.eyebrow">코인교환</div>
+        <h2 data-i18n="exchange.title">VICTORIA 프로젝트에 참여하기</h2>
+        <p data-i18n="exchange.desc">USDT, VICT, BLC 간 교환을 신청하세요. USDT와 VICT는 1:1 비율로 고정되어 있습니다.</p>
+      </div>
+      <p class="muted" style="font-size:13px;">Reference design: <a href="https://www.simpleswap.io" target="_blank" rel="noopener" class="teal">simpleswap.io</a></p>
+    </div>
+
+    <div class="exchange-panel">
+      <div class="field">
+        <label data-i18n="exchange.send_label">보낼 코인</label>
+        <div class="coin-row">
+          <select id="fromCoin">
+            <option value="USDT">USDT (Tron)</option>
+            <option value="VICT">VICT</option>
+            <option value="BLC">BLC</option>
+          </select>
+          <input type="text" inputmode="decimal" id="fromAmount" placeholder="0.00">
+        </div>
+      </div>
+
+      <div class="swap-mid">
+        <button type="button" id="swapBtn" aria-label="swap">⇅</button>
+      </div>
+
+      <div class="field">
+        <label data-i18n="exchange.receive_label">받는 코인</label>
+        <div class="coin-row">
+          <select id="toCoin">
+            <option value="VICT">VICT</option>
+            <option value="USDT">USDT (Tron)</option>
+            <option value="BLC">BLC</option>
+          </select>
+          <input type="text" inputmode="decimal" id="toAmount" placeholder="0.00" readonly>
+        </div>
+      </div>
+
+      <p class="rate-note" id="rateNote" data-i18n="exchange.rate_note_fixed">USDT ↔ VICT는 1:1 비율로 자동 환산됩니다.</p>
+
+      <button class="btn btn-gold btn-block" id="exchangeBtn" data-i18n="exchange.button">Exchange</button>
+      <p class="form-msg" id="exchangeMsg"></p>
+    </div>
+  </div>
+</section>
+
+<section id="blc">
+  <div class="wrap blc-two-col">
+    <div>
+      <div class="section-head" style="margin-bottom:24px;">
+        <div class="eyebrow" data-i18n="blc.eyebrow">BLC 코인</div>
+        <h2 data-i18n="blc.title">BLC 코인 금액 변화 정보</h2>
+        <p data-i18n="blc.desc">BLC는 VICT 생태계를 지원하는 토탈 생태계 코인입니다.</p>
+      </div>
+      <div class="chart-card">
+        <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px;" data-i18n="blc.chart_title">Real time Price Graph</div>
+        <svg id="blcChart" viewBox="0 0 640 240" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+    <div class="whitepaper-card">
+      <span class="seal teal" style="font-size:30px;"></span>
+      <h3 data-i18n="blc.whitepaper_title">BLC Whitepaper</h3>
+      <p data-i18n="blc.whitepaper_desc" style="margin-bottom:6px;">BLC 백서를 다운로드하여 자세한 내용을 확인하세요.</p>
+      <a href="assets/BLC_Whitepaper.pdf" download class="btn btn-teal" data-i18n="blc.whitepaper_button">PDF 다운로드</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site" id="company">
+  <div class="wrap">
+    <div>VICTORIA PROJECT — © 2026 <span data-i18n="footer.rights">All rights reserved.</span></div>
+    <div><span data-i18n="footer.contact">문의</span>: choihakki@gmail.com</div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="confirmModal">
+  <div class="modal">
+    <h3 data-i18n="exchange.confirm_title">교환 신청 확인</h3>
+    <p data-i18n="exchange.confirm_desc" style="margin-bottom:18px;">아래 내용으로 교환을 신청합니다.</p>
+    <div id="confirmDetails" style="background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:20px; font-size:14px;"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-outline btn-block" id="confirmCancel" data-i18n="common.cancel">취소</button>
+      <button class="btn btn-gold btn-block" id="confirmSubmit" data-i18n="exchange.confirm_submit">신청 제출</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/exchange.js"></script>
+<script src="assets/js/blc-chart.js"></script>
+</body>
+</html>

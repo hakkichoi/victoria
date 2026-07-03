@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — VICTORIA</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
+    <nav class="nav-links">
+      <a href="mypage.html" data-i18n="nav.mypage">마이페이지</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <select id="langSwitch" aria-label="Language">
+          <option value="ko">한국어</option><option value="en">English</option>
+          <option value="zh">中文</option><option value="ja">日本語</option><option value="es">Español</option>
+        </select>
+      </div>
+      <a href="#" class="btn btn-gold btn-sm" data-action="logout" data-i18n="nav.logout">로그아웃</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap" style="padding:44px 24px 90px;">
+  <h1 data-i18n="admin.title" style="margin-bottom:10px;">관리자 · 교환 신청 관리</h1>
+  <div id="adminGate" class="empty-state" style="display:none; margin-top:24px;"></div>
+
+  <div id="adminContent" style="display:none;">
+    <div class="cards-3" style="grid-template-columns:1fr 1fr; margin:28px 0 40px;">
+      <div class="card">
+        <h3 data-i18n="admin.rate_manage_title">오늘의 USDT↔BLC 환율</h3>
+        <form id="rateForm" style="display:flex; gap:10px; margin-top:14px;">
+          <input type="text" inputmode="decimal" id="rateInput" placeholder="1.00" style="flex:1;">
+          <button type="submit" class="btn btn-gold" data-i18n="admin.rate_save">환율 저장</button>
+        </form>
+        <p class="form-msg" id="rateMsg"></p>
+      </div>
+      <div class="card">
+        <h3 data-i18n="admin.price_manage_title">BLC 가격 입력 (그래프용)</h3>
+        <form id="priceForm" style="display:flex; gap:10px; margin-top:14px;">
+          <input type="date" id="priceDate" style="flex:1;">
+          <input type="text" inputmode="decimal" id="priceInput" placeholder="0.00" style="flex:1;">
+          <button type="submit" class="btn btn-gold" data-i18n="admin.price_save">가격 저장</button>
+        </form>
+        <p class="form-msg" id="priceMsg"></p>
+      </div>
+    </div>
+
+    <div class="admin-toolbar">
+      <button class="filter-chip active" data-filter="all" data-i18n="admin.filter_all">전체</button>
+      <button class="filter-chip" data-filter="pending" data-i18n="admin.filter_pending">신청됨</button>
+      <button class="filter-chip" data-filter="tx_submitted" data-i18n="admin.filter_submitted">거래정보 제출됨</button>
+      <button class="filter-chip" data-filter="completed" data-i18n="admin.filter_completed">완료</button>
+    </div>
+
+    <div id="requestsTable"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

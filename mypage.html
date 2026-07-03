@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Page — VICTORIA</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
+    <nav class="nav-links">
+      <a href="index.html" data-i18n="nav.home">홈</a>
+      <a href="index.html#exchange" data-i18n="nav.exchange">코인교환</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch">
+        <select id="langSwitch" aria-label="Language">
+          <option value="ko">한국어</option><option value="en">English</option>
+          <option value="zh">中文</option><option value="ja">日本語</option><option value="es">Español</option>
+        </select>
+      </div>
+      <a href="admin.html" class="btn btn-outline btn-sm" style="display:none" id="adminLink" data-i18n="nav.admin">관리자</a>
+      <a href="#" class="btn btn-gold btn-sm" data-action="logout" data-i18n="nav.logout">로그아웃</a>
+    </div>
+  </div>
+</header>
+
+<div class="mypage-shell wrap">
+  <h1 data-i18n="mypage.title" style="margin-bottom:28px;">마이페이지</h1>
+  <div class="mypage-grid">
+    <div class="side-nav">
+      <button class="tab-btn active" data-tab="profile" data-i18n="mypage.nav_profile">회원정보</button>
+      <button class="tab-btn" data-tab="requests" data-i18n="mypage.nav_requests">교환 신청내역</button>
+      <button class="tab-btn" data-tab="completed" data-i18n="mypage.nav_completed">교환 완료내역</button>
+    </div>
+
+    <div>
+      <!-- PROFILE PANEL -->
+      <div class="tab-panel" id="panel-profile">
+        <div class="panel-title"><h3 data-i18n="mypage.profile_title">회원정보 확인 및 수정</h3></div>
+        <form id="profileForm" class="card" style="max-width:560px;">
+          <div class="form-row">
+            <label data-i18n="auth.email_label">이메일</label>
+            <input type="email" id="pEmail" disabled>
+          </div>
+          <div class="form-row">
+            <label data-i18n="auth.name_label">이름</label>
+            <input type="text" id="pName">
+          </div>
+          <div class="form-row">
+            <label data-i18n="auth.phone_label">전화번호</label>
+            <input type="tel" id="pPhone">
+          </div>
+          <div class="form-row">
+            <label data-i18n="auth.wallet_label">트론(Tron) 지갑 주소</label>
+            <input type="text" id="pWallet" placeholder="T...">
+          </div>
+          <div class="form-row">
+            <label data-i18n="auth.telegram_label">텔레그램 아이디</label>
+            <input type="text" id="pTelegram">
+          </div>
+          <div class="form-row">
+            <label data-i18n="auth.whatsapp_label">Whatsapp 아이디</label>
+            <input type="text" id="pWhatsapp">
+          </div>
+          <button type="submit" class="btn btn-gold" data-i18n="mypage.save_button">저장하기</button>
+          <p class="form-msg" id="profileMsg"></p>
+        </form>
+      </div>
+
+      <!-- REQUESTS PANEL -->
+      <div class="tab-panel" id="panel-requests" style="display:none;">
+        <div class="panel-title"><h3 data-i18n="mypage.requests_title">교환 신청내역</h3></div>
+        <div id="requestsList"></div>
+      </div>
+
+      <!-- COMPLETED PANEL -->
+      <div class="tab-panel" id="panel-completed" style="display:none;">
+        <div class="panel-title"><h3 data-i18n="mypage.completed_title">교환 완료내역</h3></div>
+        <div id="completedList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TX SUBMIT MODAL -->
+<div class="modal-backdrop" id="txModal">
+  <div class="modal">
+    <h3 data-i18n="mypage.submit_tx_title">관리자에게 거래(Transaction) 정보 전달</h3>
+    <form id="txForm" style="margin-top:16px;">
+      <div class="form-row">
+        <label data-i18n="mypage.tx_hash_label">트랜잭션 해시 / 주소</label>
+        <input type="text" id="txHash" required>
+      </div>
+      <div class="form-row">
+        <label data-i18n="mypage.tx_note_label">메모 (선택)</label>
+        <textarea id="txNote" rows="3"></textarea>
+      </div>
+      <input type="hidden" id="txRequestId">
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="btn btn-outline btn-block" id="txCancel" data-i18n="common.cancel">취소</button>
+        <button type="submit" class="btn btn-gold btn-block" data-i18n="mypage.tx_submit_button">제출하기</button>
+      </div>
+      <p class="form-msg" id="txMsg"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/mypage.js"></script>
+</body>
+</html>
