@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>passnine Admin — Deal Manager</title>
+<meta name="robots" content="noindex, nofollow" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0A1628;
+  color: #F8FAFF;
+  min-height: 100vh;
+}
+.wrap { max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+h1 { font-size: 1.5rem; margin-bottom: 0.3rem; }
+.sub { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 2rem; }
+
+/* Login screen */
+#loginScreen {
+  max-width: 380px;
+  margin: 8rem auto 0;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 2.2rem;
+  text-align: center;
+}
+#loginScreen h2 { font-size: 1.2rem; margin-bottom: 1.5rem; }
+#loginScreen input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  outline: none;
+}
+#loginScreen input:focus { border-color: #C9A84C; }
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.6rem;
+  background: #C9A84C;
+  color: #0A1628;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+.btn:hover { background: #a8862e; }
+.btn-secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+}
+.btn-secondary:hover { border-color: #C9A84C; color: #C9A84C; }
+.btn-danger { background: #c0392b; color: #fff; }
+.btn-danger:hover { background: #a5301f; }
+.error-msg { color: #f87171; font-size: 0.82rem; margin-top: 0.5rem; }
+
+/* Main app (hidden until login) */
+#app { display: none; }
+
+.token-bar {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+}
+.token-bar label { font-size: 0.78rem; color: rgba(255,255,255,0.6); display: block; margin-bottom: 0.4rem; }
+.token-bar input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+.token-bar .row { display: flex; gap: 0.6rem; }
+.token-bar .row input { flex: 1; }
+.token-hint { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.4rem; line-height: 1.5; }
+.token-hint a { color: #C9A84C; }
+
+.status-msg {
+  font-size: 0.82rem;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: none;
+}
+.status-msg.show { display: block; }
+.status-ok { background: rgba(34,197,94,0.15); color: #4ade80; }
+.status-err { background: rgba(239,68,68,0.15); color: #f87171; }
+.status-loading { background: rgba(201,168,76,0.15); color: #C9A84C; }
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.deal-form {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 0.4rem; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 7px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  font-size: 0.88rem;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #C9A84C; }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-actions { display: flex; gap: 0.7rem; margin-top: 1.2rem; }
+.form-actions .btn { width: auto; flex: 1; }
+
+.deal-list-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.deal-list-item .tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(30,111,217,0.2);
+  color: #6fa8f0;
+  flex-shrink: 0;
+}
+.deal-list-item .info { flex: 1; min-width: 0; }
+.deal-list-item .info h4 { font-size: 0.9rem; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.deal-list-item .info p { font-size: 0.78rem; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.deal-list-item .actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+.icon-btn {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: #fff;
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.icon-btn:hover { background: rgba(255,255,255,0.18); }
+.icon-btn.del:hover { background: rgba(239,68,68,0.3); }
+.empty-note { color: rgba(255,255,255,0.4); font-size: 0.85rem; padding: 1.5rem; text-align: center; }
+
+.logout-link { font-size: 0.78rem; color: rgba(255,255,255,0.4); cursor: pointer; text-decoration: underline; }
+.logout-link:hover { color: #fff; }
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN SCREEN ─────────────────────────────────────── -->
+<div id="loginScreen">
+  <h2>passnine Admin</h2>
+  <input type="password" id="loginPw" placeholder="비밀번호 입력" autocomplete="off" />
+  <button class="btn" onclick="tryLogin()">로그인</button>
+  <div class="error-msg" id="loginError"></div>
+</div>
+
+<!-- ── MAIN APP ─────────────────────────────────────────── -->
+<div class="wrap" id="app">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+    <div>
+      <h1>거래 리스트 관리</h1>
+      <p class="sub">passnine.com — 현재 거래 진행중인 리스트를 관리합니다</p>
+    </div>
+    <span class="logout-link" onclick="logout()">로그아웃</span>
+  </div>
+
+  <div class="token-bar">
+    <label>GitHub Personal Access Token</label>
+    <div class="row">
+      <input type="password" id="ghToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+      <button class="btn btn-secondary" style="width:auto;white-space:nowrap;" onclick="saveToken()">저장</button>
+    </div>
+    <div class="token-hint">
+      토큰은 이 브라우저에만 저장됩니다 (서버 전송 없음). repo 쓰기 권한이 있는 Fine-grained Personal Access Token을 사용하세요.
+      <br/><a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub → Settings → Developer settings → Personal access tokens</a>에서 발급
+    </div>
+  </div>
+
+  <div class="status-msg" id="statusMsg"></div>
+
+  <div class="section-title">새 거래 등록</div>
+  <div class="deal-form">
+    <input type="hidden" id="editIndex" value="" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>카테고리</label>
+        <select id="dealTag">
+          <option value="ICUMSA45">ICUMSA 45</option>
+          <option value="VHP">VHP</option>
+          <option value="ChickenPaw">Chicken Paw</option>
+          <option value="Other">기타</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>날짜</label>
+        <input type="date" id="dealDate" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>제목 (리스트에 표시됨)</label>
+      <input type="text" id="dealTitle" placeholder="예: Brazilian ICUMSA 45 Sugar — 12,500 MT Available" />
+    </div>
+    <div class="form-group">
+      <label>요약 (리스트 한 줄 설명, 90자 권장)</label>
+      <input type="text" id="dealSummary" placeholder="예: FOB Santos, SGS inspection ready, shipment July 2026." />
+    </div>
+    <div class="form-group">
+      <label>상세 내용 (팝업 클릭시 전체 표시됨, 줄바꿈 가능)</label>
+      <textarea id="dealContent" placeholder="Origin: Brazil&#10;Quantity: 12,500 MT&#10;Incoterms: FOB / CIF&#10;..."></textarea>
+    </div>
+    <div class="form-actions">
+      <button class="btn" onclick="submitDeal()" id="submitBtn">거래 등록하기</button>
+      <button class="btn btn-secondary" style="display:none;" id="cancelEditBtn" onclick="cancelEdit()">취소</button>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span>현재 등록된 거래</span>
+    <button class="icon-btn" onclick="loadDeals()" title="새로고침">⟳</button>
+  </div>
+  <div id="dealsListAdmin"></div>
+</div>
+
+<script>
+/* ───────────────────────────────────────────────────
+   CONFIG — 여기를 본인 GitHub 정보로 수정하세요
+─────────────────────────────────────────────────── */
+const ADMIN_PASSWORD = "passnine2026"; // ⚠️ 반드시 변경하세요
+const GH_OWNER = "YOUR_GITHUB_USERNAME";   // 예: hakkichoi
+const GH_REPO  = "YOUR_REPO_NAME";         // 예: passnine-site
+const GH_BRANCH = "main";
+const GH_FILE_PATH = "deals.json";
+/* ─────────────────────────────────────────────────── */
+
+let currentDeals = [];
+let currentSha = null;
+
+function tryLogin() {
+  const pw = document.getElementById('loginPw').value;
+  if (pw === ADMIN_PASSWORD) {
+    sessionStorage.setItem('passnine_admin_auth', '1');
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    const savedToken = localStorage.getItem('passnine_gh_token');
+    if (savedToken) document.getElementById('ghToken').value = savedToken;
+    loadDeals();
+  } else {
+    document.getElementById('loginError').textContent = '비밀번호가 올바르지 않습니다.';
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('passnine_admin_auth');
+  location.reload();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (sessionStorage.getItem('passnine_admin_auth') === '1') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    const savedToken = localStorage.getItem('passnine_gh_token');
+    if (savedToken) document.getElementById('ghToken').value = savedToken;
+    loadDeals();
+  }
+  document.getElementById('loginPw').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+  document.getElementById('dealDate').valueAsDate = new Date();
+});
+
+function saveToken() {
+  const token = document.getElementById('ghToken').value.trim();
+  if (token) {
+    localStorage.setItem('passnine_gh_token', token);
+    showStatus('토큰이 저장되었습니다.', 'ok');
+  }
+}
+
+function getToken() {
+  return document.getElementById('ghToken').value.trim() || localStorage.getItem('passnine_gh_token');
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = msg;
+  el.className = 'status-msg show status-' + type;
+  if (type !== 'loading') setTimeout(() => el.classList.remove('show'), 4000);
+}
+
+/* ── LOAD deals.json from GitHub ──────────────── */
+function loadDeals() {
+  const token = getToken();
+  if (!token) {
+    showStatus('먼저 GitHub Token을 입력하고 저장하세요.', 'err');
+    return;
+  }
+  showStatus('불러오는 중...', 'loading');
+  fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}?ref=${GH_BRANCH}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github+json'
+    }
+  })
+  .then(r => {
+    if (!r.ok) throw new Error('GitHub API 오류: ' + r.status);
+    return r.json();
+  })
+  .then(data => {
+    currentSha = data.sha;
+    const content = decodeURIComponent(escape(atob(data.content)));
+    currentDeals = JSON.parse(content);
+    renderAdminList();
+    document.getElementById('statusMsg').classList.remove('show');
+  })
+  .catch(err => {
+    showStatus('불러오기 실패: ' + err.message + ' (저장소 이름/권한을 확인하세요)', 'err');
+  });
+}
+
+function renderAdminList() {
+  const wrap = document.getElementById('dealsListAdmin');
+  if (!currentDeals || currentDeals.length === 0) {
+    wrap.innerHTML = '<div class="empty-note">등록된 거래가 없습니다.</div>';
+    return;
+  }
+  const tagLabels = { ICUMSA45: 'ICUMSA 45', VHP: 'VHP', ChickenPaw: 'Chicken Paw', Other: '기타' };
+  wrap.innerHTML = currentDeals.map((d, i) => `
+    <div class="deal-list-item">
+      <span class="tag">${tagLabels[d.tag] || d.tag}</span>
+      <div class="info">
+        <h4>${escapeHtml(d.title)}</h4>
+        <p>${escapeHtml(d.summary)} · ${d.date || ''}</p>
+      </div>
+      <div class="actions">
+        <button class="icon-btn" onclick="editDeal(${i})" title="수정">✎</button>
+        <button class="icon-btn del" onclick="deleteDeal(${i})" title="삭제">🗑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s) {
+  if (!s) return '';
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ── FORM: add / edit ─────────────────────────── */
+function submitDeal() {
+  const editIndex = document.getElementById('editIndex').value;
+  const deal = {
+    tag: document.getElementById('dealTag').value,
+    title: document.getElementById('dealTitle').value.trim(),
+    summary: document.getElementById('dealSummary').value.trim(),
+    content: document.getElementById('dealContent').value.trim(),
+    date: document.getElementById('dealDate').value
+  };
+  if (!deal.title || !deal.summary || !deal.content) {
+    showStatus('제목, 요약, 상세 내용을 모두 입력하세요.', 'err');
+    return;
+  }
+  if (editIndex !== '') {
+    currentDeals[parseInt(editIndex)] = deal;
+  } else {
+    currentDeals.unshift(deal);
+  }
+  pushToGitHub(() => {
+    resetForm();
+    renderAdminList();
+  });
+}
+
+function editDeal(i) {
+  const d = currentDeals[i];
+  document.getElementById('editIndex').value = i;
+  document.getElementById('dealTag').value = d.tag;
+  document.getElementById('dealTitle').value = d.title;
+  document.getElementById('dealSummary').value = d.summary;
+  document.getElementById('dealContent').value = d.content;
+  document.getElementById('dealDate').value = d.date;
+  document.getElementById('submitBtn').textContent = '거래 수정하기';
+  document.getElementById('cancelEditBtn').style.display = 'inline-block';
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+function cancelEdit() { resetForm(); }
+
+function resetForm() {
+  document.getElementById('editIndex').value = '';
+  document.getElementById('dealTag').value = 'ICUMSA45';
+  document.getElementById('dealTitle').value = '';
+  document.getElementById('dealSummary').value = '';
+  document.getElementById('dealContent').value = '';
+  document.getElementById('dealDate').valueAsDate = new Date();
+  document.getElementById('submitBtn').textContent = '거래 등록하기';
+  document.getElementById('cancelEditBtn').style.display = 'none';
+}
+
+function deleteDeal(i) {
+  if (!confirm('이 거래를 삭제하시겠습니까?')) return;
+  currentDeals.splice(i, 1);
+  pushToGitHub(() => renderAdminList());
+}
+
+/* ── PUSH to GitHub (commit deals.json) ───────── */
+function pushToGitHub(onSuccess) {
+  const token = getToken();
+  if (!token) {
+    showStatus('GitHub Token이 필요합니다.', 'err');
+    return;
+  }
+  showStatus('GitHub에 저장 중...', 'loading');
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(currentDeals, null, 2))));
+  fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE_PATH}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      message: 'Update deals.json via admin panel',
+      content: content,
+      sha: currentSha,
+      branch: GH_BRANCH
+    })
+  })
+  .then(r => {
+    if (!r.ok) return r.json().then(e => { throw new Error(e.message || ('HTTP ' + r.status)); });
+    return r.json();
+  })
+  .then(data => {
+    currentSha = data.content.sha;
+    showStatus('저장되었습니다. GitHub Pages 반영까지 약 1분 소요됩니다.', 'ok');
+    if (onSuccess) onSuccess();
+  })
+  .catch(err => {
+    showStatus('저장 실패: ' + err.message, 'err');
+  });
+}
+</script>
+</body>
+</html>

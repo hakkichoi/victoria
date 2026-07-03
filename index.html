@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>passnine – Global Trade Intermediary</title>
+<meta name="description" content="passnine — Brazilian sugar (ICUMSA45, VHP) and Chicken Paw trade intermediary serving China, Korea, and global markets." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET & BASE ─────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #F8FAFF;
+  color: #0A1628;
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* ── TOKENS ───────────────────────────────────── */
+:root {
+  --navy:   #0A1628;
+  --blue:   #1E6FD9;
+  --blue2:  #1557b0;
+  --gold:   #C9A84C;
+  --gold2:  #a8862e;
+  --white:  #F8FAFF;
+  --glass:  rgba(255,255,255,0.10);
+  --glass2: rgba(255,255,255,0.18);
+  --blur:   blur(14px);
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(10,22,40,0.18);
+}
+
+/* ── TYPOGRAPHY ───────────────────────────────── */
+h1,h2,h3,h4 { font-family: 'Playfair Display', serif; }
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── NAV ──────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+  background: rgba(10,22,40,0.72);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.3s;
+}
+.nav-logo {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 1.35rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links {
+  display: flex;
+  gap: 1.8rem;
+  list-style: none;
+}
+.nav-links a {
+  color: rgba(255,255,255,0.78);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* Language switcher */
+.lang-switcher {
+  display: flex;
+  gap: 0.4rem;
+}
+.lang-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.7);
+  padding: 3px 9px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.lang-btn:hover, .lang-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+/* Mobile hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ── HERO ─────────────────────────────────────── */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--navy);
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 80%, rgba(30,111,217,0.25) 0%, transparent 70%),
+    linear-gradient(160deg, #0A1628 0%, #0d2040 50%, #0a1628 100%);
+}
+/* Ocean wave lines */
+.ocean-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.07;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 38px,
+      rgba(30,111,217,0.6) 38px,
+      rgba(30,111,217,0.6) 40px
+    );
+  animation: waveScroll 12s linear infinite;
+}
+@keyframes waveScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 120px; }
+}
+
+/* Container ship SVG scene */
+.ship-scene {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 55%;
+  opacity: 0.22;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+.ship-scene svg {
+  width: 120%;
+  max-width: 1100px;
+  transform: perspective(500px) rotateX(30deg) translateY(8%);
+  transform-origin: bottom center;
+  animation: shipDrift 20s ease-in-out infinite alternate;
+}
+@keyframes shipDrift {
+  from { transform: perspective(500px) rotateX(30deg) translateY(8%) translateX(-1%); }
+  to   { transform: perspective(500px) rotateX(30deg) translateY(8%) translateX(1%); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 780px;
+}
+.hero-content .eyebrow { color: var(--gold); margin-bottom: 1rem; }
+.hero-content h1 {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+}
+.hero-content h1 em {
+  font-style: normal;
+  color: var(--gold);
+}
+.hero-content p {
+  color: rgba(255,255,255,0.72);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+.btn-primary {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+.btn-outline {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.35);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  margin-left: 0.8rem;
+}
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(201,168,76,0.7), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
+}
+
+/* ── SECTIONS BASE ────────────────────────────── */
+section {
+  padding: 6rem 1.5rem;
+}
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.section-header {
+  margin-bottom: 3.5rem;
+}
+.section-header h2 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  line-height: 1.2;
+  margin-top: 0.5rem;
+  color: var(--navy);
+}
+.section-header p {
+  margin-top: 0.8rem;
+  color: #475569;
+  font-size: 1rem;
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* ── ACTIVE DEALS ─────────────────────────────── */
+#deals {
+  background: #EEF3FB;
+  padding: 4.5rem 1.5rem;
+}
+#deals .section-header { margin-bottom: 2.5rem; }
+.deals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.deal-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(30,111,217,0.12);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-radius: 12px;
+  padding: 1.1rem 1.5rem;
+  cursor: pointer;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+.deal-row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: rgba(30,111,217,0.3);
+}
+.deal-tag {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: rgba(30,111,217,0.12);
+  color: var(--blue2);
+  text-transform: uppercase;
+}
+.deal-tag.gold { background: rgba(201,168,76,0.18); color: var(--gold2); }
+.deal-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deal-summary {
+  flex: 2;
+  min-width: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deal-date {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+.deal-arrow { flex-shrink: 0; color: var(--gold); font-size: 1.1rem; }
+.deals-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+}
+
+/* Mobile: card layout instead of row */
+@media (max-width: 700px) {
+  .deal-row {
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding: 1rem 1.1rem;
+  }
+  .deal-title {
+    white-space: normal;
+    flex-basis: 100%;
+    font-size: 0.92rem;
+  }
+  .deal-summary {
+    white-space: normal;
+    flex-basis: 100%;
+    font-size: 0.82rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .deal-date { order: 3; }
+  .deal-arrow { display: none; }
+}
+
+/* Deal detail popup */
+.deal-popup-box {
+  background: #fff;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 600px;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(10,22,40,0.35);
+}
+.deal-popup-header {
+  background: var(--navy);
+  padding: 2rem 2rem 1.5rem;
+  position: relative;
+}
+.deal-popup-header .deal-tag { margin-bottom: 0.8rem; }
+.deal-popup-header h3 {
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+.deal-popup-header .deal-date {
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.6rem;
+  display: block;
+}
+.deal-popup-body { padding: 1.8rem 2rem; }
+.deal-popup-body .deal-full-content {
+  font-size: 0.93rem;
+  color: #334155;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+.deal-popup-body .btn-primary {
+  width: 100%;
+  margin-top: 1.8rem;
+  text-align: center;
+}
+
+/* ── HISTORY ──────────────────────────────────── */
+#history {
+  background: var(--navy);
+  color: #fff;
+}
+#history .section-header h2 { color: #fff; }
+#history .section-header p { color: rgba(255,255,255,0.6); }
+#history .eyebrow { color: var(--gold); }
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.timeline-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  padding: 1.8rem 1.6rem;
+  position: relative;
+  overflow: hidden;
+}
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--blue));
+}
+.timeline-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.timeline-card p {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.65;
+}
+
+.routes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.route-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(30,111,217,0.15);
+  border: 1px solid rgba(30,111,217,0.3);
+  padding: 0.55rem 1.1rem;
+  border-radius: 40px;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.85);
+}
+.route-tag .arrow { color: var(--gold); font-size: 1rem; }
+
+/* ── SUGAR ────────────────────────────────────── */
+#sugar { background: var(--white); }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.glass-card {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(30,111,217,0.12);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: 0 4px 24px rgba(10,22,40,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+.card-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--blue), var(--blue2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+}
+.glass-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 0.6rem;
+  color: var(--navy);
+}
+.glass-card p {
+  font-size: 0.86rem;
+  color: #475569;
+  line-height: 1.65;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 2rem;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+}
+.spec-table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.spec-table th {
+  background: var(--navy);
+  color: var(--gold);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.spec-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+  white-space: nowrap;
+}
+.spec-table tr:last-child td { border-bottom: none; }
+.spec-table tr:nth-child(even) td { background: rgba(30,111,217,0.03); }
+
+/* Mobile spec cards (replaces table on small screens) */
+.spec-cards { display: none; }
+@media (max-width: 600px) {
+  .table-wrap { display: none; }
+  .spec-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .spec-card {
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+  }
+  .spec-card-head {
+    background: var(--navy);
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .spec-card-head span { color: rgba(255,255,255,0.7); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; }
+  .spec-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .spec-cell {
+    padding: 0.65rem 0.9rem;
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+  }
+  .spec-cell:nth-child(even) { border-right: none; background: rgba(30,111,217,0.03); }
+  .spec-cell:nth-last-child(-n+2) { border-bottom: none; }
+  .spec-cell-label { font-size: 0.68rem; font-weight: 600; color: #94a3b8; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+  .spec-cell-val { font-size: 0.85rem; color: #334155; }
+}
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.badge-blue { background: rgba(30,111,217,0.12); color: var(--blue2); }
+.badge-gold { background: rgba(201,168,76,0.15); color: var(--gold2); }
+
+/* ── CHICKEN PAW ──────────────────────────────── */
+#chicken {
+  background: linear-gradient(160deg, #0f1f3d 0%, #0A1628 100%);
+  color: #fff;
+}
+#chicken .section-header h2 { color: #fff; }
+#chicken .section-header p { color: rgba(255,255,255,0.6); }
+#chicken .eyebrow { color: var(--gold); }
+#chicken .glass-card {
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+#chicken .glass-card h3 { color: #fff; }
+#chicken .glass-card p { color: rgba(255,255,255,0.65); }
+#chicken .glass-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+
+/* ── OTHER PRODUCTS ───────────────────────────── */
+#other { background: #EEF3FB; }
+.other-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.other-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+  border-left: 4px solid var(--gold);
+  box-shadow: 0 2px 12px rgba(10,22,40,0.06);
+}
+.other-card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 0.6rem; }
+.other-card p { font-size: 0.87rem; color: #475569; line-height: 1.65; }
+
+/* ── PURCHASE AGENCY ──────────────────────────── */
+#agency {
+  background: var(--navy);
+  color: #fff;
+}
+#agency .section-header h2 { color: #fff; }
+#agency .section-header p { color: rgba(255,255,255,0.6); }
+#agency .eyebrow { color: var(--gold); }
+
+.agency-flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.08);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 2.5rem;
+}
+.flow-step {
+  background: rgba(10,22,40,0.9);
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+.flow-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: rgba(201,168,76,0.2);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.flow-step h4 { font-size: 1rem; color: #fff; margin-bottom: 0.5rem; }
+.flow-step p { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+/* ── ABOUT ────────────────────────────────────── */
+#about { background: var(--white); }
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.contact-card {
+  background: var(--navy);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  color: #fff;
+}
+.contact-card h3 {
+  color: var(--gold);
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+}
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.contact-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: rgba(201,168,76,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.contact-item p { font-size: 0.88rem; color: rgba(255,255,255,0.72); line-height: 1.5; }
+.contact-item p strong { color: #fff; display: block; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+
+@media (max-width: 768px) {
+  .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ── FOOTER ───────────────────────────────────── */
+footer {
+  background: #060e1d;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.8rem;
+}
+footer a { color: var(--gold); text-decoration: none; }
+
+/* ── POPUP ────────────────────────────────────── */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,0.72);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.popup-overlay.open { display: flex; }
+
+.popup-box {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(10,22,40,0.35);
+}
+.popup-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #94a3b8;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.popup-close:hover { color: var(--navy); }
+.popup-box h3 {
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin-bottom: 0.4rem;
+}
+.popup-box .popup-sub {
+  font-size: 0.83rem;
+  color: #64748b;
+  margin-bottom: 1.8rem;
+}
+.form-group { margin-bottom: 1.1rem; }
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.35rem;
+}
+.form-group label .req { color: var(--blue); }
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  color: var(--navy);
+  outline: none;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { border-color: var(--blue); }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.btn-submit {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--navy);
+  color: var(--gold);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+.btn-submit:hover { background: var(--blue2); color: #fff; }
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 2rem 0;
+}
+.form-success .check { font-size: 2.5rem; margin-bottom: 0.5rem; }
+.form-success h4 { color: var(--navy); margin-bottom: 0.5rem; }
+.form-success p { color: #475569; font-size: 0.88rem; }
+
+/* ── MOBILE NAV ───────────────────────────────── */
+
+/* Mobile menu & hamburger: hidden by default on ALL screen sizes */
+.hamburger { display: none; }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(10,22,40,0.97);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  z-index: 99;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu ul { list-style: none; }
+.mobile-menu a {
+  display: block;
+  color: rgba(255,255,255,0.8);
+  padding: 0.75rem 0;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-lang { display: flex; gap: 0.4rem; margin-top: 1rem; }
+
+@media (max-width: 860px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: flex !important; }
+  .lang-switcher { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .popup-box { padding: 1.8rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ───────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#hero">pass<span>nine</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#history" data-i18n="nav_history">History</a></li>
+    <li><a href="#sugar" data-i18n="nav_sugar">Sugar</a></li>
+    <li><a href="#chicken" data-i18n="nav_chicken">Chicken Paw</a></li>
+    <li><a href="#other" data-i18n="nav_other">Other Products</a></li>
+    <li><a href="#agency" data-i18n="nav_agency">Purchase Agency</a></li>
+    <li><a href="#about" data-i18n="nav_about">About</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+      <button class="lang-btn" onclick="setLang('pt')">PT</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+    </div>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#history" onclick="closeMenu()" data-i18n="nav_history">History</a></li>
+    <li><a href="#sugar" onclick="closeMenu()" data-i18n="nav_sugar">Sugar</a></li>
+    <li><a href="#chicken" onclick="closeMenu()" data-i18n="nav_chicken">Chicken Paw</a></li>
+    <li><a href="#other" onclick="closeMenu()" data-i18n="nav_other">Other Products</a></li>
+    <li><a href="#agency" onclick="closeMenu()" data-i18n="nav_agency">Purchase Agency</a></li>
+    <li><a href="#about" onclick="closeMenu()" data-i18n="nav_about">About</a></li>
+  </ul>
+  <div class="mobile-lang">
+    <button class="lang-btn active" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+    <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" onclick="setLang('zh')">中文</button>
+  </div>
+</div>
+
+<!-- ── HERO ───────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="ocean-lines"></div>
+  <div class="ship-scene">
+    <svg viewBox="0 0 1000 420" xmlns="http://www.w3.org/2000/svg">
+      <!-- Water lines -->
+      <g stroke="rgba(30,111,217,0.5)" stroke-width="1" fill="none">
+        <line x1="0" y1="400" x2="1000" y2="400"/>
+        <line x1="0" y1="380" x2="1000" y2="380"/>
+        <line x1="0" y1="360" x2="1000" y2="360"/>
+        <ellipse cx="500" cy="400" rx="400" ry="30" stroke="rgba(30,111,217,0.3)"/>
+        <ellipse cx="500" cy="395" rx="350" ry="22"/>
+      </g>
+      <!-- Ship hull (top-down view) -->
+      <g transform="translate(500,200)">
+        <!-- hull body -->
+        <path d="M-180,-30 L180,-30 Q220,-30 230,0 Q220,30 180,30 L-180,30 Q-240,20 -250,0 Q-240,-20 -180,-30 Z"
+          fill="#1a3a6e" stroke="#2a5aa0" stroke-width="2"/>
+        <!-- bow -->
+        <path d="M180,-30 Q230,-20 250,0 Q230,20 180,30 L180,-30 Z"
+          fill="#16305c" stroke="#2a5aa0" stroke-width="1"/>
+        <!-- container rows -->
+        <g fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="0.8">
+          <!-- row 1 -->
+          <rect x="-160" y="-20" width="40" height="16" rx="2" fill="#c0392b" stroke="rgba(255,255,255,0.4)"/>
+          <rect x="-115" y="-20" width="40" height="16" rx="2" fill="#2980b9"/>
+          <rect x="-70" y="-20" width="40" height="16" rx="2" fill="#27ae60"/>
+          <rect x="-25" y="-20" width="40" height="16" rx="2" fill="#f39c12"/>
+          <rect x="20" y="-20" width="40" height="16" rx="2" fill="#8e44ad"/>
+          <rect x="65" y="-20" width="40" height="16" rx="2" fill="#c0392b"/>
+          <rect x="110" y="-20" width="40" height="16" rx="2" fill="#2980b9"/>
+          <!-- row 2 -->
+          <rect x="-160" y="4" width="40" height="16" rx="2" fill="#27ae60"/>
+          <rect x="-115" y="4" width="40" height="16" rx="2" fill="#f39c12"/>
+          <rect x="-70" y="4" width="40" height="16" rx="2" fill="#c0392b"/>
+          <rect x="-25" y="4" width="40" height="16" rx="2" fill="#8e44ad"/>
+          <rect x="20" y="4" width="40" height="16" rx="2" fill="#2980b9"/>
+          <rect x="65" y="4" width="40" height="16" rx="2" fill="#27ae60"/>
+          <rect x="110" y="4" width="40" height="16" rx="2" fill="#f39c12"/>
+        </g>
+        <!-- bridge -->
+        <rect x="-195" y="-14" width="30" height="28" rx="3" fill="#0d2040" stroke="#1a3a6e" stroke-width="1"/>
+        <rect x="-191" y="-10" width="8" height="5" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <rect x="-191" y="-2" width="8" height="5" rx="1" fill="rgba(255,255,255,0.3)"/>
+        <!-- wake lines -->
+        <path d="M-250,0 Q-320,-12 -380,-8" stroke="rgba(200,230,255,0.35)" stroke-width="2" fill="none"/>
+        <path d="M-250,0 Q-320,12 -380,8" stroke="rgba(200,230,255,0.35)" stroke-width="2" fill="none"/>
+        <path d="M-280,0 Q-350,-18 -420,-14" stroke="rgba(200,230,255,0.2)" stroke-width="1" fill="none"/>
+        <path d="M-280,0 Q-350,18 -420,14" stroke="rgba(200,230,255,0.2)" stroke-width="1" fill="none"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <p class="eyebrow" data-i18n="hero_eyebrow">Brazil · China · Korea — Global Commodity Trade</p>
+    <h1 data-i18n="hero_h1">Bridging Markets.<br/><em>Delivering Value.</em></h1>
+    <p data-i18n="hero_p">passnine intermediates premium Brazilian agricultural commodities — sugar and protein — connecting suppliers and buyers across Asia and beyond with reliability and transparency.</p>
+    <button class="btn-primary" onclick="openPopup()" data-i18n="hero_btn1">Inquire Now</button>
+    <a href="#sugar" class="btn-outline" data-i18n="hero_btn2">Our Products</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-i18n="scroll">Scroll</span>
+  </div>
+</section>
+
+<!-- ── ACTIVE DEALS ────────────────────────────────────── -->
+<section id="deals">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="deals_eyebrow">Active Trade Listings</p>
+      <h2 data-i18n="deals_h2">Current Deals in Progress</h2>
+      <p data-i18n="deals_p">Live trade opportunities currently being intermediated. Click any listing for full details.</p>
+    </div>
+    <div class="deals-list" id="dealsList">
+      <!-- Populated by JS from deals.json -->
+    </div>
+  </div>
+</section>
+
+<!-- ── HISTORY ─────────────────────────────────────────── -->
+<section id="history">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="hist_eyebrow">Company History</p>
+      <h2 data-i18n="hist_h2">From First Trade to<br/>Trusted Partnership</h2>
+      <p data-i18n="hist_p">Founded on the principle of transparent intermediary trade, passnine has grown its presence across three continents since 2023.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-card">
+        <div class="timeline-year">2023</div>
+        <p data-i18n="hist_2023">Established Brazil–China and Brazil–Korea trade corridors. First transactions in Brazilian sugar (ICUMSA45) and Chicken Paw successfully intermediated.</p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-year">2024</div>
+        <p data-i18n="hist_2024">Expanded to China–Korea corridor. Introduced VHP sugar and broadened protein product range. Purchase agency service launched for risk-free trade.</p>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-year">2025</div>
+        <p data-i18n="hist_2025">Ongoing partnerships with BRF and JBS for Chicken Paw. Added other Brazilian agricultural commodities including soybean and corn.</p>
+      </div>
+    </div>
+    <div class="routes-grid">
+      <div class="route-tag">🇧🇷 Brazil <span class="arrow">⟷</span> 🇨🇳 China</div>
+      <div class="route-tag">🇧🇷 Brazil <span class="arrow">⟷</span> 🇰🇷 Korea</div>
+      <div class="route-tag">🇨🇳 China <span class="arrow">⟷</span> 🇰🇷 Korea</div>
+    </div>
+    <div style="margin-top:2.5rem;text-align:center;">
+      <button class="btn-primary" onclick="openPopup()" data-i18n="cta_inquire">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── SUGAR ───────────────────────────────────────────── -->
+<section id="sugar">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="sugar_eyebrow">Brazilian Sugar</p>
+      <h2 data-i18n="sugar_h2">Premium Sugar Trade —<br/>ICUMSA 45 & VHP</h2>
+      <p data-i18n="sugar_p">Certified Brazilian origin sugar, inspected by SGS and CCIC, with flexible Incoterms to meet your logistics needs.</p>
+    </div>
+    <div class="product-grid">
+      <div class="glass-card">
+        <div class="card-icon">🍬</div>
+        <h3 data-i18n="su_c1h">ICUMSA 45</h3>
+        <p data-i18n="su_c1p">Refined white sugar with ICUMSA value of 45 RBU. Suitable for direct food production and retail. High purity, bright appearance.</p>
+      </div>
+      <div class="glass-card">
+        <div class="card-icon">🌱</div>
+        <h3 data-i18n="su_c2h">VHP Sugar</h3>
+        <p data-i18n="su_c2p">Very High Polarization raw sugar ideal for industrial refining. Cost-effective raw material for downstream sugar processing.</p>
+      </div>
+      <div class="glass-card">
+        <div class="card-icon">🔍</div>
+        <h3 data-i18n="su_c3h">Third-Party Inspection</h3>
+        <p data-i18n="su_c3p">SGS and CCIC inspection available to guarantee quality compliance and provide certified documentation for customs clearance.</p>
+      </div>
+      <div class="glass-card">
+        <div class="card-icon">🚢</div>
+        <h3 data-i18n="su_c4h">Flexible Incoterms</h3>
+        <p data-i18n="su_c4p">FCA, FOB, and CIF options available. Payment terms confirmed through negotiation prior to contract execution.</p>
+      </div>
+    </div>
+    <!-- Desktop table -->
+    <div class="table-wrap">
+      <table class="spec-table">
+        <thead>
+          <tr>
+            <th data-i18n="tbl_type">Type</th>
+            <th data-i18n="tbl_origin">Origin</th>
+            <th data-i18n="tbl_inspect">Inspection</th>
+            <th data-i18n="tbl_inco">Incoterms</th>
+            <th data-i18n="tbl_pay">Payment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-blue">ICUMSA 45</span></td>
+            <td>🇧🇷 Brazil</td>
+            <td>SGS / CCIC</td>
+            <td>FCA / FOB / CIF</td>
+            <td data-i18n="tbl_neg">Negotiable</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-gold">VHP</span></td>
+            <td>🇧🇷 Brazil</td>
+            <td>SGS / CCIC</td>
+            <td>FCA / FOB / CIF</td>
+            <td data-i18n="tbl_neg">Negotiable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Mobile cards (visible under 600px) -->
+    <div class="spec-cards">
+      <div class="spec-card">
+        <div class="spec-card-head"><span class="badge badge-blue" style="font-size:0.8rem;padding:3px 10px;">ICUMSA 45</span></div>
+        <div class="spec-card-body">
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_origin">Origin</div><div class="spec-cell-val">🇧🇷 Brazil</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_inspect">Inspection</div><div class="spec-cell-val">SGS / CCIC</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_inco">Incoterms</div><div class="spec-cell-val">FCA / FOB / CIF</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_pay">Payment</div><div class="spec-cell-val" data-i18n="tbl_neg">Negotiable</div></div>
+        </div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-card-head"><span class="badge badge-gold" style="font-size:0.8rem;padding:3px 10px;">VHP Sugar</span></div>
+        <div class="spec-card-body">
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_origin">Origin</div><div class="spec-cell-val">🇧🇷 Brazil</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_inspect">Inspection</div><div class="spec-cell-val">SGS / CCIC</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_inco">Incoterms</div><div class="spec-cell-val">FCA / FOB / CIF</div></div>
+          <div class="spec-cell"><div class="spec-cell-label" data-i18n="tbl_pay">Payment</div><div class="spec-cell-val" data-i18n="tbl_neg">Negotiable</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:2rem;text-align:center;">
+      <button class="btn-primary" onclick="openPopup()" data-i18n="cta_inquire">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── CHICKEN PAW ─────────────────────────────────────── -->
+<section id="chicken">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="cp_eyebrow">Brazilian Chicken Paw</p>
+      <h2 data-i18n="cp_h2">Premium Protein —<br/>BRF & JBS Certified</h2>
+      <p data-i18n="cp_p">We exclusively handle Chicken Paw from Brazil's top certified processors. Additional products available by negotiation.</p>
+    </div>
+    <div class="product-grid">
+      <div class="glass-card">
+        <div class="card-icon" style="background:linear-gradient(135deg,#c9a84c,#a8862e);">🏭</div>
+        <h3 data-i18n="cp_c1h">BRF Products</h3>
+        <p data-i18n="cp_c1p">Brasil Foods (BRF) — globally certified Chicken Paw with consistent quality. Widely accepted by importers in China and Korea.</p>
+      </div>
+      <div class="glass-card">
+        <div class="card-icon" style="background:linear-gradient(135deg,#c9a84c,#a8862e);">🏭</div>
+        <h3 data-i18n="cp_c2h">JBS Products</h3>
+        <p data-i18n="cp_c2p">JBS — world's largest protein company. Chicken Paw products meet strict international quality and veterinary standards.</p>
+      </div>
+      <div class="glass-card">
+        <div class="card-icon" style="background:linear-gradient(135deg,#c9a84c,#a8862e);">🤝</div>
+        <h3 data-i18n="cp_c3h">Custom Sourcing</h3>
+        <p data-i18n="cp_c3p">Other Brazilian chicken products available through our established supplier network. Contact us to discuss specific requirements.</p>
+      </div>
+    </div>
+    <div style="margin-top:2rem;text-align:center;">
+      <button class="btn-primary" onclick="openPopup()" data-i18n="cta_inquire">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── OTHER PRODUCTS ──────────────────────────────────── -->
+<section id="other">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="oth_eyebrow">Other Products</p>
+      <h2 data-i18n="oth_h2">Brazilian Agricultural<br/>Commodities</h2>
+      <p data-i18n="oth_p">Expanding our portfolio with Brazil's world-leading agricultural exports across the Brazil–China corridor.</p>
+    </div>
+    <div class="other-grid">
+      <div class="other-card">
+        <h3 data-i18n="oth_c1h">🌱 Soybean (Soja)</h3>
+        <p data-i18n="oth_c1p">Brazilian non-GMO and conventional soybeans for the Chinese and Asian markets. Brazil is the world's largest soybean exporter, providing reliable supply throughout the year.</p>
+      </div>
+      <div class="other-card">
+        <h3 data-i18n="oth_c2h">🌽 Corn (Milho)</h3>
+        <p data-i18n="oth_c2p">Brazilian corn for feed and industrial use. Competitive pricing leveraging Brazil's Southern Hemisphere harvest cycle for year-round availability.</p>
+      </div>
+      <div class="other-card">
+        <h3 data-i18n="oth_c3h">📦 Other Commodities</h3>
+        <p data-i18n="oth_c3p">Additional Brazilian agricultural commodities available upon request. Contact us to explore trade opportunities across the Brazil–China–Korea corridor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AGENCY ──────────────────────────────────────────── -->
+<section id="agency">
+  <div class="container">
+    <div class="section-header">
+      <p class="eyebrow" data-i18n="ag_eyebrow">Purchase Agency Service</p>
+      <h2 data-i18n="ag_h2">Risk-Free Trade Through<br/>Our Agency Network</h2>
+      <p data-i18n="ag_p">Eliminate counterparty risk entirely. Our China-based partner enables domestic contract arrangements so buyers receive goods before payment, and sellers receive guaranteed settlement.</p>
+    </div>
+    <div class="agency-flow">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <h4 data-i18n="ag_s1h">Buyer Contracts Locally</h4>
+        <p data-i18n="ag_s1p">The buyer signs a domestic contract with our China-based partner, eliminating cross-border payment risk entirely.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <h4 data-i18n="ag_s2h">Goods Shipped & Received</h4>
+        <p data-i18n="ag_s2p">Product is shipped from Brazil and delivered. The buyer inspects and accepts the goods before any payment is made.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <h4 data-i18n="ag_s3h">Payment After Receipt</h4>
+        <p data-i18n="ag_s3p">The buyer makes payment only after confirming receipt. Our agency absorbs the settlement risk on the seller's behalf.</p>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <h4 data-i18n="ag_s4h">Guaranteed Settlement</h4>
+        <p data-i18n="ag_s4p">Sellers receive secure, guaranteed payment through our partner network, eliminating default or delay risk.</p>
+      </div>
+    </div>
+    <div style="margin-top:2.5rem;text-align:center;">
+      <button class="btn-primary" onclick="openPopup()" data-i18n="cta_inquire">Send Inquiry</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ───────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div>
+        <p class="eyebrow" data-i18n="ab_eyebrow">About passnine</p>
+        <h2 style="font-size:clamp(1.8rem,4vw,2.6rem);margin-top:0.5rem;margin-bottom:1rem;" data-i18n="ab_h2">KMC Foundation</h2>
+        <p style="color:#475569;line-height:1.75;font-size:0.95rem;" data-i18n="ab_p1">passnine operates under KMC Foundation as an international trade intermediary specializing in Brazilian commodities. We connect buyers and sellers across China, Korea, and global markets through transparent, efficient intermediation.</p>
+        <p style="color:#475569;line-height:1.75;font-size:0.95rem;margin-top:1rem;" data-i18n="ab_p2">We maintain direct relationships with certified Brazilian suppliers and trusted buyer networks in Asia, enabling smooth transactions with reduced risk and clear communication across Korean, English, Chinese, and Portuguese.</p>
+      </div>
+      <div class="contact-card">
+        <h3 data-i18n="ab_contact">Contact Us</h3>
+        <div class="contact-item">
+          <div class="contact-icon">👤</div>
+          <p><strong data-i18n="ab_name_lbl">Contact Person</strong>Hakki Choi (최학기)</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <p><strong>Email</strong><a href="mailto:choihakki@gmail.com" style="color:var(--gold);text-decoration:none;">choihakki@gmail.com</a></p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <p><strong>WhatsApp</strong>+82-10-5561-7107</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <p><strong>WeChat ID</strong>hakki0729</p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🏢</div>
+          <p><strong data-i18n="ab_company_lbl">Company</strong>KMC Foundation</p>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:1.2rem;" onclick="openPopup()" data-i18n="cta_inquire">Send Inquiry</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────── -->
+<footer>
+  <p>© 2025 passnine · KMC Foundation · <a href="mailto:choihakki@gmail.com">choihakki@gmail.com</a></p>
+  <p style="margin-top:0.4rem;" data-i18n="footer_p">International Trade Intermediary — Brazil · China · Korea</p>
+</footer>
+
+<!-- ── INQUIRY POPUP ───────────────────────────────────── -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopupOutside(event)">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <h3 data-i18n="pop_title">Trade Inquiry</h3>
+    <p class="popup-sub" data-i18n="pop_sub">No login required. We'll respond within 1–2 business days.</p>
+    <form id="inquiryForm" action="https://formsubmit.co/choihakki@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="passnine.com Trade Inquiry" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <div class="form-group">
+        <label><span data-i18n="pop_interest">Product Interest</span> <span class="req">*</span></label>
+        <select name="Product Interest" required>
+          <option value="" data-i18n="pop_select_ph">Select a product...</option>
+          <option value="ICUMSA45">ICUMSA 45 Sugar</option>
+          <option value="VHP">VHP Sugar</option>
+          <option value="Chicken Paw">Chicken Paw</option>
+          <option value="Other" data-i18n="pop_opt_other">Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label><span data-i18n="pop_name">Full Name</span> <span class="req">*</span></label>
+          <input type="text" name="Name" required placeholder="John Kim" />
+        </div>
+        <div class="form-group">
+          <label><span data-i18n="pop_email">Email</span> <span class="req">*</span></label>
+          <input type="email" name="Email" required placeholder="email@company.com" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label data-i18n="pop_phone">Phone (optional)</label>
+          <input type="tel" name="Phone" placeholder="+82-10-0000-0000" />
+        </div>
+        <div class="form-group">
+          <label data-i18n="pop_wechat">WeChat ID (optional)</label>
+          <input type="text" name="WeChat ID" placeholder="wechat_id" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label><span data-i18n="pop_message">Message</span> <span class="req">*</span></label>
+        <textarea name="Message" required placeholder="Please describe your requirements — quantity, destination, preferred Incoterms, etc."></textarea>
+      </div>
+      <button type="submit" class="btn-submit" data-i18n="pop_submit">Submit Inquiry</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <div class="check">✅</div>
+      <h4 data-i18n="pop_ok_h">Inquiry Sent!</h4>
+      <p data-i18n="pop_ok_p">Thank you. We'll review your inquiry and respond to your email within 1–2 business days.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── DEAL DETAIL POPUP ────────────────────────────────── -->
+<div class="popup-overlay" id="dealPopupOverlay" onclick="closeDealPopupOutside(event)">
+  <div class="deal-popup-box">
+    <button class="popup-close" onclick="closeDealPopup()">✕</button>
+    <div class="deal-popup-header">
+      <span class="deal-tag" id="dealPopupTag">SUGAR</span>
+      <h3 id="dealPopupTitle">Deal Title</h3>
+      <span class="deal-date" id="dealPopupDate">2026-06-01</span>
+    </div>
+    <div class="deal-popup-body">
+      <div class="deal-full-content" id="dealPopupContent"></div>
+      <button class="btn-primary" onclick="closeDealPopup(); openPopup();" data-i18n="deal_inquire_btn">Inquire About This Deal</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── TRANSLATIONS ─────────────────────────────── */
+const i18n = {
+  en: {
+    nav_history:"History", nav_sugar:"Sugar", nav_chicken:"Chicken Paw",
+    nav_other:"Other Products", nav_agency:"Purchase Agency", nav_about:"About",
+    hero_eyebrow:"Brazil · China · Korea — Global Commodity Trade",
+    hero_h1:"Bridging Markets.<br/><em>Delivering Value.</em>",
+    hero_p:"passnine intermediates premium Brazilian agricultural commodities — sugar and protein — connecting suppliers and buyers across Asia and beyond with reliability and transparency.",
+    hero_btn1:"Inquire Now", hero_btn2:"Our Products", scroll:"Scroll",
+    deals_eyebrow:"Active Trade Listings", deals_h2:"Current Deals in Progress",
+    deals_p:"Live trade opportunities currently being intermediated. Click any listing for full details.",
+    deal_inquire_btn:"Inquire About This Deal",
+    hist_eyebrow:"Company History", hist_h2:"From First Trade to<br/>Trusted Partnership",
+    hist_p:"Founded on the principle of transparent intermediary trade, passnine has grown its presence across three continents since 2023.",
+    hist_2023:"Established Brazil–China and Brazil–Korea trade corridors. First transactions in Brazilian sugar (ICUMSA45) and Chicken Paw successfully intermediated.",
+    hist_2024:"Expanded to China–Korea corridor. Introduced VHP sugar and broadened protein product range. Purchase agency service launched for risk-free trade.",
+    hist_2025:"Ongoing partnerships with BRF and JBS for Chicken Paw. Added other Brazilian agricultural commodities including soybean and corn.",
+    cta_inquire:"Send Inquiry",
+    sugar_eyebrow:"Brazilian Sugar", sugar_h2:"Premium Sugar Trade —<br/>ICUMSA 45 & VHP",
+    sugar_p:"Certified Brazilian origin sugar, inspected by SGS and CCIC, with flexible Incoterms to meet your logistics needs.",
+    su_c1h:"ICUMSA 45", su_c1p:"Refined white sugar with ICUMSA value of 45 RBU. Suitable for direct food production and retail. High purity, bright appearance.",
+    su_c2h:"VHP Sugar", su_c2p:"Very High Polarization raw sugar ideal for industrial refining. Cost-effective raw material for downstream sugar processing.",
+    su_c3h:"Third-Party Inspection", su_c3p:"SGS and CCIC inspection available to guarantee quality compliance and certified documentation for customs clearance.",
+    su_c4h:"Flexible Incoterms", su_c4p:"FCA, FOB, and CIF options available. Payment terms confirmed through negotiation prior to contract execution.",
+    tbl_type:"Type", tbl_origin:"Origin", tbl_inspect:"Inspection", tbl_inco:"Incoterms", tbl_pay:"Payment", tbl_neg:"Negotiable",
+    cp_eyebrow:"Brazilian Chicken Paw", cp_h2:"Premium Protein —<br/>BRF & JBS Certified",
+    cp_p:"We exclusively handle Chicken Paw from Brazil's top certified processors. Additional products available by negotiation.",
+    cp_c1h:"BRF Products", cp_c1p:"Brasil Foods (BRF) — globally certified Chicken Paw with consistent quality. Widely accepted by importers in China and Korea.",
+    cp_c2h:"JBS Products", cp_c2p:"JBS — world's largest protein company. Chicken Paw products meet strict international quality and veterinary standards.",
+    cp_c3h:"Custom Sourcing", cp_c3p:"Other Brazilian chicken products available through our established supplier network. Contact us to discuss specific requirements.",
+    oth_eyebrow:"Other Products", oth_h2:"Brazilian Agricultural<br/>Commodities",
+    oth_p:"Expanding our portfolio with Brazil's world-leading agricultural exports across the Brazil–China corridor.",
+    oth_c1h:"🌱 Soybean (Soja)", oth_c1p:"Brazilian soybeans for Chinese and Asian markets. Brazil is the world's largest soybean exporter, providing reliable supply throughout the year.",
+    oth_c2h:"🌽 Corn (Milho)", oth_c2p:"Brazilian corn for feed and industrial use. Competitive pricing leveraging Brazil's Southern Hemisphere harvest cycle.",
+    oth_c3h:"📦 Other Commodities", oth_c3p:"Additional Brazilian agricultural commodities available upon request. Contact us to explore trade opportunities.",
+    ag_eyebrow:"Purchase Agency Service", ag_h2:"Risk-Free Trade Through<br/>Our Agency Network",
+    ag_p:"Eliminate counterparty risk entirely. Our China-based partner enables domestic contract arrangements so buyers receive goods before payment.",
+    ag_s1h:"Buyer Contracts Locally", ag_s1p:"The buyer signs a domestic contract with our China-based partner, eliminating cross-border payment risk.",
+    ag_s2h:"Goods Shipped & Received", ag_s2p:"Product is shipped from Brazil and delivered. The buyer inspects and accepts the goods before any payment is made.",
+    ag_s3h:"Payment After Receipt", ag_s3p:"The buyer makes payment only after confirming receipt. Our agency absorbs the settlement risk on the seller's behalf.",
+    ag_s4h:"Guaranteed Settlement", ag_s4p:"Sellers receive secure, guaranteed payment through our partner network, eliminating default or delay risk.",
+    ab_eyebrow:"About passnine", ab_h2:"KMC Foundation",
+    ab_p1:"passnine operates under KMC Foundation as an international trade intermediary specializing in Brazilian commodities.",
+    ab_p2:"We maintain direct relationships with certified Brazilian suppliers and trusted buyer networks in Asia.",
+    ab_contact:"Contact Us", ab_name_lbl:"Contact Person", ab_company_lbl:"Company",
+    footer_p:"International Trade Intermediary — Brazil · China · Korea",
+    pop_title:"Trade Inquiry", pop_sub:"No login required. We'll respond within 1–2 business days.",
+    pop_interest:"Product Interest", pop_select_ph:"Select a product...", pop_opt_other:"Other",
+    pop_name:"Full Name", pop_email:"Email", pop_phone:"Phone (optional)",
+    pop_wechat:"WeChat ID (optional)", pop_message:"Message", pop_submit:"Submit Inquiry",
+    pop_ok_h:"Inquiry Sent!", pop_ok_p:"Thank you. We'll respond to your email within 1–2 business days."
+  },
+  ko: {
+    nav_history:"회사연혁", nav_sugar:"설탕", nav_chicken:"닭발",
+    nav_other:"기타제품", nav_agency:"구매대행", nav_about:"회사소개",
+    hero_eyebrow:"브라질 · 중국 · 한국 — 글로벌 원자재 무역",
+    hero_h1:"시장을 잇다.<br/><em>가치를 전달하다.</em>",
+    hero_p:"passnine은 브라질산 프리미엄 농산물(설탕, 닭발)을 전문으로 하는 무역 중개 서비스로, 아시아 전역의 공급자와 구매자를 안전하고 투명하게 연결합니다.",
+    hero_btn1:"문의하기", hero_btn2:"취급 제품", scroll:"스크롤",
+    deals_eyebrow:"진행중인 거래", deals_h2:"현재 진행중인 거래 리스트",
+    deals_p:"현재 중개 진행중인 실시간 거래 기회입니다. 클릭하시면 전체 내용을 확인하실 수 있습니다.",
+    deal_inquire_btn:"이 거래 문의하기",
+    hist_eyebrow:"회사연혁", hist_h2:"첫 거래에서<br/>신뢰받는 파트너로",
+    hist_p:"2023년 설립 이후 브라질, 중국, 한국을 잇는 투명한 중개 무역을 기반으로 성장해 왔습니다.",
+    hist_2023:"브라질-중국, 브라질-한국 무역 루트 개설. 브라질산 설탕(ICUMSA45)과 닭발 첫 거래 성공.",
+    hist_2024:"중국-한국 루트 확장. VHP 설탕 도입 및 단백질 제품군 확대. 안전 거래를 위한 구매대행 서비스 론칭.",
+    hist_2025:"BRF 및 JBS와의 닭발 지속 파트너십 유지. 대두, 옥수수 등 브라질 농산물 품목 추가.",
+    cta_inquire:"문의 보내기",
+    sugar_eyebrow:"브라질산 설탕", sugar_h2:"프리미엄 설탕 무역 —<br/>ICUMSA 45 & VHP",
+    sugar_p:"SGS 및 CCIC 검사를 통한 브라질 원산지 인증 설탕. 다양한 인코텀즈(FCA/FOB/CIF) 선택 가능.",
+    su_c1h:"ICUMSA 45", su_c1p:"ICUMSA 값 45 RBU의 정제 백설탕. 식품 생산 및 소매에 적합. 높은 순도와 밝은 외관.",
+    su_c2h:"VHP 설탕", su_c2p:"산업용 정제에 최적화된 원당. 하류 설탕 가공을 위한 원가 경쟁력 있는 원자재.",
+    su_c3h:"제3자 검사", su_c3p:"SGS 및 CCIC 검사로 품질 기준 준수 및 통관 서류 인증 제공.",
+    su_c4h:"유연한 인코텀즈", su_c4p:"FCA, FOB, CIF 선택 가능. 계약 전 협의를 통해 결제 조건 확정.",
+    tbl_type:"종류", tbl_origin:"원산지", tbl_inspect:"검사기관", tbl_inco:"인코텀즈", tbl_pay:"결제", tbl_neg:"협의",
+    cp_eyebrow:"브라질산 닭발", cp_h2:"프리미엄 단백질 —<br/>BRF & JBS 인증",
+    cp_p:"브라질 최고 인증 가공업체의 닭발만 취급합니다. 기타 제품은 협의 가능.",
+    cp_c1h:"BRF 제품", cp_c1p:"Brasil Foods(BRF) — 글로벌 인증 닭발. 중국, 한국 수입업체에서 널리 인정받는 품질.",
+    cp_c2h:"JBS 제품", cp_c2p:"세계 최대 단백질 기업 JBS. 국제 품질 및 수의학 기준을 충족하는 닭발 제품.",
+    cp_c3h:"맞춤형 소싱", cp_c3p:"기타 브라질산 닭고기 제품도 공급망을 통해 제공 가능. 요구사항 협의 환영.",
+    oth_eyebrow:"기타 제품", oth_h2:"브라질산 농산물<br/>원자재",
+    oth_p:"브라질-중국 루트를 중심으로 브라질의 세계 최고 농산물 수출 품목으로 포트폴리오를 확장합니다.",
+    oth_c1h:"🌱 대두(콩)", oth_c1p:"중국 및 아시아 시장을 위한 브라질산 대두. 브라질은 세계 최대 대두 수출국으로 안정적인 공급 가능.",
+    oth_c2h:"🌽 옥수수", oth_c2p:"사료 및 산업용 브라질산 옥수수. 브라질의 남반구 수확 주기를 활용한 경쟁력 있는 가격.",
+    oth_c3h:"📦 기타 상품", oth_c3p:"요청 시 브라질산 농산물 추가 품목 제공 가능. 브라질-중국-한국 무역 기회를 탐색해보세요.",
+    ag_eyebrow:"구매대행 서비스", ag_h2:"대행 네트워크를 통한<br/>안전한 무역",
+    ag_p:"거래 위험을 완전히 제거합니다. 중국 현지 파트너를 통해 구매자는 수령 후 대금 지급, 판매자는 확실한 결제 보장.",
+    ag_s1h:"국내 계약", ag_s1p:"구매자는 중국 파트너와 국내 계약 체결로 해외 송금 리스크 없이 거래 가능.",
+    ag_s2h:"화물 운송 및 수령", ag_s2p:"브라질에서 제품이 출발하여 배송됩니다. 구매자는 수령 확인 전까지 대금 지급 불필요.",
+    ag_s3h:"수령 후 결제", ag_s3p:"구매자는 수령 확인 후에만 결제. 당사 대행이 판매자 대신 결제 리스크를 부담.",
+    ag_s4h:"결제 보장", ag_s4p:"판매자는 파트너 네트워크를 통해 안전하고 확실한 결제 수령. 미지급 또는 지연 위험 없음.",
+    ab_eyebrow:"passnine 소개", ab_h2:"KMC Foundation",
+    ab_p1:"passnine은 KMC Foundation 산하 브라질 원자재 전문 국제 무역 중개 서비스입니다.",
+    ab_p2:"브라질 인증 공급업체 및 아시아 신뢰 구매자 네트워크와 직접 파트너십을 유지합니다.",
+    ab_contact:"연락처", ab_name_lbl:"담당자", ab_company_lbl:"회사명",
+    footer_p:"국제 무역 중개 — 브라질 · 중국 · 한국",
+    pop_title:"무역 문의", pop_sub:"로그인 없이 신청 가능합니다. 1–2 영업일 내 회신드립니다.",
+    pop_interest:"관심 항목", pop_select_ph:"제품을 선택하세요...", pop_opt_other:"기타",
+    pop_name:"성명", pop_email:"이메일", pop_phone:"전화번호 (선택)",
+    pop_wechat:"위챗 아이디 (선택)", pop_message:"내용", pop_submit:"제출하기",
+    pop_ok_h:"문의가 전송되었습니다!", pop_ok_p:"감사합니다. 입력하신 이메일로 1–2 영업일 내에 회신드리겠습니다."
+  },
+  pt: {
+    nav_history:"Histórico", nav_sugar:"Açúcar", nav_chicken:"Pata de Frango",
+    nav_other:"Outros Produtos", nav_agency:"Agência de Compra", nav_about:"Sobre",
+    hero_eyebrow:"Brasil · China · Coreia — Comércio Global de Commodities",
+    hero_h1:"Conectando Mercados.<br/><em>Entregando Valor.</em>",
+    hero_p:"A passnine intermedia commodities agrícolas brasileiras premium — açúcar e proteína — conectando fornecedores e compradores na Ásia e além com confiabilidade e transparência.",
+    hero_btn1:"Fazer Consulta", hero_btn2:"Nossos Produtos", scroll:"Rolar",
+    deals_eyebrow:"Negociações Ativas", deals_h2:"Negociações em Andamento",
+    deals_p:"Oportunidades de negociação em tempo real atualmente intermediadas. Clique em qualquer item para ver detalhes completos.",
+    deal_inquire_btn:"Consultar Sobre Esta Negociação",
+    hist_eyebrow:"Histórico da Empresa", hist_h2:"Do Primeiro Negócio à<br/>Parceria de Confiança",
+    hist_p:"Fundada no princípio do comércio intermediário transparente, a passnine expandiu sua presença em três continentes desde 2023.",
+    hist_2023:"Estabelecimento dos corredores Brasil–China e Brasil–Coreia. Primeiras transações de açúcar brasileiro (ICUMSA45) e Pata de Frango.",
+    hist_2024:"Expansão para o corredor China–Coreia. Introdução do açúcar VHP. Serviço de agência de compra lançado.",
+    hist_2025:"Parcerias contínuas com BRF e JBS para Pata de Frango. Inclusão de soja e milho brasileiros.",
+    cta_inquire:"Enviar Consulta",
+    sugar_eyebrow:"Açúcar Brasileiro", sugar_h2:"Comércio de Açúcar Premium —<br/>ICUMSA 45 & VHP",
+    sugar_p:"Açúcar de origem brasileira certificada, inspecionado pela SGS e CCIC, com Incoterms flexíveis.",
+    su_c1h:"ICUMSA 45", su_c1p:"Açúcar branco refinado com valor ICUMSA de 45 RBU. Adequado para produção de alimentos e varejo.",
+    su_c2h:"Açúcar VHP", su_c2p:"Açúcar bruto de Alta Polarização ideal para refino industrial. Matéria-prima competitiva.",
+    su_c3h:"Inspeção por Terceiros", su_c3p:"Inspeção SGS e CCIC disponível para garantir conformidade de qualidade e documentação certificada.",
+    su_c4h:"Incoterms Flexíveis", su_c4p:"Opções FCA, FOB e CIF disponíveis. Condições de pagamento confirmadas por negociação.",
+    tbl_type:"Tipo", tbl_origin:"Origem", tbl_inspect:"Inspeção", tbl_inco:"Incoterms", tbl_pay:"Pagamento", tbl_neg:"Negociável",
+    cp_eyebrow:"Pata de Frango Brasileira", cp_h2:"Proteína Premium —<br/>Certificada BRF & JBS",
+    cp_p:"Trabalhamos exclusivamente com Pata de Frango dos principais processadores certificados do Brasil.",
+    cp_c1h:"Produtos BRF", cp_c1p:"Brasil Foods (BRF) — Pata de Frango com certificação global e qualidade consistente.",
+    cp_c2h:"Produtos JBS", cp_c2p:"JBS — maior empresa de proteínas do mundo. Produtos atendem padrões internacionais rigorosos.",
+    cp_c3h:"Sourcing Personalizado", cp_c3p:"Outros produtos de frango brasileiro disponíveis através de nossa rede de fornecedores.",
+    oth_eyebrow:"Outros Produtos", oth_h2:"Commodities Agrícolas<br/>Brasileiras",
+    oth_p:"Expandindo nosso portfólio com as exportações agrícolas líderes mundiais do Brasil.",
+    oth_c1h:"🌱 Soja", oth_c1p:"Soja brasileira para os mercados chinês e asiático. O Brasil é o maior exportador de soja do mundo.",
+    oth_c2h:"🌽 Milho", oth_c2p:"Milho brasileiro para uso em rações e indústria. Preços competitivos com ciclo de colheita do Hemisfério Sul.",
+    oth_c3h:"📦 Outras Commodities", oth_c3p:"Commodities agrícolas brasileiras adicionais disponíveis mediante solicitação.",
+    ag_eyebrow:"Serviço de Agência de Compra", ag_h2:"Comércio Sem Risco com<br/>Nossa Rede de Agências",
+    ag_p:"Elimine o risco de contraparte. Nossa parceira na China permite contratos domésticos para que compradores recebam mercadorias antes do pagamento.",
+    ag_s1h:"Comprador Contrata Localmente", ag_s1p:"O comprador assina contrato doméstico com nossa parceira na China, eliminando o risco cambial.",
+    ag_s2h:"Mercadoria Enviada e Recebida", ag_s2p:"O produto é enviado do Brasil. O comprador inspeciona antes de qualquer pagamento.",
+    ag_s3h:"Pagamento Após Recebimento", ag_s3p:"O comprador paga somente após confirmar o recebimento. Nossa agência absorve o risco.",
+    ag_s4h:"Liquidação Garantida", ag_s4p:"Vendedores recebem pagamento seguro e garantido através de nossa rede de parceiros.",
+    ab_eyebrow:"Sobre a passnine", ab_h2:"KMC Foundation",
+    ab_p1:"A passnine atua sob a KMC Foundation como intermediária de comércio internacional especializada em commodities brasileiras.",
+    ab_p2:"Mantemos relações diretas com fornecedores brasileiros certificados e redes de compradores confiáveis na Ásia.",
+    ab_contact:"Contato", ab_name_lbl:"Responsável", ab_company_lbl:"Empresa",
+    footer_p:"Intermediário de Comércio Internacional — Brasil · China · Coreia",
+    pop_title:"Consulta Comercial", pop_sub:"Sem necessidade de cadastro. Retornaremos em 1–2 dias úteis.",
+    pop_interest:"Produto de Interesse", pop_select_ph:"Selecione um produto...", pop_opt_other:"Outro",
+    pop_name:"Nome Completo", pop_email:"E-mail", pop_phone:"Telefone (opcional)",
+    pop_wechat:"WeChat ID (opcional)", pop_message:"Mensagem", pop_submit:"Enviar Consulta",
+    pop_ok_h:"Consulta Enviada!", pop_ok_p:"Obrigado. Responderemos por e-mail em 1–2 dias úteis."
+  },
+  zh: {
+    nav_history:"公司历程", nav_sugar:"糖类", nav_chicken:"鸡爪",
+    nav_other:"其他产品", nav_agency:"采购代理", nav_about:"关于我们",
+    hero_eyebrow:"巴西 · 中国 · 韩国 — 全球大宗商品贸易",
+    hero_h1:"连接市场，<br/><em>创造价值。</em>",
+    hero_p:"passnine 专注于巴西优质农产品（糖类、鸡爪）的国际贸易中介服务，以可靠和透明的方式连接亚洲及全球的供应商与买家。",
+    hero_btn1:"立即询价", hero_btn2:"我们的产品", scroll:"向下滚动",
+    deals_eyebrow:"正在进行的交易", deals_h2:"当前交易列表",
+    deals_p:"当前正在中介的实时交易机会。点击任意列表查看完整详情。",
+    deal_inquire_btn:"咨询此交易",
+    hist_eyebrow:"公司历程", hist_h2:"从首次交易到<br/>值得信赖的合作伙伴",
+    hist_p:"passnine 自 2023 年成立以来，秉承透明中介贸易的原则，在三大洲持续拓展业务。",
+    hist_2023:"开辟巴西-中国、巴西-韩国贸易通道。成功完成巴西糖（ICUMSA45）和鸡爪的首批交易。",
+    hist_2024:"扩展至中国-韩国贸易通道。引入 VHP 糖，拓宽蛋白类产品线。推出采购代理服务。",
+    hist_2025:"与 BRF 和 JBS 持续保持鸡爪合作伙伴关系。新增巴西大豆和玉米等农产品。",
+    cta_inquire:"发送询价",
+    sugar_eyebrow:"巴西糖", sugar_h2:"优质糖贸易 —<br/>ICUMSA 45 & VHP",
+    sugar_p:"巴西原产地认证糖，经 SGS 和 CCIC 检验，提供灵活的贸易术语（Incoterms）选项。",
+    su_c1h:"ICUMSA 45", su_c1p:"ICUMSA 值为 45 RBU 的精制白糖，适用于食品生产和零售，纯度高、色泽亮。",
+    su_c2h:"VHP 糖", su_c2p:"适合工业精炼的高极化原糖，是下游糖加工的具有成本竞争力的原材料。",
+    su_c3h:"第三方检验", su_c3p:"提供 SGS 和 CCIC 检验，保证质量合规并提供通关所需认证文件。",
+    su_c4h:"灵活贸易术语", su_c4p:"提供 FCA、FOB 和 CIF 选项，付款条件在合同签订前经协商确认。",
+    tbl_type:"类型", tbl_origin:"产地", tbl_inspect:"检验机构", tbl_inco:"贸易术语", tbl_pay:"付款方式", tbl_neg:"可协商",
+    cp_eyebrow:"巴西鸡爪", cp_h2:"优质蛋白 —<br/>BRF & JBS 认证",
+    cp_p:"我们专门经营巴西顶级认证加工商的鸡爪产品，其他产品可协商。",
+    cp_c1h:"BRF 产品", cp_c1p:"巴西食品（BRF）— 全球认证鸡爪，质量稳定，深受中韩进口商认可。",
+    cp_c2h:"JBS 产品", cp_c2p:"JBS — 全球最大蛋白企业，鸡爪产品符合严格国际质量和兽医标准。",
+    cp_c3h:"定制采购", cp_c3p:"可通过我们的供应商网络提供其他巴西鸡肉产品，欢迎联系洽谈。",
+    oth_eyebrow:"其他产品", oth_h2:"巴西农产品<br/>大宗商品",
+    oth_p:"依托巴西-中国贸易通道，持续扩展巴西世界领先农产品的出口组合。",
+    oth_c1h:"🌱 大豆", oth_c1p:"面向中国及亚洲市场的巴西大豆。巴西是全球最大大豆出口国，供应稳定全年无间。",
+    oth_c2h:"🌽 玉米", oth_c2p:"饲料和工业用巴西玉米，依托南半球收获周期实现竞争性定价。",
+    oth_c3h:"📦 其他商品", oth_c3p:"更多巴西农产品可按需提供，欢迎探索巴西-中国-韩国贸易机会。",
+    ag_eyebrow:"采购代理服务", ag_h2:"通过代理网络实现<br/>零风险贸易",
+    ag_p:"彻底消除交易对手风险。我们的中国合作伙伴支持国内合同安排，买家收货后再付款，卖家获得有保障的安全付款。",
+    ag_s1h:"买家本地签约", ag_s1p:"买家与中国合作伙伴签订国内合同，完全消除跨境付款风险。",
+    ag_s2h:"货物运输与收货", ag_s2p:"产品从巴西发货送达，买家验货确认后方才进行付款。",
+    ag_s3h:"收货后付款", ag_s3p:"买家仅在确认收货后付款，我们的代理机构代卖方承担结算风险。",
+    ag_s4h:"有保障的结算", ag_s4p:"卖家通过合作伙伴网络获得安全、有保障的付款，消除违约或延迟风险。",
+    ab_eyebrow:"关于 passnine", ab_h2:"KMC Foundation",
+    ab_p1:"passnine 隶属于 KMC Foundation，是专注于巴西大宗商品的国际贸易中介机构。",
+    ab_p2:"我们与巴西认证供应商及亚洲可信买家网络保持直接合作关系。",
+    ab_contact:"联系方式", ab_name_lbl:"联系人", ab_company_lbl:"公司名称",
+    footer_p:"国际贸易中介 — 巴西 · 中国 · 韩国",
+    pop_title:"贸易询价", pop_sub:"无需注册登录，我们将在 1–2 个工作日内回复。",
+    pop_interest:"感兴趣的产品", pop_select_ph:"请选择产品...", pop_opt_other:"其他",
+    pop_name:"姓名", pop_email:"电子邮件", pop_phone:"电话（选填）",
+    pop_wechat:"微信号（选填）", pop_message:"内容", pop_submit:"提交询价",
+    pop_ok_h:"询价已发送！", pop_ok_p:"感谢您的联系，我们将在 1–2 个工作日内通过您的电子邮件回复。"
+  }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    if (b.textContent.trim() === ({en:'EN',ko:'한국어',pt:'PT',zh:'中文'})[lang]) b.classList.add('active');
+  });
+  applyTranslations();
+  if (typeof renderDeals === 'function') renderDeals();
+}
+
+function applyTranslations() {
+  const t = i18n[currentLang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  // Update select options
+  const sel = document.querySelector('select[name="Product Interest"]');
+  if (sel) {
+    const t2 = i18n[currentLang];
+    sel.options[0].text = t2.pop_select_ph || sel.options[0].text;
+    sel.options[4].text = t2.pop_opt_other || sel.options[4].text;
+  }
+}
+
+/* ── POPUP ────────────────────────────────────── */
+function openPopup() {
+  document.getElementById('popupOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePopup() {
+  document.getElementById('popupOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closePopupOutside(e) {
+  if (e.target === document.getElementById('popupOverlay')) closePopup();
+}
+
+/* ── ACTIVE DEALS ─────────────────────────────── */
+let dealsData = [];
+
+const dealTagLabels = {
+  ICUMSA45: 'ICUMSA 45', VHP: 'VHP', ChickenPaw: 'Chicken Paw', Other: 'Other'
+};
+
+function truncate(str, n) {
+  if (!str) return '';
+  return str.length > n ? str.slice(0, n - 1) + '…' : str;
+}
+
+function renderDeals() {
+  const list = document.getElementById('dealsList');
+  if (!dealsData || dealsData.length === 0) {
+    const emptyText = currentLang === 'ko' ? '현재 등록된 거래가 없습니다. 곧 새로운 거래가 업데이트됩니다.'
+      : currentLang === 'pt' ? 'Nenhuma negociação listada no momento. Novas listagens em breve.'
+      : currentLang === 'zh' ? '目前没有正在进行的交易。请稍后查看更新。'
+      : 'No active deals listed right now. Check back soon for new listings.';
+    list.innerHTML = `<div class="deals-empty">${emptyText}</div>`;
+    return;
+  }
+  list.innerHTML = dealsData.map((deal, i) => {
+    const tagLabel = dealTagLabels[deal.tag] || deal.tag || 'Other';
+    const tagClass = (deal.tag === 'VHP' || deal.tag === 'Other') ? 'gold' : '';
+    return `
+      <div class="deal-row" onclick="openDealPopup(${i})">
+        <span class="deal-tag ${tagClass}">${tagLabel}</span>
+        <span class="deal-title">${truncate(deal.title, 60)}</span>
+        <span class="deal-summary">${truncate(deal.summary, 90)}</span>
+        <span class="deal-date">${deal.date || ''}</span>
+        <span class="deal-arrow">→</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function openDealPopup(index) {
+  const deal = dealsData[index];
+  if (!deal) return;
+  const tagLabel = dealTagLabels[deal.tag] || deal.tag || 'Other';
+  document.getElementById('dealPopupTag').textContent = tagLabel;
+  document.getElementById('dealPopupTitle').textContent = deal.title || '';
+  document.getElementById('dealPopupDate').textContent = deal.date || '';
+  document.getElementById('dealPopupContent').textContent = deal.content || deal.summary || '';
+  document.getElementById('dealPopupOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDealPopup() {
+  document.getElementById('dealPopupOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeDealPopupOutside(e) {
+  if (e.target === document.getElementById('dealPopupOverlay')) closeDealPopup();
+}
+
+function loadDeals() {
+  fetch('deals.json?t=' + Date.now())
+    .then(r => r.ok ? r.json() : [])
+    .then(data => {
+      dealsData = Array.isArray(data) ? data : (data.deals || []);
+      renderDeals();
+    })
+    .catch(() => {
+      dealsData = [];
+      renderDeals();
+    });
+}
+loadDeals();
+
+/* Form submission via FormSubmit */
+document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = new FormData(form);
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).then(r => {
+    form.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }).catch(() => {
+    // fallback: show success anyway (FormSubmit may redirect)
+    form.submit();
+  });
+});
+
+/* ── MOBILE MENU ──────────────────────────────── */
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+/* Close mobile menu on outside click */
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const hamburger = document.querySelector('.hamburger');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !hamburger.contains(e.target)) closeMenu();
+});
+
+/* Keyboard close */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePopup(); closeMenu(); } });
+</script>
+</body>
+</html>
