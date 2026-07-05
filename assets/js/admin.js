@@ -70,6 +70,56 @@ async function loadRateAndPriceDefaults(){
   document.getElementById('priceDate').value = new Date().toISOString().slice(0,10);
 }
 
+async function loadFundingAdminList(){
+  const { data, error } = await sb
+    .from('funding_transactions')
+    .select('id, tx_date, tx_address, amount')
+    .order('tx_date', { ascending: false })
+    .order('created_at', { ascending: false })
+    .limit(30);
+
+  const el = document.getElementById('fundingAdminList');
+  if (error || !data || data.length === 0){
+    el.innerHTML = `<div class="empty-state">${i18n.t('funding.empty')}</div>`;
+    return;
+  }
+
+  el.innerHTML = `<table class="data">
+    <thead><tr>
+      <th>${i18n.t('admin.tx_date_label')}</th>
+      <th>${i18n.t('admin.tx_address_label')}</th>
+      <th>${i18n.t('admin.tx_amount_label')}</th>
+      <th></th>
+    </tr></thead>
+    <tbody>${data.map(r => `
+      <tr>
+        <td>${r.tx_date}</td>
+        <td style="font-family:monospace; font-size:12.5px;">${r.tx_address}</td>
+        <td>${fmtNum(r.amount)} USDT</td>
+        <td><button class="btn btn-danger btn-sm" data-delete-tx="${r.id}">${i18n.t('admin.delete_button')}</button></td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+
+  el.querySelectorAll('[data-delete-tx]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const id = btn.getAttribute('data-delete-tx');
+      const { error } = await sb.from('funding_transactions').delete().eq('id', id);
+      if (error) { alert(error.message); return; }
+      await loadFundingAdminList();
+    });
+  });
+}
+
+async function loadFundingSummaryDefaults(){
+  const { data } = await sb.from('funding_summary').select('*').eq('key', 'main').single();
+  if (!data) return;
+  document.getElementById('sumWallets').value = data.total_wallets;
+  document.getElementById('sumCumulative').value = data.cumulative_amount;
+  document.getElementById('sumRewardCount').value = data.reward_count;
+  document.getElementById('sumRewardAmount').value = data.reward_amount;
+}
+
 document.addEventListener('DOMContentLoaded', async ()=>{
   const session = await requireAuth();
   if (!session) return;
@@ -83,6 +133,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   document.getElementById('adminContent').style.display = '';
   await loadRateAndPriceDefaults();
+  await loadFundingSummaryDefaults();
+  await loadFundingAdminList();
   await loadRequests();
 
   document.querySelectorAll('.filter-chip').forEach(chip=>{
@@ -111,6 +163,39 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     const price_date = document.getElementById('priceDate').value;
     const price = parseFloat(document.getElementById('priceInput').value);
     const { error } = await sb.from('blc_price_history').upsert({ price_date, price }, { onConflict: 'price_date' });
+    msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
+    msg.className = 'form-msg ' + (error ? 'error' : 'ok');
+  });
+
+  document.getElementById('fundingTxForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('fundingTxMsg');
+    const { error } = await sb.from('funding_transactions').insert({
+      tx_date: document.getElementById('fundingTxDate').value,
+      tx_address: document.getElementById('fundingTxAddress').value.trim(),
+      amount: parseFloat(document.getElementById('fundingTxAmount').value),
+      created_by: session.user.id
+    });
+    msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
+    msg.className = 'form-msg ' + (error ? 'error' : 'ok');
+    if (!error){
+      document.getElementById('fundingTxForm').reset();
+      await loadFundingAdminList();
+    }
+  });
+
+  document.getElementById('fundingSummaryForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('fundingSummaryMsg');
+    const { error } = await sb.from('funding_summary').upsert({
+      key: 'main',
+      total_wallets: parseInt(document.getElementById('sumWallets').value, 10) || 0,
+      cumulative_amount: parseFloat(document.getElementById('sumCumulative').value) || 0,
+      reward_count: parseInt(document.getElementById('sumRewardCount').value, 10) || 0,
+      reward_amount: parseFloat(document.getElementById('sumRewardAmount').value) || 0,
+      updated_at: new Date().toISOString(),
+      updated_by: session.user.id
+    });
     msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
     msg.className = 'form-msg ' + (error ? 'error' : 'ok');
   });

@@ -138,3 +138,50 @@ on conflict (pair) do nothing;
 -- ---------- 5. Make yourself admin ----------
 -- After you sign up once through the site, run this (replace the email):
 -- update public.profiles set is_admin = true where email = 'you@example.com';
+
+-- ---------- 6. VICT FUNDING SECTION ----------
+-- Individual funding transactions shown on the homepage "VICT FUNDING" list.
+-- Every row here is entered by an admin — this is a public, read-only
+-- transparency feed, not something regular users write to.
+create table if not exists public.funding_transactions (
+  id bigint generated always as identity primary key,
+  tx_date date not null,
+  tx_address text not null,
+  amount numeric not null,
+  created_at timestamptz not null default now(),
+  created_by uuid references public.profiles(id)
+);
+
+alter table public.funding_transactions enable row level security;
+
+create policy "funding_tx_select_public" on public.funding_transactions
+  for select using (true);
+
+create policy "funding_tx_admin_write" on public.funding_transactions
+  for all using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+-- Single-row summary strip (total wallets / cumulative amount / reward count) —
+-- also entirely admin-entered, publicly readable.
+create table if not exists public.funding_summary (
+  key text primary key default 'main',
+  total_wallets integer not null default 0,
+  cumulative_amount numeric not null default 0,
+  reward_count integer not null default 0,
+  reward_amount numeric not null default 0,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references public.profiles(id)
+);
+
+alter table public.funding_summary enable row level security;
+
+create policy "funding_summary_select_public" on public.funding_summary
+  for select using (true);
+
+create policy "funding_summary_admin_write" on public.funding_summary
+  for all using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );
+
+insert into public.funding_summary (key) values ('main') on conflict (key) do nothing;

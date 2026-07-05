@@ -3,7 +3,7 @@
 
 const DICT = {
 ko: {
-  "nav.home":"홈","nav.project":"프로젝트","nav.exchange":"코인교환","nav.blc":"BLC 코인","nav.company":"회사소개",
+  "nav.home":"홈","nav.project":"프로젝트","nav.exchange":"코인교환","nav.funding":"펀딩","nav.blc":"BLC 코인","nav.company":"회사소개",
   "nav.login":"로그인","nav.signup":"회원가입","nav.logout":"로그아웃","nav.mypage":"마이페이지","nav.admin":"관리자",
   "hero.eyebrow":"전세계 무역 금융 블록체인 프로젝트",
   "hero.title":"블록체인과 암호화폐가\n지금의 금융을 대체합니다.",
@@ -58,10 +58,17 @@ ko: {
   "admin.user_col":"신청자","admin.detail_col":"교환 내용","admin.tx_col":"거래정보","admin.status_col":"상태","admin.date_col":"신청일","admin.action_col":"작업",
   "footer.rights":"All rights reserved.","footer.contact":"문의",
   "partners.label":"함께하는 글로벌 금융기관",
+  "funding.eyebrow":"실시간 펀딩 현황","funding.title":"VICT FUNDING",
+  "funding.empty":"등록된 펀딩 내역이 없습니다.",
+  "funding.wallets_col":"총 참여 지갑","funding.cumulative_col":"현재까지 누적 금액(USDT)","funding.reward_col":"총 보상 횟수",
+  "funding.reward_value":"{count}회 | {amount} USDT",
+  "admin.funding_title":"VICT 펀딩 관리","admin.funding_add_title":"거래 내역 추가","admin.tx_date_label":"날짜","admin.tx_address_label":"트랜잭션 주소","admin.tx_amount_label":"금액 (USDT)","admin.funding_add_button":"추가하기",
+  "admin.funding_summary_title":"펀딩 요약 통계","admin.total_wallets_label":"총 참여 지갑 수","admin.cumulative_label":"누적 금액 (USDT)","admin.reward_count_label":"총 보상 횟수","admin.reward_amount_label":"보상 금액 (USDT)",
+  "admin.funding_list_title":"등록된 거래 내역","admin.delete_button":"삭제",
   "common.loading":"불러오는 중...","common.save":"저장","common.cancel":"취소","common.close":"닫기","common.copy":"복사","common.copied":"복사됨"
 },
 en: {
-  "nav.home":"Home","nav.project":"Project","nav.exchange":"Exchange","nav.blc":"BLC Coin","nav.company":"About",
+  "nav.home":"Home","nav.project":"Project","nav.exchange":"Exchange","nav.funding":"Funding","nav.blc":"BLC Coin","nav.company":"About",
   "nav.login":"Log in","nav.signup":"Sign up","nav.logout":"Log out","nav.mypage":"My Page","nav.admin":"Admin",
   "hero.eyebrow":"A Global Trade Finance Blockchain Project",
   "hero.title":"Blockchain and crypto\nare replacing today's finance.",
@@ -116,10 +123,17 @@ en: {
   "admin.user_col":"Requester","admin.detail_col":"Exchange","admin.tx_col":"Tx info","admin.status_col":"Status","admin.date_col":"Date","admin.action_col":"Action",
   "footer.rights":"All rights reserved.","footer.contact":"Contact",
   "partners.label":"Global financial partners",
+  "funding.eyebrow":"Live funding status","funding.title":"VICT FUNDING",
+  "funding.empty":"No funding entries yet.",
+  "funding.wallets_col":"Total participating wallets","funding.cumulative_col":"Cumulative amount so far (USDT)","funding.reward_col":"Total rewards",
+  "funding.reward_value":"{count}x | {amount} USDT",
+  "admin.funding_title":"VICT Funding Management","admin.funding_add_title":"Add a transaction","admin.tx_date_label":"Date","admin.tx_address_label":"Transaction address","admin.tx_amount_label":"Amount (USDT)","admin.funding_add_button":"Add",
+  "admin.funding_summary_title":"Funding summary stats","admin.total_wallets_label":"Total participating wallets","admin.cumulative_label":"Cumulative amount (USDT)","admin.reward_count_label":"Total reward count","admin.reward_amount_label":"Reward amount (USDT)",
+  "admin.funding_list_title":"Recorded transactions","admin.delete_button":"Delete",
   "common.loading":"Loading...","common.save":"Save","common.cancel":"Cancel","common.close":"Close","common.copy":"Copy","common.copied":"Copied"
 },
 zh: {
-  "nav.home":"首页","nav.project":"项目","nav.exchange":"币种兑换","nav.blc":"BLC 币","nav.company":"公司介绍",
+  "nav.home":"首页","nav.project":"项目","nav.exchange":"币种兑换","nav.funding":"融资","nav.blc":"BLC 币","nav.company":"公司介绍",
   "nav.login":"登录","nav.signup":"注册","nav.logout":"退出登录","nav.mypage":"我的页面","nav.admin":"管理后台",
   "hero.eyebrow":"全球贸易金融区块链项目",
   "hero.title":"区块链与加密货币，\n正在取代今天的金融体系。",
@@ -174,10 +188,17 @@ zh: {
   "admin.user_col":"申请人","admin.detail_col":"兑换内容","admin.tx_col":"交易信息","admin.status_col":"状态","admin.date_col":"申请日期","admin.action_col":"操作",
   "footer.rights":"版权所有。","footer.contact":"联系我们",
   "partners.label":"全球金融合作伙伴",
+  "funding.eyebrow":"实时融资动态","funding.title":"VICT FUNDING",
+  "funding.empty":"暂无融资记录。",
+  "funding.wallets_col":"总参与钱包数","funding.cumulative_col":"累计金额 (USDT)","funding.reward_col":"总奖励次数",
+  "funding.reward_value":"{count}次 | {amount} USDT",
+  "admin.funding_title":"VICT 融资管理","admin.funding_add_title":"添加交易记录","admin.tx_date_label":"日期","admin.tx_address_label":"交易地址","admin.tx_amount_label":"金额 (USDT)","admin.funding_add_button":"添加",
+  "admin.funding_summary_title":"融资统计汇总","admin.total_wallets_label":"总参与钱包数","admin.cumulative_label":"累计金额 (USDT)","admin.reward_count_label":"总奖励次数","admin.reward_amount_label":"奖励金额 (USDT)",
+  "admin.funding_list_title":"已登记的交易记录","admin.delete_button":"删除",
   "common.loading":"加载中...","common.save":"保存","common.cancel":"取消","common.close":"关闭","common.copy":"复制","common.copied":"已复制"
 },
 ja: {
-  "nav.home":"ホーム","nav.project":"プロジェクト","nav.exchange":"コイン交換","nav.blc":"BLCコイン","nav.company":"会社紹介",
+  "nav.home":"ホーム","nav.project":"プロジェクト","nav.exchange":"コイン交換","nav.funding":"ファンディング","nav.blc":"BLCコイン","nav.company":"会社紹介",
   "nav.login":"ログイン","nav.signup":"会員登録","nav.logout":"ログアウト","nav.mypage":"マイページ","nav.admin":"管理者",
   "hero.eyebrow":"世界貿易金融ブロックチェーンプロジェクト",
   "hero.title":"ブロックチェーンと暗号資産が\n今の金融に取って代わります。",
@@ -232,10 +253,17 @@ ja: {
   "admin.user_col":"申請者","admin.detail_col":"交換内容","admin.tx_col":"取引情報","admin.status_col":"状態","admin.date_col":"申請日","admin.action_col":"操作",
   "footer.rights":"All rights reserved.","footer.contact":"お問い合わせ",
   "partners.label":"グローバル金融パートナー",
+  "funding.eyebrow":"リアルタイム資金状況","funding.title":"VICT FUNDING",
+  "funding.empty":"登録された資金内訳はまだありません。",
+  "funding.wallets_col":"総参加ウォレット数","funding.cumulative_col":"現在までの累計金額 (USDT)","funding.reward_col":"総報酬回数",
+  "funding.reward_value":"{count}回 | {amount} USDT",
+  "admin.funding_title":"VICTファンディング管理","admin.funding_add_title":"取引履歴の追加","admin.tx_date_label":"日付","admin.tx_address_label":"トランザクションアドレス","admin.tx_amount_label":"金額（USDT）","admin.funding_add_button":"追加する",
+  "admin.funding_summary_title":"ファンディング要約統計","admin.total_wallets_label":"総参加ウォレット数","admin.cumulative_label":"累計金額（USDT）","admin.reward_count_label":"総報酬回数","admin.reward_amount_label":"報酬金額（USDT）",
+  "admin.funding_list_title":"登録済み取引履歴","admin.delete_button":"削除",
   "common.loading":"読み込み中...","common.save":"保存","common.cancel":"キャンセル","common.close":"閉じる","common.copy":"コピー","common.copied":"コピーしました"
 },
 es: {
-  "nav.home":"Inicio","nav.project":"Proyecto","nav.exchange":"Canje","nav.blc":"Moneda BLC","nav.company":"Nosotros",
+  "nav.home":"Inicio","nav.project":"Proyecto","nav.exchange":"Canje","nav.funding":"Financiamiento","nav.blc":"Moneda BLC","nav.company":"Nosotros",
   "nav.login":"Iniciar sesión","nav.signup":"Registrarse","nav.logout":"Cerrar sesión","nav.mypage":"Mi cuenta","nav.admin":"Admin",
   "hero.eyebrow":"Un proyecto blockchain de financiamiento comercial global",
   "hero.title":"La blockchain y las criptomonedas\nestán reemplazando las finanzas actuales.",
@@ -290,6 +318,13 @@ es: {
   "admin.user_col":"Solicitante","admin.detail_col":"Canje","admin.tx_col":"Info de tx","admin.status_col":"Estado","admin.date_col":"Fecha","admin.action_col":"Acción",
   "footer.rights":"Todos los derechos reservados.","footer.contact":"Contacto",
   "partners.label":"Socios financieros globales",
+  "funding.eyebrow":"Estado de financiamiento en vivo","funding.title":"VICT FUNDING",
+  "funding.empty":"Aún no hay registros de financiamiento.",
+  "funding.wallets_col":"Billeteras participantes","funding.cumulative_col":"Monto acumulado hasta ahora (USDT)","funding.reward_col":"Total de recompensas",
+  "funding.reward_value":"{count}x | {amount} USDT",
+  "admin.funding_title":"Gestión de financiamiento VICT","admin.funding_add_title":"Agregar una transacción","admin.tx_date_label":"Fecha","admin.tx_address_label":"Dirección de transacción","admin.tx_amount_label":"Monto (USDT)","admin.funding_add_button":"Agregar",
+  "admin.funding_summary_title":"Estadísticas resumidas","admin.total_wallets_label":"Billeteras participantes","admin.cumulative_label":"Monto acumulado (USDT)","admin.reward_count_label":"Total de recompensas","admin.reward_amount_label":"Monto de recompensa (USDT)",
+  "admin.funding_list_title":"Transacciones registradas","admin.delete_button":"Eliminar",
   "common.loading":"Cargando...","common.save":"Guardar","common.cancel":"Cancelar","common.close":"Cerrar","common.copy":"Copiar","common.copied":"Copiado"
 }
 };

@@ -16,6 +16,7 @@
       <a href="index.html#home" data-i18n="nav.home">홈</a>
       <a href="index.html#project" data-i18n="nav.project">프로젝트</a>
       <a href="index.html#exchange" data-i18n="nav.exchange">코인교환</a>
+      <a href="index.html#funding" data-i18n="nav.funding">펀딩</a>
       <a href="index.html#blc" data-i18n="nav.blc">BLC 코인</a>
       <a href="index.html#company" data-i18n="nav.company">회사소개</a>
     </nav>
@@ -157,6 +158,33 @@
   </div>
 </section>
 
+<section id="funding">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow" data-i18n="funding.eyebrow">실시간 펀딩 현황</div>
+      <h2 data-i18n="funding.title">VICT FUNDING</h2>
+    </div>
+
+    <div class="funding-list" id="fundingList"></div>
+    <div class="pagination" id="fundingPagination"></div>
+
+    <table class="summary-table">
+      <thead>
+        <tr>
+          <th data-i18n="funding.wallets_col">총 참여 지갑</th>
+          <th data-i18n="funding.cumulative_col">현재까지 누적 금액(USDT)</th>
+          <th data-i18n="funding.reward_col">총 보상 횟수</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="fundingSummaryRow">
+          <td>—</td><td>—</td><td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <section id="blc">
   <div class="wrap blc-two-col">
     <div>
@@ -203,6 +231,7 @@
 <script src="assets/js/supabase-config.js"></script>
 <script src="assets/js/app.js"></script>
 <script src="assets/js/exchange.js"></script>
+<script src="assets/js/funding.js"></script>
 <script src="assets/js/blc-chart.js"></script>
 </body>
 </html>

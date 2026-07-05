@@ -32,7 +32,7 @@
 
   <div id="adminContent" style="display:none;">
     <div class="cards-3" style="grid-template-columns:1fr 1fr; margin:28px 0 40px;">
-      <div class="card">
+      <div class="card card-cream">
         <h3 data-i18n="admin.rate_manage_title">오늘의 USDT↔BLC 환율</h3>
         <form id="rateForm" style="display:flex; gap:10px; margin-top:14px;">
           <input type="text" inputmode="decimal" id="rateInput" placeholder="1.00" style="flex:1;">
@@ -40,7 +40,7 @@
         </form>
         <p class="form-msg" id="rateMsg"></p>
       </div>
-      <div class="card">
+      <div class="card card-cream">
         <h3 data-i18n="admin.price_manage_title">BLC 가격 입력 (그래프용)</h3>
         <form id="priceForm" style="display:flex; gap:10px; margin-top:14px;">
           <input type="date" id="priceDate" style="flex:1;">
@@ -49,6 +49,35 @@
         </form>
         <p class="form-msg" id="priceMsg"></p>
       </div>
+    </div>
+
+    <div class="cards-3" style="grid-template-columns:1fr 1fr; margin:0 0 40px;">
+      <div class="card card-cream">
+        <h3 data-i18n="admin.funding_add_title">거래 내역 추가</h3>
+        <form id="fundingTxForm" style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+          <input type="date" id="fundingTxDate" required>
+          <input type="text" id="fundingTxAddress" data-i18n-placeholder="admin.tx_address_label" placeholder="트랜잭션 주소" required>
+          <input type="text" inputmode="decimal" id="fundingTxAmount" data-i18n-placeholder="admin.tx_amount_label" placeholder="금액 (USDT)" required>
+          <button type="submit" class="btn btn-gold" data-i18n="admin.funding_add_button">추가하기</button>
+        </form>
+        <p class="form-msg" id="fundingTxMsg"></p>
+      </div>
+      <div class="card card-cream">
+        <h3 data-i18n="admin.funding_summary_title">펀딩 요약 통계</h3>
+        <form id="fundingSummaryForm" style="display:flex; flex-direction:column; gap:10px; margin-top:14px;">
+          <input type="text" inputmode="numeric" id="sumWallets" data-i18n-placeholder="admin.total_wallets_label" placeholder="총 참여 지갑 수">
+          <input type="text" inputmode="decimal" id="sumCumulative" data-i18n-placeholder="admin.cumulative_label" placeholder="누적 금액 (USDT)">
+          <input type="text" inputmode="numeric" id="sumRewardCount" data-i18n-placeholder="admin.reward_count_label" placeholder="총 보상 횟수">
+          <input type="text" inputmode="decimal" id="sumRewardAmount" data-i18n-placeholder="admin.reward_amount_label" placeholder="보상 금액 (USDT)">
+          <button type="submit" class="btn btn-gold" data-i18n="admin.rate_save">저장하기</button>
+        </form>
+        <p class="form-msg" id="fundingSummaryMsg"></p>
+      </div>
+    </div>
+
+    <div style="margin-bottom:56px;">
+      <h3 data-i18n="admin.funding_list_title" style="margin-bottom:16px;">등록된 거래 내역</h3>
+      <div id="fundingAdminList"></div>
     </div>
 
     <div class="admin-toolbar">
