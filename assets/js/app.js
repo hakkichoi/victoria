@@ -67,17 +67,36 @@ async function requireAuth(){
   return session;
 }
 
-// ---------- partner bank marquee (text wordmark plates — see README note on real logo assets) ----------
+// ---------- partner bank marquee ----------
+// NOTE: these are generic placeholder marks (a colored monogram chip + name),
+// not the banks' actual trademarked logos — see README for why, and swap in
+// official logo files (with permission) once real partnerships are in place.
 const PARTNER_BANKS = [
-  'HSBC', 'Shinhan Bank', 'IBK · Industrial Bank of Korea',
-  'Bank of China', 'Bank of America', 'ICBC', 'Barclays'
+  { short: 'HSBC',      color: '#FF4D8B', text: '#FFFFFF' },
+  { short: 'Shinhan',   color: '#1A3A3A', text: '#FFFFFF' },
+  { short: 'IBK',       color: '#B8A4ED', text: '#0A0A0A' },
+  { short: 'BOC',       color: '#FFB084', text: '#0A0A0A' },
+  { short: 'BofA',      color: '#E8B94A', text: '#0A0A0A' },
+  { short: 'ICBC',      color: '#A4D4C5', text: '#0A0A0A' },
+  { short: 'Barclays',  color: '#FF6B5A', text: '#FFFFFF' }
 ];
+
+function bankLogoSVG(bank){
+  const initials = bank.short.slice(0, bank.short.length > 6 ? 3 : 2).toUpperCase();
+  return `
+  <svg class="partner-logo" viewBox="0 0 176 56" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${bank.short}">
+    <rect x="0.5" y="0.5" width="175" height="55" rx="14" fill="#FFFFFF" stroke="#E5E5E5"/>
+    <rect x="14" y="14" width="28" height="28" rx="8" fill="${bank.color}"/>
+    <text x="28" y="32.5" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="11" fill="${bank.text}">${initials}</text>
+    <text x="56" y="33" font-family="Inter, sans-serif" font-weight="600" font-size="15" fill="#0A0A0A">${bank.short}</text>
+  </svg>`;
+}
 
 function renderPartnerMarquee(){
   const track = document.getElementById('partnerTrack');
   if (!track) return;
-  const plates = PARTNER_BANKS.map(name => `<div class="partner-plate">${name}</div>`).join('');
-  track.innerHTML = plates + plates; // duplicated once for a seamless loop
+  const logos = PARTNER_BANKS.map(bankLogoSVG).join('');
+  track.innerHTML = logos + logos; // duplicated once for a seamless loop
 }
 
 document.addEventListener('DOMContentLoaded', renderPartnerMarquee);
