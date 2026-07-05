@@ -14,7 +14,7 @@ async function drawBlcChart(){
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
   if (error || !data || data.length === 0){
-    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#999999" font-size="13" font-family="Inter,sans-serif">
+    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" fill="#6A6A6A" font-size="13" font-family="Inter,sans-serif">
       ${i18n.t('common.loading') === 'Loading...' ? 'No price data yet' : ''}
     </text>`;
     return;
@@ -40,15 +40,15 @@ async function drawBlcChart(){
   svg.innerHTML = `
     <defs>
       <linearGradient id="blcFill" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#8145B5" stop-opacity="0.16"/>
-        <stop offset="100%" stop-color="#8145B5" stop-opacity="0"/>
+        <stop offset="0%" stop-color="#E8B94A" stop-opacity="0.16"/>
+        <stop offset="100%" stop-color="#E8B94A" stop-opacity="0"/>
       </linearGradient>
     </defs>
-    <line x1="${PAD}" y1="${H-PAD}" x2="${W-PAD}" y2="${H-PAD}" stroke="#DCDEE0" stroke-width="1"/>
+    <line x1="${PAD}" y1="${H-PAD}" x2="${W-PAD}" y2="${H-PAD}" stroke="#E5E5E5" stroke-width="1"/>
     <path d="${areaPath}" fill="url(#blcFill)"/>
-    <path d="${linePath}" fill="none" stroke="#8145B5" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-    <text x="${PAD}" y="${H-8}" fill="#999999" font-size="11" font-family="Inter,sans-serif">${firstLabel}</text>
-    <text x="${W-PAD}" y="${H-8}" text-anchor="end" fill="#999999" font-size="11" font-family="Inter,sans-serif">${lastLabel}</text>
+    <path d="${linePath}" fill="none" stroke="#E8B94A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+    <text x="${PAD}" y="${H-8}" fill="#6A6A6A" font-size="11" font-family="Inter,sans-serif">${firstLabel}</text>
+    <text x="${W-PAD}" y="${H-8}" text-anchor="end" fill="#6A6A6A" font-size="11" font-family="Inter,sans-serif">${lastLabel}</text>
   `;
 }
 

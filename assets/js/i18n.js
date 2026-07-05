@@ -57,6 +57,7 @@ ko: {
   "admin.price_manage_title":"BLC 가격 입력 (그래프용)","admin.price_save":"가격 저장",
   "admin.user_col":"신청자","admin.detail_col":"교환 내용","admin.tx_col":"거래정보","admin.status_col":"상태","admin.date_col":"신청일","admin.action_col":"작업",
   "footer.rights":"All rights reserved.","footer.contact":"문의",
+  "partners.label":"함께하는 글로벌 금융기관",
   "common.loading":"불러오는 중...","common.save":"저장","common.cancel":"취소","common.close":"닫기","common.copy":"복사","common.copied":"복사됨"
 },
 en: {
@@ -114,6 +115,7 @@ en: {
   "admin.price_manage_title":"BLC price entry (for the chart)","admin.price_save":"Save price",
   "admin.user_col":"Requester","admin.detail_col":"Exchange","admin.tx_col":"Tx info","admin.status_col":"Status","admin.date_col":"Date","admin.action_col":"Action",
   "footer.rights":"All rights reserved.","footer.contact":"Contact",
+  "partners.label":"Global financial partners",
   "common.loading":"Loading...","common.save":"Save","common.cancel":"Cancel","common.close":"Close","common.copy":"Copy","common.copied":"Copied"
 },
 zh: {
@@ -171,6 +173,7 @@ zh: {
   "admin.price_manage_title":"BLC 价格录入（用于图表）","admin.price_save":"保存价格",
   "admin.user_col":"申请人","admin.detail_col":"兑换内容","admin.tx_col":"交易信息","admin.status_col":"状态","admin.date_col":"申请日期","admin.action_col":"操作",
   "footer.rights":"版权所有。","footer.contact":"联系我们",
+  "partners.label":"全球金融合作伙伴",
   "common.loading":"加载中...","common.save":"保存","common.cancel":"取消","common.close":"关闭","common.copy":"复制","common.copied":"已复制"
 },
 ja: {
@@ -228,6 +231,7 @@ ja: {
   "admin.price_manage_title":"BLC価格入力（チャート用）","admin.price_save":"価格を保存",
   "admin.user_col":"申請者","admin.detail_col":"交換内容","admin.tx_col":"取引情報","admin.status_col":"状態","admin.date_col":"申請日","admin.action_col":"操作",
   "footer.rights":"All rights reserved.","footer.contact":"お問い合わせ",
+  "partners.label":"グローバル金融パートナー",
   "common.loading":"読み込み中...","common.save":"保存","common.cancel":"キャンセル","common.close":"閉じる","common.copy":"コピー","common.copied":"コピーしました"
 },
 es: {
@@ -285,6 +289,7 @@ es: {
   "admin.price_manage_title":"Registro de precio de BLC (para el gráfico)","admin.price_save":"Guardar precio",
   "admin.user_col":"Solicitante","admin.detail_col":"Canje","admin.tx_col":"Info de tx","admin.status_col":"Estado","admin.date_col":"Fecha","admin.action_col":"Acción",
   "footer.rights":"Todos los derechos reservados.","footer.contact":"Contacto",
+  "partners.label":"Socios financieros globales",
   "common.loading":"Cargando...","common.save":"Guardar","common.cancel":"Cancelar","common.close":"Cerrar","common.copy":"Copiar","common.copied":"Copiado"
 }
 };

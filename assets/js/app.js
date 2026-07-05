@@ -67,6 +67,21 @@ async function requireAuth(){
   return session;
 }
 
+// ---------- partner bank marquee (text wordmark plates — see README note on real logo assets) ----------
+const PARTNER_BANKS = [
+  'HSBC', 'Shinhan Bank', 'IBK · Industrial Bank of Korea',
+  'Bank of China', 'Bank of America', 'ICBC', 'Barclays'
+];
+
+function renderPartnerMarquee(){
+  const track = document.getElementById('partnerTrack');
+  if (!track) return;
+  const plates = PARTNER_BANKS.map(name => `<div class="partner-plate">${name}</div>`).join('');
+  track.innerHTML = plates + plates; // duplicated once for a seamless loop
+}
+
+document.addEventListener('DOMContentLoaded', renderPartnerMarquee);
+
 document.addEventListener('DOMContentLoaded', ()=>{
   paintSeals();
   refreshNavAuthState();
@@ -76,3 +91,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
     langSwitch.addEventListener('change', (e)=> i18n.setLang(e.target.value));
   }
 });
+

@@ -49,15 +49,27 @@
         <a href="#project" class="btn btn-outline" data-i18n="hero.cta_secondary">VictoriaPlan 보기</a>
       </div>
     </div>
-    <div class="hero-art">
-      <svg viewBox="0 0 360 360" width="100%" role="img" aria-label="VICTORIA guarantee seal">
+    <div class="hero-illustration">
+      <div class="blob" style="width:220px; height:220px; background:var(--lavender); top:-40px; left:-30px;"></div>
+      <div class="blob" style="width:180px; height:180px; background:var(--peach); bottom:-30px; right:-20px;"></div>
+      <div class="blob" style="width:130px; height:130px; background:var(--mint); top:40%; right:10%;"></div>
+      <svg viewBox="0 0 360 360" width="72%" role="img" aria-label="VICTORIA guarantee seal" style="position:relative; z-index:1;">
         <circle cx="180" cy="180" r="150" fill="none" stroke="#DCDEE0" stroke-width="1.5"/>
-        <circle cx="180" cy="180" r="118" fill="none" stroke="#8145B5" stroke-width="1.4" stroke-dasharray="3 6"/>
-        <circle cx="180" cy="180" r="92" fill="#FFFFFF" stroke="#0D74CE" stroke-width="1.2"/>
-        <path d="M148 182L170 204L214 156" fill="none" stroke="#171717" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-        <text x="180" y="252" text-anchor="middle" fill="#60646C" font-size="12" letter-spacing="3" font-family="Inter, sans-serif">VICT · GUARANTEED</text>
+        <circle cx="180" cy="180" r="118" fill="none" stroke="#FF6B5A" stroke-width="1.6" stroke-dasharray="3 6"/>
+        <circle cx="180" cy="180" r="92" fill="#FFFAF0" stroke="#0A0A0A" stroke-width="1.4"/>
+        <path d="M148 182L170 204L214 156" fill="none" stroke="#0A0A0A" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="180" y="252" text-anchor="middle" fill="#3A3A3A" font-size="12" letter-spacing="3" font-family="Inter, sans-serif" font-weight="600">VICT · GUARANTEED</text>
       </svg>
     </div>
+  </div>
+</section>
+
+<section class="partners-band">
+  <div class="wrap">
+    <div class="partners-label" data-i18n="partners.label">함께하는 금융기관</div>
+  </div>
+  <div class="marquee">
+    <div class="marquee-track" id="partnerTrack"></div>
   </div>
 </section>
 
@@ -86,17 +98,17 @@
     </div>
 
     <div class="cards-3">
-      <div class="card">
+      <div class="card card-pink">
         <span class="seal"></span>
         <h3 data-i18n="project.card1_title">지급 거절 리스크 헤지</h3>
         <p data-i18n="project.card1_desc">구매자의 대금 지급 거절 또는 실패에 대비한 지급 보증을 제공합니다.</p>
       </div>
-      <div class="card">
+      <div class="card card-lavender">
         <span class="seal"></span>
         <h3 data-i18n="project.card2_title">보증서 기반 코인</h3>
         <p data-i18n="project.card2_desc">실보증서 형식의 VICT 코인을 보유한 뒤, 필요 시 법정화폐로 교환할 수 있습니다.</p>
       </div>
-      <div class="card">
+      <div class="card card-peach">
         <span class="seal"></span>
         <h3 data-i18n="project.card3_title">선적 후 결제 가능</h3>
         <p data-i18n="project.card3_desc">판매자는 불안한 선지급 대신, 지급 보증을 이용해 제품 선적 후 결제받을 수 있습니다.</p>
@@ -117,17 +129,12 @@
       <h2 data-i18n="exchange.title">VICTORIA 프로젝트에 참여하기</h2>
       <p data-i18n="exchange.desc">USDT, VICT, BLC 간 교환을 신청하세요. USDT와 VICT는 1:1 비율로 고정되어 있습니다.</p>
     </div>
-    <p class="ref-note muted" style="font-size:13px; margin-top:-28px; margin-bottom:44px;">Reference design: <a href="https://www.simpleswap.io" target="_blank" rel="noopener">simpleswap.io</a></p>
 
     <div class="exchange-panel">
       <div class="field">
         <label data-i18n="exchange.send_label">보낼 코인</label>
         <div class="coin-row">
-          <select id="fromCoin">
-            <option value="USDT">USDT (Tron)</option>
-            <option value="VICT">VICT</option>
-            <option value="BLC">BLC</option>
-          </select>
+          <select id="fromCoin"></select>
           <input type="text" inputmode="decimal" id="fromAmount" placeholder="0.00">
         </div>
       </div>
@@ -139,11 +146,7 @@
       <div class="field">
         <label data-i18n="exchange.receive_label">받는 코인</label>
         <div class="coin-row">
-          <select id="toCoin">
-            <option value="VICT">VICT</option>
-            <option value="USDT">USDT (Tron)</option>
-            <option value="BLC">BLC</option>
-          </select>
+          <select id="toCoin"></select>
           <input type="text" inputmode="decimal" id="toAmount" placeholder="0.00" readonly>
         </div>
       </div>
@@ -170,7 +173,7 @@
       </div>
     </div>
     <div class="whitepaper-card">
-      <span class="seal teal" style="font-size:30px;"></span>
+      <span class="seal" style="font-size:30px; color:var(--ink);"></span>
       <h3 data-i18n="blc.whitepaper_title">BLC Whitepaper</h3>
       <p data-i18n="blc.whitepaper_desc" style="margin-bottom:6px;">BLC 백서를 다운로드하여 자세한 내용을 확인하세요.</p>
       <a href="assets/BLC_Whitepaper.pdf" download class="btn btn-teal" data-i18n="blc.whitepaper_button">PDF 다운로드</a>
