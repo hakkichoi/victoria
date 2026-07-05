@@ -4,12 +4,18 @@ const COIN_ORDER = ['USDT', 'BLC', 'VICT']; // display priority everywhere
 const COIN_LABEL = { USDT: 'USDT (Tron)', BLC: 'BLC', VICT: 'VICT' };
 
 let ADMIN_RATE = 1; // USDT (or VICT, they're 1:1) per 1 BLC-equivalent unit; loaded from Supabase
-let fromCoinVal = 'USDT';
-let toCoinVal = 'BLC';
+let fromCoinVal = null; // null until the user actively picks one — shows the "select coin" placeholder
+let toCoinVal = null;
 
 async function loadAdminRate(){
-  const { data, error } = await sb.from('exchange_rates').select('rate').eq('pair', 'USDT_BLC').single();
-  if (!error && data) ADMIN_RATE = Number(data.rate);
+  try {
+    const { data, error } = await sb.from('exchange_rates').select('rate').eq('pair', 'USDT_BLC').single();
+    if (!error && data) ADMIN_RATE = Number(data.rate);
+  } catch (e) {
+    // Supabase not reachable / not configured yet — keep the default rate of 1
+    // so the calculator UI still renders instead of breaking.
+    console.warn('exchange: could not load admin rate, using default', e);
+  }
 }
 
 // value of 1 unit of `coin` expressed in USDT terms
@@ -20,7 +26,7 @@ function unitValueInUsdt(coin){
 }
 
 function computeToAmount(fromCoin, toCoin, fromAmount){
-  if (!fromAmount || isNaN(fromAmount)) return '';
+  if (!fromCoin || !toCoin || !fromAmount || isNaN(fromAmount)) return '';
   if (fromCoin === toCoin) return fromAmount;
   const usdtValue = Number(fromAmount) * unitValueInUsdt(fromCoin);
   const result = usdtValue / unitValueInUsdt(toCoin);
@@ -40,18 +46,24 @@ function updateRateNote(){
 
 // Rebuild both <select> option lists so neither can ever show the coin
 // currently chosen in the other one — always in USDT → BLC → VICT order.
+// Until the user picks a value, a disabled "select coin" placeholder is shown
+// (this renders instantly and does not depend on any network call succeeding).
 function renderCoinSelects(){
   const fromCoinEl = document.getElementById('fromCoin');
   const toCoinEl = document.getElementById('toCoin');
+  if (!fromCoinEl || !toCoinEl) return;
+
+  const placeholder = `<option value="" disabled ${fromCoinVal ? '' : 'selected'}>${i18n.t('exchange.select_placeholder')}</option>`;
+  const placeholderTo = `<option value="" disabled ${toCoinVal ? '' : 'selected'}>${i18n.t('exchange.select_placeholder')}</option>`;
 
   const fromOptions = COIN_ORDER.filter(c => c !== toCoinVal);
   const toOptions = COIN_ORDER.filter(c => c !== fromCoinVal);
 
-  fromCoinEl.innerHTML = fromOptions.map(c => `<option value="${c}">${COIN_LABEL[c]}</option>`).join('');
-  toCoinEl.innerHTML = toOptions.map(c => `<option value="${c}">${COIN_LABEL[c]}</option>`).join('');
+  fromCoinEl.innerHTML = placeholder + fromOptions.map(c => `<option value="${c}">${COIN_LABEL[c]}</option>`).join('');
+  toCoinEl.innerHTML = placeholderTo + toOptions.map(c => `<option value="${c}">${COIN_LABEL[c]}</option>`).join('');
 
-  fromCoinEl.value = fromCoinVal;
-  toCoinEl.value = toCoinVal;
+  fromCoinEl.value = fromCoinVal || '';
+  toCoinEl.value = toCoinVal || '';
 }
 
 function recalc(){
@@ -68,13 +80,16 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   const exchangeBtn = document.getElementById('exchangeBtn');
   if (!exchangeBtn) return; // not on this page
 
-  await loadAdminRate();
+  // Render immediately with defaults — do NOT wait on the network for the
+  // dropdowns to appear. The admin rate (only needed for BLC math) fills in
+  // a moment later and just re-runs recalc().
   renderCoinSelects();
   recalc();
+  loadAdminRate().then(recalc);
 
   fromCoinEl.addEventListener('change', ()=>{
-    fromCoinVal = fromCoinEl.value;
-    if (fromCoinVal === toCoinVal){
+    fromCoinVal = fromCoinEl.value || null;
+    if (fromCoinVal && fromCoinVal === toCoinVal){
       toCoinVal = COIN_ORDER.find(c => c !== fromCoinVal);
     }
     renderCoinSelects();
@@ -82,8 +97,8 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   });
 
   toCoinEl.addEventListener('change', ()=>{
-    toCoinVal = toCoinEl.value;
-    if (toCoinVal === fromCoinVal){
+    toCoinVal = toCoinEl.value || null;
+    if (toCoinVal && toCoinVal === fromCoinVal){
       fromCoinVal = COIN_ORDER.find(c => c !== toCoinVal);
     }
     renderCoinSelects();
@@ -107,6 +122,12 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   exchangeBtn.addEventListener('click', async ()=>{
     msgEl.textContent = '';
     const fromAmount = parseFloat(fromAmountEl.value);
+
+    if (!fromCoinVal || !toCoinVal){
+      msgEl.textContent = i18n.t('exchange.select_placeholder');
+      msgEl.className = 'form-msg error';
+      return;
+    }
     if (!fromAmount || fromAmount <= 0){
       msgEl.textContent = i18n.t('exchange.rate_note_fixed');
       msgEl.className = 'form-msg error';
