@@ -9,6 +9,21 @@
 </head>
 <body>
 
+<div id="langGate" class="lang-gate">
+  <div class="lang-gate-inner">
+    <div class="seal" style="font-size:34px; color:var(--coral); margin-bottom:18px;"></div>
+    <h1 style="font-size:clamp(26px,4vw,40px);">Choose your language</h1>
+    <p style="max-width:440px; margin:0 auto 36px;">Select a language to continue. You can change it anytime from the button at the bottom of the homepage.</p>
+    <div class="lang-gate-grid">
+      <button type="button" class="lang-gate-btn" data-gate-lang="en"><strong>English</strong><span>English</span></button>
+      <button type="button" class="lang-gate-btn" data-gate-lang="ko"><strong>한국어</strong><span>Korean</span></button>
+      <button type="button" class="lang-gate-btn" data-gate-lang="zh"><strong>中文</strong><span>Chinese</span></button>
+      <button type="button" class="lang-gate-btn" data-gate-lang="ja"><strong>日本語</strong><span>Japanese</span></button>
+      <button type="button" class="lang-gate-btn" data-gate-lang="es"><strong>Español</strong><span>Spanish</span></button>
+    </div>
+  </div>
+</div>
+
 <header class="site">
   <div class="wrap nav">
     <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
@@ -21,20 +36,10 @@
       <a href="index.html#company" data-i18n="nav.company">회사소개</a>
     </nav>
     <div class="nav-right">
-      <div class="lang-switch">
-        <select id="langSwitch" aria-label="Language">
-          <option value="ko" title="한국어">KO</option>
-          <option value="en" title="English">EN</option>
-          <option value="zh" title="中文">ZH</option>
-          <option value="ja" title="日本語">JA</option>
-          <option value="es" title="Español">ES</option>
-        </select>
-      </div>
-      <a href="login.html" class="btn btn-outline btn-sm nav-auth-out" data-i18n="nav.login">로그인</a>
-      <a href="signup.html" class="btn btn-gold btn-sm nav-auth-out" data-i18n="nav.signup">회원가입</a>
+      <a href="login.html" class="btn btn-gold btn-sm nav-auth-out" data-i18n="nav.login">로그인</a>
       <a href="admin.html" class="btn btn-outline btn-sm nav-auth-in nav-auth-admin" style="display:none" data-i18n="nav.admin">관리자</a>
       <a href="mypage.html" class="btn btn-outline btn-sm nav-auth-in" style="display:none" data-i18n="nav.mypage">마이페이지</a>
-      <a href="#" class="btn btn-gold btn-sm nav-auth-in" style="display:none" data-action="logout" data-i18n="nav.logout">로그아웃</a>
+      <a href="#" class="btn btn-outline btn-sm nav-auth-in" style="display:none" data-action="logout" data-i18n="nav.logout">로그아웃</a>
     </div>
   </div>
 </header>
@@ -59,6 +64,16 @@
     <div class="hero-actions center">
       <a href="#exchange" class="btn btn-gold" data-i18n="hero.cta_primary">교환하러 가기</a>
       <a href="#project" class="btn btn-outline" data-i18n="hero.cta_secondary">VictoriaPlan 보기</a>
+    </div>
+    <div class="hero-lang-switch">
+      <span class="seal" style="font-size:15px;"></span>
+      <select id="heroLangSwitch" aria-label="Language" data-lang-select>
+        <option value="en" title="English">EN</option>
+        <option value="ko" title="한국어">KO</option>
+        <option value="zh" title="中文">ZH</option>
+        <option value="ja" title="日本語">JA</option>
+        <option value="es" title="Español">ES</option>
+      </select>
     </div>
   </div>
 </section>
@@ -207,6 +222,19 @@
   </div>
 </section>
 
+<section id="planning">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow" data-i18n="planning.eyebrow">사업 일정</div>
+      <h2 data-i18n="planning.title">VICTORIA Planning</h2>
+      <p data-i18n="planning.desc">연도·월별 주요 사업 일정을 확인하세요.</p>
+    </div>
+  </div>
+  <div class="marquee">
+    <div class="marquee-track" id="planningTrack"></div>
+  </div>
+</section>
+
 <footer class="site" id="company">
   <div class="wrap">
     <div>VICTORIA PROJECT — © 2026 <span data-i18n="footer.rights">All rights reserved.</span></div>
@@ -230,8 +258,10 @@
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/supabase-config.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/lang-gate.js"></script>
 <script src="assets/js/exchange.js"></script>
 <script src="assets/js/funding.js"></script>
+<script src="assets/js/planning.js"></script>
 <script src="assets/js/blc-chart.js"></script>
 </body>
 </html>

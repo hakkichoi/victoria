@@ -120,6 +120,76 @@ async function loadFundingSummaryDefaults(){
   document.getElementById('sumRewardAmount').value = data.reward_amount;
 }
 
+function fmtPeriodInput(iso){
+  // 'YYYY-MM-01' -> 'YYYY-MM' for the <input type="month"> field
+  return iso ? iso.slice(0, 7) : '';
+}
+
+async function loadPlanningAdminList(){
+  const { data, error } = await sb
+    .from('planning_items')
+    .select('id, period_date, title, detail')
+    .order('period_date', { ascending: true });
+
+  const el = document.getElementById('planningAdminList');
+  if (error || !data || data.length === 0){
+    el.innerHTML = `<div class="empty-state">${i18n.t('funding.empty')}</div>`;
+    return;
+  }
+
+  el.innerHTML = `<table class="data">
+    <thead><tr>
+      <th>${i18n.t('admin.planning_period_label')}</th>
+      <th>${i18n.t('admin.planning_title_label')}</th>
+      <th>${i18n.t('admin.planning_detail_label')}</th>
+      <th></th>
+    </tr></thead>
+    <tbody>${data.map(r => `
+      <tr>
+        <td>${fmtPeriodInput(r.period_date)}</td>
+        <td>${r.title}</td>
+        <td class="muted" style="font-size:12.5px;">${r.detail || '—'}</td>
+        <td style="white-space:nowrap;">
+          <button class="btn btn-outline btn-sm" data-edit-planning="${r.id}">${i18n.t('admin.planning_edit_button')}</button>
+          <button class="btn btn-danger btn-sm" data-delete-planning="${r.id}">${i18n.t('admin.delete_button')}</button>
+        </td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+
+  const rowsById = Object.fromEntries(data.map(r => [String(r.id), r]));
+
+  el.querySelectorAll('[data-edit-planning]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const r = rowsById[btn.getAttribute('data-edit-planning')];
+      document.getElementById('planningEditId').value = r.id;
+      document.getElementById('planningPeriod').value = fmtPeriodInput(r.period_date);
+      document.getElementById('planningTitle').value = r.title;
+      document.getElementById('planningDetail').value = r.detail || '';
+      document.getElementById('planningSubmitBtn').textContent = i18n.t('admin.planning_save_button');
+      document.getElementById('planningCancelBtn').style.display = '';
+      window.scrollTo({ top: document.getElementById('planningForm').offsetTop - 100, behavior: 'smooth' });
+    });
+  });
+
+  el.querySelectorAll('[data-delete-planning]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const id = btn.getAttribute('data-delete-planning');
+      const { error } = await sb.from('planning_items').delete().eq('id', id);
+      if (error) { alert(error.message); return; }
+      await loadPlanningAdminList();
+    });
+  });
+}
+
+function resetPlanningForm(){
+  document.getElementById('planningForm').reset();
+  document.getElementById('planningEditId').value = '';
+  document.getElementById('planningSubmitBtn').textContent = i18n.t('admin.planning_add_button');
+  document.getElementById('planningCancelBtn').style.display = 'none';
+}
+
+
 document.addEventListener('DOMContentLoaded', async ()=>{
   const session = await requireAuth();
   if (!session) return;
@@ -135,6 +205,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   await loadRateAndPriceDefaults();
   await loadFundingSummaryDefaults();
   await loadFundingAdminList();
+  await loadPlanningAdminList();
   await loadRequests();
 
   document.querySelectorAll('.filter-chip').forEach(chip=>{
@@ -199,4 +270,33 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
     msg.className = 'form-msg ' + (error ? 'error' : 'ok');
   });
+
+  document.getElementById('planningForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('planningMsg');
+    const editId = document.getElementById('planningEditId').value;
+    const payload = {
+      period_date: document.getElementById('planningPeriod').value + '-01',
+      title: document.getElementById('planningTitle').value.trim(),
+      detail: document.getElementById('planningDetail').value.trim() || null,
+      updated_at: new Date().toISOString(),
+      updated_by: session.user.id
+    };
+
+    let error;
+    if (editId){
+      ({ error } = await sb.from('planning_items').update(payload).eq('id', editId));
+    } else {
+      ({ error } = await sb.from('planning_items').insert(payload));
+    }
+
+    msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
+    msg.className = 'form-msg ' + (error ? 'error' : 'ok');
+    if (!error){
+      resetPlanningForm();
+      await loadPlanningAdminList();
+    }
+  });
+
+  document.getElementById('planningCancelBtn').addEventListener('click', resetPlanningForm);
 });

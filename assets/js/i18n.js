@@ -58,10 +58,12 @@ ko: {
   "admin.user_col":"신청자","admin.detail_col":"교환 내용","admin.tx_col":"거래정보","admin.status_col":"상태","admin.date_col":"신청일","admin.action_col":"작업",
   "footer.rights":"All rights reserved.","footer.contact":"문의",
   "partners.label":"함께하는 글로벌 금융기관",
+  "planning.eyebrow":"사업 일정","planning.title":"VICTORIA Planning","planning.desc":"연도·월별 주요 사업 일정을 확인하세요.",
   "funding.eyebrow":"실시간 펀딩 현황","funding.title":"VICT FUNDING",
   "funding.empty":"등록된 펀딩 내역이 없습니다.",
   "funding.wallets_col":"총 참여 지갑","funding.cumulative_col":"현재까지 누적 금액(USDT)","funding.reward_col":"총 보상 횟수",
   "funding.reward_value":"{count}회 | {amount} USDT",
+  "admin.planning_title":"사업 일정 관리","admin.planning_period_label":"연/월","admin.planning_title_label":"제목","admin.planning_detail_label":"상세 내용","admin.planning_add_button":"추가하기","admin.planning_save_button":"저장하기","admin.planning_cancel_button":"취소","admin.planning_edit_button":"수정","admin.planning_list_title":"등록된 사업 일정",
   "admin.funding_title":"VICT 펀딩 관리","admin.funding_add_title":"거래 내역 추가","admin.tx_date_label":"날짜","admin.tx_address_label":"트랜잭션 주소","admin.tx_amount_label":"금액 (USDT)","admin.funding_add_button":"추가하기",
   "admin.funding_summary_title":"펀딩 요약 통계","admin.total_wallets_label":"총 참여 지갑 수","admin.cumulative_label":"누적 금액 (USDT)","admin.reward_count_label":"총 보상 횟수","admin.reward_amount_label":"보상 금액 (USDT)",
   "admin.funding_list_title":"등록된 거래 내역","admin.delete_button":"삭제",
@@ -123,10 +125,12 @@ en: {
   "admin.user_col":"Requester","admin.detail_col":"Exchange","admin.tx_col":"Tx info","admin.status_col":"Status","admin.date_col":"Date","admin.action_col":"Action",
   "footer.rights":"All rights reserved.","footer.contact":"Contact",
   "partners.label":"Global financial partners",
+  "planning.eyebrow":"Planning","planning.title":"VICTORIA Planning","planning.desc":"See the year-by-year, month-by-month business roadmap.",
   "funding.eyebrow":"Live funding status","funding.title":"VICT FUNDING",
   "funding.empty":"No funding entries yet.",
   "funding.wallets_col":"Total participating wallets","funding.cumulative_col":"Cumulative amount so far (USDT)","funding.reward_col":"Total rewards",
   "funding.reward_value":"{count}x | {amount} USDT",
+  "admin.planning_title":"Planning Management","admin.planning_period_label":"Year / Month","admin.planning_title_label":"Title","admin.planning_detail_label":"Detail","admin.planning_add_button":"Add","admin.planning_save_button":"Save changes","admin.planning_cancel_button":"Cancel","admin.planning_edit_button":"Edit","admin.planning_list_title":"Recorded planning items",
   "admin.funding_title":"VICT Funding Management","admin.funding_add_title":"Add a transaction","admin.tx_date_label":"Date","admin.tx_address_label":"Transaction address","admin.tx_amount_label":"Amount (USDT)","admin.funding_add_button":"Add",
   "admin.funding_summary_title":"Funding summary stats","admin.total_wallets_label":"Total participating wallets","admin.cumulative_label":"Cumulative amount (USDT)","admin.reward_count_label":"Total reward count","admin.reward_amount_label":"Reward amount (USDT)",
   "admin.funding_list_title":"Recorded transactions","admin.delete_button":"Delete",
@@ -188,10 +192,12 @@ zh: {
   "admin.user_col":"申请人","admin.detail_col":"兑换内容","admin.tx_col":"交易信息","admin.status_col":"状态","admin.date_col":"申请日期","admin.action_col":"操作",
   "footer.rights":"版权所有。","footer.contact":"联系我们",
   "partners.label":"全球金融合作伙伴",
+  "planning.eyebrow":"事业规划","planning.title":"VICTORIA Planning","planning.desc":"查看按年度、月度划分的主要业务规划。",
   "funding.eyebrow":"实时融资动态","funding.title":"VICT FUNDING",
   "funding.empty":"暂无融资记录。",
   "funding.wallets_col":"总参与钱包数","funding.cumulative_col":"累计金额 (USDT)","funding.reward_col":"总奖励次数",
   "funding.reward_value":"{count}次 | {amount} USDT",
+  "admin.planning_title":"事业规划管理","admin.planning_period_label":"年/月","admin.planning_title_label":"标题","admin.planning_detail_label":"详细内容","admin.planning_add_button":"添加","admin.planning_save_button":"保存","admin.planning_cancel_button":"取消","admin.planning_edit_button":"编辑","admin.planning_list_title":"已登记的规划项目",
   "admin.funding_title":"VICT 融资管理","admin.funding_add_title":"添加交易记录","admin.tx_date_label":"日期","admin.tx_address_label":"交易地址","admin.tx_amount_label":"金额 (USDT)","admin.funding_add_button":"添加",
   "admin.funding_summary_title":"融资统计汇总","admin.total_wallets_label":"总参与钱包数","admin.cumulative_label":"累计金额 (USDT)","admin.reward_count_label":"总奖励次数","admin.reward_amount_label":"奖励金额 (USDT)",
   "admin.funding_list_title":"已登记的交易记录","admin.delete_button":"删除",
@@ -253,10 +259,12 @@ ja: {
   "admin.user_col":"申請者","admin.detail_col":"交換内容","admin.tx_col":"取引情報","admin.status_col":"状態","admin.date_col":"申請日","admin.action_col":"操作",
   "footer.rights":"All rights reserved.","footer.contact":"お問い合わせ",
   "partners.label":"グローバル金融パートナー",
+  "planning.eyebrow":"事業計画","planning.title":"VICTORIA Planning","planning.desc":"年度・月別の主要事業スケジュールをご確認ください。",
   "funding.eyebrow":"リアルタイム資金状況","funding.title":"VICT FUNDING",
   "funding.empty":"登録された資金内訳はまだありません。",
   "funding.wallets_col":"総参加ウォレット数","funding.cumulative_col":"現在までの累計金額 (USDT)","funding.reward_col":"総報酬回数",
   "funding.reward_value":"{count}回 | {amount} USDT",
+  "admin.planning_title":"事業計画管理","admin.planning_period_label":"年/月","admin.planning_title_label":"タイトル","admin.planning_detail_label":"詳細内容","admin.planning_add_button":"追加する","admin.planning_save_button":"保存する","admin.planning_cancel_button":"キャンセル","admin.planning_edit_button":"編集","admin.planning_list_title":"登録済み事業計画",
   "admin.funding_title":"VICTファンディング管理","admin.funding_add_title":"取引履歴の追加","admin.tx_date_label":"日付","admin.tx_address_label":"トランザクションアドレス","admin.tx_amount_label":"金額（USDT）","admin.funding_add_button":"追加する",
   "admin.funding_summary_title":"ファンディング要約統計","admin.total_wallets_label":"総参加ウォレット数","admin.cumulative_label":"累計金額（USDT）","admin.reward_count_label":"総報酬回数","admin.reward_amount_label":"報酬金額（USDT）",
   "admin.funding_list_title":"登録済み取引履歴","admin.delete_button":"削除",
@@ -318,10 +326,12 @@ es: {
   "admin.user_col":"Solicitante","admin.detail_col":"Canje","admin.tx_col":"Info de tx","admin.status_col":"Estado","admin.date_col":"Fecha","admin.action_col":"Acción",
   "footer.rights":"Todos los derechos reservados.","footer.contact":"Contacto",
   "partners.label":"Socios financieros globales",
+  "planning.eyebrow":"Planificación","planning.title":"VICTORIA Planning","planning.desc":"Consulta el cronograma de negocio año por año, mes por mes.",
   "funding.eyebrow":"Estado de financiamiento en vivo","funding.title":"VICT FUNDING",
   "funding.empty":"Aún no hay registros de financiamiento.",
   "funding.wallets_col":"Billeteras participantes","funding.cumulative_col":"Monto acumulado hasta ahora (USDT)","funding.reward_col":"Total de recompensas",
   "funding.reward_value":"{count}x | {amount} USDT",
+  "admin.planning_title":"Gestión de planificación","admin.planning_period_label":"Año / Mes","admin.planning_title_label":"Título","admin.planning_detail_label":"Detalle","admin.planning_add_button":"Agregar","admin.planning_save_button":"Guardar cambios","admin.planning_cancel_button":"Cancelar","admin.planning_edit_button":"Editar","admin.planning_list_title":"Elementos de planificación registrados",
   "admin.funding_title":"Gestión de financiamiento VICT","admin.funding_add_title":"Agregar una transacción","admin.tx_date_label":"Fecha","admin.tx_address_label":"Dirección de transacción","admin.tx_amount_label":"Monto (USDT)","admin.funding_add_button":"Agregar",
   "admin.funding_summary_title":"Estadísticas resumidas","admin.total_wallets_label":"Billeteras participantes","admin.cumulative_label":"Monto acumulado (USDT)","admin.reward_count_label":"Total de recompensas","admin.reward_amount_label":"Monto de recompensa (USDT)",
   "admin.funding_list_title":"Transacciones registradas","admin.delete_button":"Eliminar",
@@ -330,7 +340,7 @@ es: {
 };
 
 const i18n = {
-  lang: localStorage.getItem('victoria_lang') || 'ko',
+  lang: localStorage.getItem('victoria_lang') || 'en',
   dict: DICT,
   t(key){
     const d = this.dict[this.lang] || this.dict.ko;
@@ -355,8 +365,7 @@ const i18n = {
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
       el.setAttribute('placeholder', this.t(el.getAttribute('data-i18n-placeholder')));
     });
-    const sw = document.getElementById('langSwitch');
-    if(sw) sw.value = this.lang;
+    document.querySelectorAll('[data-lang-select]').forEach(sw => { sw.value = this.lang; });
   }
 };
 

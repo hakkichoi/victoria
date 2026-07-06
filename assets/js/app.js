@@ -105,9 +105,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   paintSeals();
   refreshNavAuthState();
   bindLogoutButtons();
-  const langSwitch = document.getElementById('langSwitch');
-  if (langSwitch){
-    langSwitch.addEventListener('change', (e)=> i18n.setLang(e.target.value));
-  }
+  document.querySelectorAll('[data-lang-select]').forEach(sw=>{
+    sw.addEventListener('change', (e)=> i18n.setLang(e.target.value));
+  });
 });
 

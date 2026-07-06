@@ -16,7 +16,7 @@
     </nav>
     <div class="nav-right">
       <div class="lang-switch">
-        <select id="langSwitch" aria-label="Language">
+        <select id="langSwitch" aria-label="Language" data-lang-select>
           <option value="ko" title="한국어">KO</option><option value="en" title="English">EN</option>
           <option value="zh" title="中文">ZH</option><option value="ja" title="日本語">JA</option><option value="es" title="Español">ES</option>
         </select>
@@ -78,6 +78,24 @@
     <div style="margin-bottom:56px;">
       <h3 data-i18n="admin.funding_list_title" style="margin-bottom:16px;">등록된 거래 내역</h3>
       <div id="fundingAdminList"></div>
+    </div>
+
+    <div class="card card-cream" style="margin-bottom:24px;">
+      <h3 data-i18n="admin.planning_title">사업 일정 관리</h3>
+      <form id="planningForm" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; align-items:flex-start;">
+        <input type="hidden" id="planningEditId" value="">
+        <input type="month" id="planningPeriod" required style="flex:0 0 160px;">
+        <input type="text" id="planningTitle" data-i18n-placeholder="admin.planning_title_label" placeholder="제목" required style="flex:1 1 200px;">
+        <input type="text" id="planningDetail" data-i18n-placeholder="admin.planning_detail_label" placeholder="상세 내용" style="flex:2 1 260px;">
+        <button type="submit" class="btn btn-gold" id="planningSubmitBtn" data-i18n="admin.planning_add_button">추가하기</button>
+        <button type="button" class="btn btn-outline" id="planningCancelBtn" data-i18n="admin.planning_cancel_button" style="display:none;">취소</button>
+      </form>
+      <p class="form-msg" id="planningMsg"></p>
+    </div>
+
+    <div style="margin-bottom:56px;">
+      <h3 data-i18n="admin.planning_list_title" style="margin-bottom:16px;">등록된 사업 일정</h3>
+      <div id="planningAdminList"></div>
     </div>
 
     <div class="admin-toolbar">

@@ -185,3 +185,26 @@ create policy "funding_summary_admin_write" on public.funding_summary
   );
 
 insert into public.funding_summary (key) values ('main') on conflict (key) do nothing;
+
+-- ---------- 7. PLANNING / ROADMAP SECTION ----------
+-- Year/month business milestones shown in the "Planning" section — entirely
+-- admin-entered, publicly readable, editable at any time.
+create table if not exists public.planning_items (
+  id bigint generated always as identity primary key,
+  period_date date not null,   -- store as the 1st of the month, e.g. 2026-07-01
+  title text not null,
+  detail text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  updated_by uuid references public.profiles(id)
+);
+
+alter table public.planning_items enable row level security;
+
+create policy "planning_select_public" on public.planning_items
+  for select using (true);
+
+create policy "planning_admin_write" on public.planning_items
+  for all using (
+    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+  );

@@ -13,7 +13,7 @@
     <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
     <div class="nav-right">
       <div class="lang-switch">
-        <select id="langSwitch" aria-label="Language">
+        <select id="langSwitch" aria-label="Language" data-lang-select>
           <option value="ko" title="한국어">KO</option><option value="en" title="English">EN</option>
           <option value="zh" title="中文">ZH</option><option value="ja" title="日本語">JA</option><option value="es" title="Español">ES</option>
         </select>
@@ -47,10 +47,8 @@
       <p class="form-msg" id="loginMsg"></p>
     </form>
 
-    <p class="foot-link">
-      <span data-i18n="auth.no_account">아직 계정이 없으신가요?</span>
-      <a href="signup.html" class="gold" data-i18n="auth.signup_link">회원가입</a>
-    </p>
+    <div class="divider" data-i18n="auth.no_account">아직 계정이 없으신가요?</div>
+    <a href="signup.html" class="btn btn-outline btn-block" data-i18n="auth.signup_link">회원가입</a>
   </div>
 </div>
 

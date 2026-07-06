@@ -18,7 +18,7 @@ victoria/
 ## 1) Supabase 프로젝트 만들기
 1. https://supabase.com 에서 새 프로젝트 생성 (무료 티어로 충분히 시작 가능)
 2. **SQL Editor** 에서 `supabase/schema.sql` 내용을 전체 붙여넣고 실행 → 테이블/보안정책(RLS)/트리거 생성
-   - 이미 이전에 스키마를 한 번 실행하셨다면, 전체를 다시 실행해도 안전합니다 (새로 추가된 `funding_transactions`, `funding_summary` 테이블만 새로 생성되고 기존 테이블은 `if not exists`라 영향 없습니다)
+   - 이미 이전에 스키마를 한 번 실행하셨다면, 전체를 다시 실행해도 안전합니다 (새로 추가된 `funding_transactions`, `funding_summary`, `planning_items` 테이블만 새로 생성되고 기존 테이블은 `if not exists`라 영향 없습니다)
 3. **Project Settings → API** 에서 `Project URL` 과 `anon public` 키를 복사
 4. `assets/js/supabase-config.js` 파일의 `SUPABASE_URL`, `SUPABASE_ANON_KEY` 값을 교체
 
@@ -55,6 +55,7 @@ victoria/
 - **회원 정보/코인교환 신청/완료내역**: Supabase Postgres 테이블 (`profiles`, `exchange_requests`)
 - **BLC 가격/환율**: 관리자만 쓸 수 있고 누구나 읽을 수 있는 테이블 (`blc_price_history`, `exchange_rates`)
 - **VICT 펀딩 내역/요약통계**: 관리자만 입력, 누구나 조회 가능 (`funding_transactions`, `funding_summary`) — 홈페이지에는 최신 10건만 보이고 그 아래 페이지 번호로 나머지를 볼 수 있습니다
+- **사업 일정(Planning)**: 관리자만 입력·수정 가능, 누구나 조회 가능 (`planning_items`) — 연/월, 제목, 상세 내용을 관리자 페이지에서 언제든 추가·수정·삭제할 수 있습니다
 - **완료 처리 잠금**: DB 정책(RLS) 레벨에서 `status = 'completed'`가 되면 일반 사용자는 더 이상 수정 불가하도록 강제되어 있어, 프론트엔드 코드를 우회해도 안전합니다.
 - **정적 파일(HTML/CSS/JS)**: GitHub Pages에서 그대로 호스팅
 
