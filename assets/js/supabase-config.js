@@ -4,7 +4,7 @@
 // 3) supabase/schema.sql 을 SQL Editor에서 한 번 실행하세요.
 // anon key는 공개되어도 되는 키입니다 (RLS 정책이 실제 접근 권한을 통제합니다).
 
-const SUPABASE_URL = "https://YOUR-PROJECT-ID.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const SUPABASE_URL = "https://bvmfqjovgbdcyhdyyuk.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_WyT9M2NRZ_TSWTy5pQZO_g_jeohkEXY";
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
