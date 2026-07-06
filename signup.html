@@ -27,7 +27,7 @@
     <h1 data-i18n="auth.signup_title">회원가입</h1>
     <p style="margin-bottom:26px;" data-i18n="auth.signup_subtitle">이메일 인증 후 계정을 만들 수 있습니다.</p>
 
-    <!-- STEP 1: details + send code -->
+    <!-- details, then Supabase sends a confirmation link (no SMTP setup needed) -->
     <form id="signupForm">
       <div class="form-row">
         <label data-i18n="auth.email_label">이메일</label>
@@ -62,21 +62,15 @@
         <label data-i18n="auth.whatsapp_label">Whatsapp 아이디 (선택)</label>
         <input type="text" id="whatsapp">
       </div>
-      <button type="submit" class="btn btn-gold btn-block" id="sendOtpBtn" data-i18n="auth.send_otp_button">인증번호 받기</button>
+      <button type="submit" class="btn btn-gold btn-block" id="signupBtn" data-i18n="auth.signup_button">회원가입 완료</button>
       <p class="form-msg" id="signupMsg"></p>
     </form>
 
-    <!-- STEP 2: otp verification (hidden until code sent) -->
-    <form id="otpForm" style="display:none; margin-top:22px;">
-      <div class="form-row">
-        <label data-i18n="auth.otp_label">이메일 인증번호</label>
-        <div class="otp-row">
-          <input type="text" id="otpCode" inputmode="numeric" maxlength="6" required>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-gold btn-block" data-i18n="auth.otp_verify_button">인증 확인</button>
-      <p class="form-msg" id="otpMsg"></p>
-    </form>
+    <div id="checkEmailNotice" style="display:none; text-align:center; padding:20px 0;">
+      <div class="seal" style="font-size:30px; color:var(--ink); margin:0 auto 14px;"></div>
+      <h3 data-i18n="auth.check_email_title" style="margin-bottom:8px;">이메일을 확인해주세요</h3>
+      <p data-i18n="auth.check_email_desc" style="margin:0;">인증 링크를 클릭하시면 가입이 완료되고 자동으로 로그인됩니다.</p>
+    </div>
 
     <p class="foot-link">
       <span data-i18n="auth.have_account">이미 계정이 있으신가요?</span>
@@ -90,9 +84,6 @@
 <script src="assets/js/supabase-config.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
-let pendingProfile = null;
-let pendingEmail = null;
-
 document.getElementById('signupForm').addEventListener('submit', async (e)=>{
   e.preventDefault();
   const msg = document.getElementById('signupMsg');
@@ -108,52 +99,37 @@ document.getElementById('signupForm').addEventListener('submit', async (e)=>{
     return;
   }
 
-  pendingProfile = {
+  const pendingProfile = {
     full_name: document.getElementById('fullName').value.trim() || null,
     phone: document.getElementById('phone').value.trim() || null,
     tron_wallet: document.getElementById('tronWallet').value.trim() || null,
     telegram_id: document.getElementById('telegram').value.trim() || null,
     whatsapp_id: document.getElementById('whatsapp').value.trim() || null
   };
-  pendingEmail = email;
+  // survives the round-trip through the user's email client back to mypage.html
+  localStorage.setItem('victoria_pending_profile', JSON.stringify(pendingProfile));
 
-  const btn = document.getElementById('sendOtpBtn');
+  const btn = document.getElementById('signupBtn');
   btn.disabled = true;
 
-  const { error } = await sb.auth.signUp({ email, password });
+  // send the user straight to My Page once they click the confirmation link
+  const redirectTo = window.location.href.replace(/signup\.html.*$/, 'mypage.html');
+
+  const { error } = await sb.auth.signUp({
+    email, password,
+    options: { emailRedirectTo: redirectTo }
+  });
   btn.disabled = false;
 
   if (error){
     msg.textContent = error.message;
     msg.className = 'form-msg error';
+    localStorage.removeItem('victoria_pending_profile');
     return;
   }
 
-  msg.textContent = '';
-  document.getElementById('otpForm').style.display = 'block';
-  document.getElementById('signupForm').querySelectorAll('input, button').forEach(el => el.disabled = true);
-});
-
-document.getElementById('otpForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const msg = document.getElementById('otpMsg');
-  msg.textContent = ''; msg.className = 'form-msg';
-
-  const token = document.getElementById('otpCode').value.trim();
-  const { data, error } = await sb.auth.verifyOtp({ email: pendingEmail, token, type: 'signup' });
-
-  if (error){
-    msg.textContent = error.message;
-    msg.className = 'form-msg error';
-    return;
-  }
-
-  // the DB trigger already created a bare profile row on signUp; now fill in the rest
-  if (data.user && pendingProfile){
-    await sb.from('profiles').update(pendingProfile).eq('id', data.user.id);
-  }
-
-  window.location.href = 'mypage.html';
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('checkEmailNotice').style.display = 'block';
 });
 </script>
 </body>

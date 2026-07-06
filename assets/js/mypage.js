@@ -99,10 +99,27 @@ function openTxModal(requestId){
   document.getElementById('txModal').classList.add('open');
 }
 
+// If the person just confirmed their email from the signup flow, the extra
+// profile fields they typed in (phone, wallet, telegram...) were stashed in
+// localStorage since they don't survive the round-trip through their inbox.
+// Apply them once, then forget them.
+async function applyPendingSignupProfile(userId){
+  const raw = localStorage.getItem('victoria_pending_profile');
+  if (!raw) return;
+  localStorage.removeItem('victoria_pending_profile');
+  try {
+    const pendingProfile = JSON.parse(raw);
+    await sb.from('profiles').update(pendingProfile).eq('id', userId);
+  } catch (e) {
+    console.warn('mypage: could not apply pending signup profile', e);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', async ()=>{
   const session = await requireAuth();
   if (!session) return;
   CURRENT_USER = session.user;
+  await applyPendingSignupProfile(CURRENT_USER.id);
 
   await loadProfile();
   await loadRequests();
