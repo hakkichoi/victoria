@@ -27,7 +27,7 @@ async function loadRequests(){
     return;
   }
 
-  el.innerHTML = `<table class="data">
+  el.innerHTML = `<div class="table-scroll"><table class="data">
     <thead><tr>
       <th>${i18n.t('admin.date_col')}</th>
       <th>${i18n.t('admin.user_col')}</th>
@@ -48,7 +48,7 @@ async function loadRequests(){
               : `<span class="muted" style="font-size:12px;">${fmtDate(r.completed_at)}</span>`}</td>
       </tr>`).join('')}
     </tbody>
-  </table>`;
+  </table></div>`;
 
   el.querySelectorAll('[data-complete]').forEach(btn=>{
     btn.addEventListener('click', async ()=>{
@@ -84,7 +84,7 @@ async function loadFundingAdminList(){
     return;
   }
 
-  el.innerHTML = `<table class="data">
+  el.innerHTML = `<div class="table-scroll"><table class="data">
     <thead><tr>
       <th>${i18n.t('admin.tx_date_label')}</th>
       <th>${i18n.t('admin.tx_address_label')}</th>
@@ -99,7 +99,7 @@ async function loadFundingAdminList(){
         <td><button class="btn btn-danger btn-sm" data-delete-tx="${r.id}">${i18n.t('admin.delete_button')}</button></td>
       </tr>`).join('')}
     </tbody>
-  </table>`;
+  </table></div>`;
 
   el.querySelectorAll('[data-delete-tx]').forEach(btn=>{
     btn.addEventListener('click', async ()=>{

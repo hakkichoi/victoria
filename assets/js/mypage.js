@@ -42,7 +42,7 @@ async function loadRequests(){
     return;
   }
 
-  el.innerHTML = `<table class="data">
+  el.innerHTML = `<div class="table-scroll"><table class="data">
     <thead><tr>
       <th>${i18n.t('admin.date_col')}</th><th>${i18n.t('admin.detail_col')}</th>
       <th>${i18n.t('admin.status_col')}</th><th></th>
@@ -57,7 +57,7 @@ async function loadRequests(){
               : `<span class="muted" style="font-size:12.5px;">${r.tx_hash ? r.tx_hash.slice(0,10)+'…' : ''}</span>`}</td>
       </tr>`).join('')}
     </tbody>
-  </table>`;
+  </table></div>`;
 
   el.querySelectorAll('[data-submit-tx]').forEach(btn=>{
     btn.addEventListener('click', ()=> openTxModal(btn.getAttribute('data-submit-tx')));
