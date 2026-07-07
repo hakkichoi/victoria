@@ -1,14 +1,9 @@
 // VICTORIA PROJECT — shared app logic (nav state, seal icon, small helpers)
 
-const SEAL_SVG = `
-<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="2"/>
-  <circle cx="24" cy="24" r="15.5" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 3"/>
-  <path d="M16 24.5L21 29.5L32 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>`;
-
 function paintSeals(){
-  document.querySelectorAll('.seal:empty').forEach(el => el.innerHTML = SEAL_SVG);
+  document.querySelectorAll('.seal:empty').forEach(el => {
+    el.innerHTML = '<img src="assets/img/vict-logo.png" alt="VICT">';
+  });
 }
 
 function fmtDate(iso){
