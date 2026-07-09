@@ -30,7 +30,7 @@ create policy "profiles_update_own" on public.profiles
 -- admins can read every profile (needed for admin page to show requester info)
 create policy "profiles_select_admin" on public.profiles
   for select using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 -- auto-create a profile row right after signup
@@ -47,6 +47,23 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- Checks whether the current user is an admin, WITHOUT going through
+-- profiles' own RLS policies. This is essential: a policy on `profiles`
+-- (or any other table) that checks admin status by querying `profiles`
+-- directly, under RLS, re-triggers profiles' own policies — including
+-- itself — causing "infinite recursion detected in policy for relation
+-- profiles". SECURITY DEFINER makes this function run with the
+-- privileges of its owner, bypassing RLS for this one lookup only.
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+stable
+set search_path = public
+as $$
+  select coalesce((select is_admin from public.profiles where id = auth.uid()), false);
+$$;
 
 -- ---------- 2. EXCHANGE REQUESTS ----------
 create type exchange_status as enum ('pending', 'tx_submitted', 'completed');
@@ -85,12 +102,12 @@ create policy "requests_update_own_not_completed" on public.exchange_requests
 -- admins can see and update every request (needed to hit "complete")
 create policy "requests_select_admin" on public.exchange_requests
   for select using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 create policy "requests_update_admin" on public.exchange_requests
   for update using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 -- ---------- 3. BLC PRICE HISTORY (admin-entered, publicly readable) ----------
@@ -108,7 +125,7 @@ create policy "blc_price_select_public" on public.blc_price_history
 
 create policy "blc_price_admin_write" on public.blc_price_history
   for all using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 -- ---------- 4. DAILY EXCHANGE RATES (admin-set, publicly readable) ----------
@@ -127,7 +144,7 @@ create policy "rates_select_public" on public.exchange_rates
 
 create policy "rates_admin_write" on public.exchange_rates
   for all using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 -- seed a starting rate so the calculator has something to show on day 1
@@ -159,7 +176,7 @@ create policy "funding_tx_select_public" on public.funding_transactions
 
 create policy "funding_tx_admin_write" on public.funding_transactions
   for all using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 -- Single-row summary strip (total wallets / cumulative amount / reward count) —
@@ -181,7 +198,7 @@ create policy "funding_summary_select_public" on public.funding_summary
 
 create policy "funding_summary_admin_write" on public.funding_summary
   for all using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );
 
 insert into public.funding_summary (key) values ('main') on conflict (key) do nothing;
@@ -206,5 +223,5 @@ create policy "planning_select_public" on public.planning_items
 
 create policy "planning_admin_write" on public.planning_items
   for all using (
-    exists (select 1 from public.profiles p where p.id = auth.uid() and p.is_admin = true)
+    public.is_admin()
   );

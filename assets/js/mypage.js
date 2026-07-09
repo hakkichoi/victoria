@@ -18,7 +18,13 @@ function switchTab(tab){
 }
 
 async function loadProfile(){
-  const { data } = await sb.from('profiles').select('*').eq('id', CURRENT_USER.id).single();
+  const { data, error } = await sb.from('profiles').select('*').eq('id', CURRENT_USER.id).single();
+  if (error){
+    console.error('mypage: failed to load profile', error);
+    const msg = document.getElementById('profileMsg');
+    if (msg){ msg.textContent = error.message; msg.className = 'form-msg error'; }
+    return;
+  }
   if (!data) return;
   document.getElementById('pEmail').value = data.email || '';
   document.getElementById('pName').value = data.full_name || '';
@@ -37,6 +43,7 @@ async function loadRequests(){
     .order('created_at', { ascending: false });
 
   const el = document.getElementById('requestsList');
+  if (error) console.error('mypage: failed to load requests', error);
   if (error || !data || data.length === 0){
     el.innerHTML = `<div class="empty-state">${i18n.t('mypage.no_requests')}</div>`;
     return;
@@ -71,6 +78,7 @@ async function loadCompleted(){
     .order('completed_at', { ascending: false });
 
   const el = document.getElementById('completedList');
+  if (error) console.error('mypage: failed to load completed', error);
   if (error || !data || data.length === 0){
     el.innerHTML = `<div class="empty-state">${i18n.t('mypage.no_completed')}</div>`;
     return;
