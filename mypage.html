@@ -13,7 +13,7 @@
     <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
     <nav class="nav-links">
       <a href="index.html" data-i18n="nav.home">홈</a>
-      <a href="index.html#exchange" data-i18n="nav.exchange">코인교환</a>
+      <a href="index.html#exchange-vict" data-i18n="nav.exchange">코인교환</a>
     </nav>
     <div class="nav-right">
       <div class="lang-switch">
@@ -35,6 +35,7 @@
       <button class="tab-btn active" data-tab="profile" data-i18n="mypage.nav_profile">회원정보</button>
       <button class="tab-btn" data-tab="requests" data-i18n="mypage.nav_requests">교환 신청내역</button>
       <button class="tab-btn" data-tab="completed" data-i18n="mypage.nav_completed">교환 완료내역</button>
+      <button class="tab-btn" data-tab="krw" data-i18n="mypage.nav_krw">원화 구매내역</button>
     </div>
 
     <div>
@@ -82,6 +83,12 @@
         <div class="panel-title"><h3 data-i18n="mypage.completed_title">교환 완료내역</h3></div>
         <div id="completedList"></div>
       </div>
+
+      <!-- KRW PURCHASE PANEL -->
+      <div class="tab-panel" id="panel-krw" style="display:none;">
+        <div class="panel-title"><h3 data-i18n="mypage.krw_title">원화 구매내역</h3></div>
+        <div id="krwList"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -105,6 +112,29 @@
         <button type="submit" class="btn btn-gold btn-block" data-i18n="mypage.tx_submit_button">제출하기</button>
       </div>
       <p class="form-msg" id="txMsg"></p>
+    </form>
+  </div>
+</div>
+
+<!-- KRW DEPOSITOR NAME SUBMIT MODAL -->
+<div class="modal-backdrop" id="depositModal">
+  <div class="modal">
+    <h3 data-i18n="mypage.submit_deposit_title">입금하신 예금주명을 알려주세요</h3>
+    <form id="depositForm" style="margin-top:16px;">
+      <div class="form-row">
+        <label data-i18n="mypage.depositor_name_label">입금자명</label>
+        <input type="text" id="depositorName" required>
+      </div>
+      <div class="form-row">
+        <label data-i18n="mypage.depositor_note_label">메모 (선택)</label>
+        <textarea id="depositorNote" rows="3"></textarea>
+      </div>
+      <input type="hidden" id="depositRequestId">
+      <div style="display:flex; gap:10px;">
+        <button type="button" class="btn btn-outline btn-block" id="depositCancel" data-i18n="common.cancel">취소</button>
+        <button type="submit" class="btn btn-gold btn-block" data-i18n="mypage.submit_deposit_button">제출하기</button>
+      </div>
+      <p class="form-msg" id="depositMsg"></p>
     </form>
   </div>
 </div>

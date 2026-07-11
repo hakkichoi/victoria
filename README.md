@@ -19,6 +19,7 @@ victoria/
 1. https://supabase.com 에서 새 프로젝트 생성 (무료 티어로 충분히 시작 가능)
 2. **SQL Editor** 에서 `supabase/schema.sql` 내용을 전체 붙여넣고 실행 → 테이블/보안정책(RLS)/트리거 생성
    - 이미 이전에 스키마를 한 번 실행하셨다면, 전체를 다시 실행해도 안전합니다 (새로 추가된 `funding_transactions`, `funding_summary`, `planning_items` 테이블만 새로 생성되고 기존 테이블은 `if not exists`라 영향 없습니다)
+   - **이미 기존 DB가 있는 경우**: 최신 변경사항(구좌 단위 교환, 결제 정보, 원화 구매)은 `supabase/migration-vict-lots-krw.sql` 파일을 한 번 더 실행해주셔야 반영됩니다
 3. **Project Settings → API** 에서 `Project URL` 과 `anon public` 키를 복사
 4. `assets/js/supabase-config.js` 파일의 `SUPABASE_URL`, `SUPABASE_ANON_KEY` 값을 교체
 
@@ -56,6 +57,11 @@ victoria/
 - **BLC 가격/환율**: 관리자만 쓸 수 있고 누구나 읽을 수 있는 테이블 (`blc_price_history`, `exchange_rates`)
 - **VICT 펀딩 내역/요약통계**: 관리자만 입력, 누구나 조회 가능 (`funding_transactions`, `funding_summary`) — 홈페이지에는 최신 10건만 보이고 그 아래 페이지 번호로 나머지를 볼 수 있습니다
 - **사업 일정(Planning)**: 관리자만 입력·수정 가능, 누구나 조회 가능 (`planning_items`) — 연/월, 제목, 상세 내용을 관리자 페이지에서 언제든 추가·수정·삭제할 수 있습니다
+- **코인교환은 두 섹션으로 분리**되어 있습니다:
+  - **USDT ↔ VICT**: 100개 단위(1구좌)로만 신청 가능 (`exchange_requests.units` 컬럼에 구좌 수 기록)
+  - **BLC 교환**: USDT 또는 VICT ↔ BLC, 자유 금액. 두 코인 중 하나는 항상 BLC여야 하도록 강제되어 있습니다
+- **결제 정보**(`site_settings`): 관리자 트론 지갑 주소와 원화 입금 계좌 정보를 관리자 페이지에서 관리합니다. 모든 코인(USDT/VICT/BLC)은 트론 기반 토큰이라 지갑 주소는 하나만 있으면 됩니다
+- **원화(KRW)로 VICT 구매**(`krw_purchase_requests`, `buy-vict.html`): USDT가 없는 사용자를 위한 별도 신청 흐름입니다. 실시간 USD/KRW 환율(open.er-api.com, 무료 API)을 불러와 자동 계산하고, 수수료 3%를 더한 뒤 최종 금액의 1원 단위는 항상 0으로 내림 처리합니다. 계좌이체 후 입금자명을 마이페이지에서 제출하면 관리자가 완료 처리합니다
 - **완료 처리 잠금**: DB 정책(RLS) 레벨에서 `status = 'completed'`가 되면 일반 사용자는 더 이상 수정 불가하도록 강제되어 있어, 프론트엔드 코드를 우회해도 안전합니다.
 - **정적 파일(HTML/CSS/JS)**: GitHub Pages에서 그대로 호스팅
 

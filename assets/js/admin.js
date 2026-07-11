@@ -190,6 +190,81 @@ function resetPlanningForm(){
 }
 
 
+async function loadPaymentSettingsDefaults(){
+  const { data } = await sb.from('site_settings').select('*').eq('key', 'main').single();
+  if (!data) return;
+  document.getElementById('settingsTronWallet').value = data.admin_tron_wallet || '';
+  document.getElementById('settingsBankName').value = data.krw_bank_name || '';
+  document.getElementById('settingsBankAccount').value = data.krw_bank_account || '';
+  document.getElementById('settingsBankHolder').value = data.krw_account_holder || '';
+}
+
+let KRW_CURRENT_FILTER = 'all';
+
+function krwStatusBadgeAdmin(status){
+  const map = {
+    pending:           { cls:'badge-pending',   key:'mypage.status_pending' },
+    deposit_submitted: { cls:'badge-submitted', key:'mypage.status_deposit_submitted' },
+    completed:         { cls:'badge-completed', key:'mypage.status_completed' }
+  };
+  const s = map[status] || map.pending;
+  return `<span class="badge ${s.cls}">${i18n.t(s.key)}</span>`;
+}
+
+async function loadKrwRequestsAdmin(){
+  let query = sb.from('krw_purchase_requests')
+    .select('*, profiles(email, full_name)')
+    .order('created_at', { ascending: false });
+
+  if (KRW_CURRENT_FILTER !== 'all') query = query.eq('status', KRW_CURRENT_FILTER);
+
+  const { data, error } = await query;
+  const el = document.getElementById('krwRequestsTable');
+
+  if (error || !data || data.length === 0){
+    el.innerHTML = `<div class="empty-state">${i18n.t('admin.no_requests')}</div>`;
+    return;
+  }
+
+  el.innerHTML = `<div class="table-scroll"><table class="data">
+    <thead><tr>
+      <th>${i18n.t('admin.date_col')}</th>
+      <th>${i18n.t('admin.user_col')}</th>
+      <th>${i18n.t('buyvict.breakdown_vict')}</th>
+      <th>${i18n.t('buyvict.breakdown_total_krw')}</th>
+      <th>${i18n.t('admin.depositor_col')}</th>
+      <th>${i18n.t('admin.status_col')}</th>
+      <th>${i18n.t('admin.action_col')}</th>
+    </tr></thead>
+    <tbody>${data.map(r => `
+      <tr>
+        <td>${fmtDate(r.created_at)}</td>
+        <td>${(r.profiles && (r.profiles.full_name || r.profiles.email)) || r.user_id.slice(0,8)}</td>
+        <td>${fmtNum(r.vict_amount)} VICT</td>
+        <td>₩${fmtNum(r.krw_amount)}</td>
+        <td style="font-size:12.5px;">${r.depositor_name || '—'}${r.depositor_note ? `<div class="muted">${r.depositor_note}</div>` : ''}</td>
+        <td>${krwStatusBadgeAdmin(r.status)}</td>
+        <td>${r.status !== 'completed'
+              ? `<button class="btn btn-teal btn-sm" data-krw-complete="${r.id}">${i18n.t('admin.complete_button')}</button>`
+              : `<span class="muted" style="font-size:12px;">${fmtDate(r.completed_at)}</span>`}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table></div>`;
+
+  el.querySelectorAll('[data-krw-complete]').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      if (!confirm(i18n.t('admin.complete_confirm'))) return;
+      const id = btn.getAttribute('data-krw-complete');
+      const { error } = await sb.from('krw_purchase_requests').update({
+        status: 'completed',
+        completed_at: new Date().toISOString()
+      }).eq('id', id);
+      if (error) { alert(error.message); return; }
+      await loadKrwRequestsAdmin();
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async ()=>{
   const session = await requireAuth();
   if (!session) return;
@@ -203,18 +278,45 @@ document.addEventListener('DOMContentLoaded', async ()=>{
 
   document.getElementById('adminContent').style.display = '';
   await loadRateAndPriceDefaults();
+  await loadPaymentSettingsDefaults();
   await loadFundingSummaryDefaults();
   await loadFundingAdminList();
   await loadPlanningAdminList();
   await loadRequests();
+  await loadKrwRequestsAdmin();
 
-  document.querySelectorAll('.filter-chip').forEach(chip=>{
+  document.querySelectorAll('.filter-chip:not(.krw-filter-chip)').forEach(chip=>{
     chip.addEventListener('click', ()=>{
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      document.querySelectorAll('.filter-chip:not(.krw-filter-chip)').forEach(c => c.classList.remove('active'));
       chip.classList.add('active');
       CURRENT_FILTER = chip.dataset.filter;
       loadRequests();
     });
+  });
+
+  document.querySelectorAll('.krw-filter-chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      document.querySelectorAll('.krw-filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      KRW_CURRENT_FILTER = chip.dataset.filter;
+      loadKrwRequestsAdmin();
+    });
+  });
+
+  document.getElementById('paymentSettingsForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('paymentSettingsMsg');
+    const { error } = await sb.from('site_settings').upsert({
+      key: 'main',
+      admin_tron_wallet: document.getElementById('settingsTronWallet').value.trim(),
+      krw_bank_name: document.getElementById('settingsBankName').value.trim() || null,
+      krw_bank_account: document.getElementById('settingsBankAccount').value.trim() || null,
+      krw_account_holder: document.getElementById('settingsBankHolder').value.trim() || null,
+      updated_at: new Date().toISOString(),
+      updated_by: session.user.id
+    });
+    msg.textContent = error ? error.message : i18n.t('mypage.saved_msg');
+    msg.className = 'form-msg ' + (error ? 'error' : 'ok');
   });
 
   document.getElementById('rateForm').addEventListener('submit', async (e)=>{

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buy VICT with KRW — VICTORIA</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="index.html" class="brand"><span class="seal"></span> VICTORIA</a>
+    <nav class="nav-links">
+      <a href="index.html#exchange-vict" data-i18n="nav.exchange">코인교환</a>
+    </nav>
+    <div class="nav-right">
+      <a href="login.html" class="btn btn-gold btn-sm nav-auth-out" data-i18n="nav.login">로그인</a>
+      <a href="mypage.html" class="btn btn-outline btn-sm nav-auth-in" style="display:none" data-i18n="nav.mypage">마이페이지</a>
+      <a href="#" class="btn btn-gold btn-sm nav-auth-in" style="display:none" data-action="logout" data-i18n="nav.logout">로그아웃</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" style="padding:64px 0;">
+  <div class="wrap hero-content" style="max-width:640px;">
+    <div class="eyebrow center"><span class="seal"></span> <span data-i18n="buyvict.title">원화로 VICT 구매</span></div>
+    <h1 style="font-size:clamp(28px,4vw,44px);" data-i18n="buyvict.title">원화로 VICT 구매</h1>
+    <p data-i18n="buyvict.subtitle">USDT가 없어도 원화 계좌이체로 VICT를 구매할 수 있습니다.</p>
+  </div>
+</section>
+
+<section style="padding-top:56px;">
+  <div class="wrap" style="max-width:560px;">
+
+    <div class="card card-cream" style="margin-bottom:24px;">
+      <div class="wallet-note-title" data-i18n="buyvict.rate_label">실시간 환율 (1 USD)</div>
+      <div id="rateDisplay" style="font-family:var(--font-display); font-size:32px; font-weight:600; margin:6px 0;" data-i18n="buyvict.rate_loading">환율 불러오는 중...</div>
+      <p class="muted" style="font-size:12px; margin:0;" data-i18n="buyvict.rate_note">환율은 참고용 시세이며 실제 은행 고시 환율과 다소 차이가 있을 수 있습니다.</p>
+    </div>
+
+    <div class="exchange-panel" style="max-width:100%; box-shadow:none; border:1px solid var(--hairline);">
+      <div class="field">
+        <label data-i18n="buyvict.unit_label">구좌 수</label>
+        <div class="coin-row" style="justify-content:center; gap:16px;">
+          <button type="button" id="unitMinus" class="btn btn-outline btn-sm">−</button>
+          <input type="number" id="units" min="1" step="1" value="1" style="text-align:center; font-size:20px; max-width:80px; flex:0 0 auto;">
+          <button type="button" id="unitPlus" class="btn btn-outline btn-sm">+</button>
+        </div>
+        <div class="hint" data-i18n="buyvict.unit_hint">1구좌 = 100 VICT</div>
+      </div>
+
+      <table class="data" style="margin:20px 0;">
+        <tbody>
+          <tr><td data-i18n="buyvict.breakdown_vict">VICT 수량</td><td style="text-align:right; font-weight:600;" id="outVict">100</td></tr>
+          <tr><td data-i18n="buyvict.breakdown_base">기준 금액 (USD)</td><td style="text-align:right;" id="outBase">$100.00</td></tr>
+          <tr><td data-i18n="buyvict.breakdown_fee">수수료 (3%)</td><td style="text-align:right;" id="outFee">$3.00</td></tr>
+          <tr><td data-i18n="buyvict.breakdown_total_usd">총 금액 (USD)</td><td style="text-align:right; font-weight:600;" id="outTotalUsd">$103.00</td></tr>
+          <tr><td data-i18n="buyvict.breakdown_total_krw" style="font-weight:700;">총 입금액 (KRW)</td><td style="text-align:right; font-weight:700; color:var(--coral); font-size:18px;" id="outTotalKrw">—</td></tr>
+        </tbody>
+      </table>
+      <p class="muted" style="font-size:11.5px; margin-top:-10px;" data-i18n="buyvict.rounding_note">총 입금액의 1원 단위는 0으로 절사되어 계산됩니다.</p>
+
+      <div class="wallet-note">
+        <div class="wallet-note-title" data-i18n="buyvict.bank_info_title">입금 계좌 정보</div>
+        <div id="bankInfoBox" style="background:var(--surface-card); border:1px solid var(--hairline); border-radius:var(--r-md); padding:14px 16px; font-size:14px; line-height:1.8;">
+          <span class="muted" data-i18n="buyvict.bank_info_pending">관리자가 아직 입금 계좌 정보를 등록하지 않았습니다.</span>
+        </div>
+      </div>
+
+      <button class="btn btn-gold btn-block" id="buyBtn" style="margin-top:24px;" data-i18n="buyvict.submit_button">구매 신청</button>
+      <p class="form-msg" id="buyMsg"></p>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div>VICTORIA PROJECT — © 2026 <span data-i18n="footer.rights">All rights reserved.</span></div>
+    <div><span data-i18n="footer.contact">문의</span>: choihakki@gmail.com</div>
+  </div>
+</footer>
+
+<div class="modal-backdrop" id="buyConfirmModal">
+  <div class="modal">
+    <h3 data-i18n="buyvict.confirm_title">구매 신청 확인</h3>
+    <p data-i18n="buyvict.confirm_desc" style="margin-bottom:18px;">아래 내용으로 VICT 구매를 신청합니다.</p>
+    <div id="buyConfirmDetails" style="background:var(--surface-card); border:1px solid var(--hairline); border-radius:10px; padding:16px; margin-bottom:20px; font-size:14px;"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-outline btn-block" id="buyConfirmCancel" data-i18n="common.cancel">취소</button>
+      <button class="btn btn-gold btn-block" id="buyConfirmSubmit" data-i18n="buyvict.confirm_submit">신청 제출</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/buy-vict.js"></script>
+</body>
+</html>

@@ -30,7 +30,7 @@
     <nav class="nav-links">
       <a href="index.html#home" data-i18n="nav.home">홈</a>
       <a href="index.html#project" data-i18n="nav.project">프로젝트</a>
-      <a href="index.html#exchange" data-i18n="nav.exchange">코인교환</a>
+      <a href="index.html#exchange-vict" data-i18n="nav.exchange">코인교환</a>
       <a href="index.html#funding" data-i18n="nav.funding">펀딩</a>
       <a href="index.html#blc" data-i18n="nav.blc">BLC 코인</a>
       <a href="index.html#company" data-i18n="nav.company">회사소개</a>
@@ -62,7 +62,7 @@
     <h1 data-i18n="hero.title">블록체인과 암호화폐가<br>지금의 금융을 대체합니다.</h1>
     <p data-i18n="hero.subtitle">VICTORIA는 국경을 넘는 무역 거래에 코인 기반의 지급보증을 제공하여, 선적 전 대금을 떼일 걱정 없는 거래를 만듭니다.</p>
     <div class="hero-actions center">
-      <a href="#exchange" class="btn btn-gold" data-i18n="hero.cta_primary">교환하러 가기</a>
+      <a href="#exchange-vict" class="btn btn-gold" data-i18n="hero.cta_primary">교환하러 가기</a>
       <a href="#project" class="btn btn-outline" data-i18n="hero.cta_secondary">VictoriaPlan 보기</a>
     </div>
     <div class="hero-lang-switch">
@@ -136,12 +136,71 @@
   </div>
 </section>
 
-<section id="exchange" class="exchange-band">
+<section id="exchange-vict" class="exchange-band">
   <div class="wrap">
     <div class="section-head center">
-      <div class="eyebrow" data-i18n="exchange.eyebrow">코인교환</div>
-      <h2 data-i18n="exchange.title">VICTORIA 프로젝트에 참여하기</h2>
-      <p data-i18n="exchange.desc">USDT, VICT, BLC 간 교환을 신청하세요. USDT와 VICT는 1:1 비율로 고정되어 있습니다.</p>
+      <div class="eyebrow" data-i18n="exchange.vict_eyebrow">VICT 구매</div>
+      <h2 data-i18n="exchange.vict_title">USDT ↔ VICT 교환</h2>
+      <p data-i18n="exchange.vict_desc">VICT는 100개 단위(1구좌)로만 교환할 수 있습니다. USDT와 VICT는 1:1 비율로 고정되어 있습니다.</p>
+    </div>
+
+    <div class="exchange-panel">
+      <div class="field">
+        <label data-i18n="exchange.send_label">보낼 코인</label>
+        <div class="coin-row">
+          <select id="victFromCoin"></select>
+          <input type="text" id="victFromAmount" readonly>
+        </div>
+      </div>
+
+      <div class="swap-mid">
+        <button type="button" id="victSwapBtn" aria-label="swap direction">⇅</button>
+      </div>
+
+      <div class="field">
+        <label data-i18n="exchange.receive_label">받는 코인</label>
+        <div class="coin-row">
+          <select id="victToCoin"></select>
+          <input type="text" id="victToAmount" readonly>
+        </div>
+      </div>
+
+      <div class="field">
+        <label data-i18n="exchange.unit_label">구좌 수</label>
+        <div class="coin-row" style="justify-content:center; gap:16px;">
+          <button type="button" id="victUnitMinus" class="btn btn-outline btn-sm">−</button>
+          <input type="number" id="victUnits" min="1" step="1" value="1" style="text-align:center; font-size:20px; max-width:80px; flex:0 0 auto;">
+          <button type="button" id="victUnitPlus" class="btn btn-outline btn-sm">+</button>
+        </div>
+        <div class="hint" data-i18n="exchange.unit_hint">1구좌 = 100 VICT = 100 USDT. 구좌 단위로만 신청할 수 있습니다.</div>
+      </div>
+
+      <button class="btn btn-gold btn-block" id="victExchangeBtn" data-i18n="exchange.button">Exchange</button>
+      <p class="form-msg" id="victExchangeMsg"></p>
+
+      <div class="wallet-note">
+        <div class="wallet-note-title" data-i18n="exchange.wallet_note_title">입금 주소 (TRON 네트워크)</div>
+        <p data-i18n="exchange.wallet_note_desc" style="margin-bottom:10px;">USDT·VICT·BLC 모두 트론(TRON) 기반 토큰입니다. 아래 주소로 보내주세요.</p>
+        <div class="wallet-address-row">
+          <code class="admin-wallet-addr">—</code>
+          <button type="button" class="btn btn-outline btn-sm copy-wallet-btn" data-i18n="exchange.copy_address">주소 복사</button>
+        </div>
+      </div>
+
+      <p class="foot-link" style="margin-top:20px;">
+        <span data-i18n="exchange.no_usdt_prompt">USDT가 없으신가요?</span>
+        <a href="buy-vict.html" style="color:var(--mint); font-weight:600;" data-i18n="exchange.buy_vict_link">원화로 VICT 구매하기</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="exchange-blc" class="exchange-band" style="border-top:1px solid rgba(255,255,255,.1); padding-top:64px;">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow" data-i18n="exchange.blc_eyebrow">BLC 교환</div>
+      <h2 data-i18n="exchange.blc_title">BLC 코인 교환</h2>
+      <p data-i18n="exchange.blc_desc">USDT 또는 VICT로 BLC를 교환하거나, BLC를 USDT/VICT로 교환할 수 있습니다.</p>
     </div>
 
     <div class="exchange-panel">
@@ -165,10 +224,18 @@
         </div>
       </div>
 
-      <p class="rate-note" id="rateNote" data-i18n="exchange.rate_note_fixed">USDT ↔ VICT는 1:1 비율로 자동 환산됩니다.</p>
+      <p class="rate-note" id="rateNote" data-i18n="exchange.rate_note_admin">BLC 관련 교환은 관리자가 매일 지정하는 환율이 적용됩니다.</p>
 
       <button class="btn btn-gold btn-block" id="exchangeBtn" data-i18n="exchange.button">Exchange</button>
       <p class="form-msg" id="exchangeMsg"></p>
+
+      <div class="wallet-note">
+        <div class="wallet-note-title" data-i18n="exchange.wallet_note_title">입금 주소 (TRON 네트워크)</div>
+        <div class="wallet-address-row">
+          <code class="admin-wallet-addr">—</code>
+          <button type="button" class="btn btn-outline btn-sm copy-wallet-btn" data-i18n="exchange.copy_address">주소 복사</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -241,6 +308,18 @@
     <div><span data-i18n="footer.contact">문의</span>: choihakki@gmail.com</div>
   </div>
 </footer>
+
+<div class="modal-backdrop" id="victConfirmModal">
+  <div class="modal">
+    <h3 data-i18n="exchange.confirm_title">교환 신청 확인</h3>
+    <p data-i18n="exchange.confirm_desc" style="margin-bottom:18px;">아래 내용으로 교환을 신청합니다.</p>
+    <div id="victConfirmDetails" style="background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:20px; font-size:14px;"></div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-outline btn-block" id="victConfirmCancel" data-i18n="common.cancel">취소</button>
+      <button class="btn btn-gold btn-block" id="victConfirmSubmit" data-i18n="exchange.confirm_submit">신청 제출</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal-backdrop" id="confirmModal">
   <div class="modal">

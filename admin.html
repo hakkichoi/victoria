@@ -51,6 +51,22 @@
       </div>
     </div>
 
+    <div class="card card-cream" style="margin-bottom:40px;">
+      <h3 data-i18n="admin.payment_settings_title">결제 정보 관리</h3>
+      <form id="paymentSettingsForm" style="display:flex; flex-direction:column; gap:10px; margin-top:14px; max-width:480px;">
+        <label class="hint" data-i18n="admin.tron_wallet_label" style="margin:0;">관리자 트론 지갑 주소</label>
+        <input type="text" id="settingsTronWallet" placeholder="T...">
+        <label class="hint" data-i18n="admin.bank_name_label" style="margin:10px 0 0;">은행명</label>
+        <input type="text" id="settingsBankName">
+        <label class="hint" data-i18n="admin.bank_account_label" style="margin:10px 0 0;">계좌번호</label>
+        <input type="text" id="settingsBankAccount">
+        <label class="hint" data-i18n="admin.bank_holder_label" style="margin:10px 0 0;">예금주명</label>
+        <input type="text" id="settingsBankHolder">
+        <button type="submit" class="btn btn-gold" style="margin-top:8px; align-self:flex-start;" data-i18n="admin.rate_save">저장하기</button>
+      </form>
+      <p class="form-msg" id="paymentSettingsMsg"></p>
+    </div>
+
     <div class="cards-3" style="grid-template-columns:1fr 1fr; margin:0 0 40px;">
       <div class="card card-cream">
         <h3 data-i18n="admin.funding_add_title">거래 내역 추가</h3>
@@ -106,6 +122,16 @@
     </div>
 
     <div id="requestsTable"></div>
+
+    <h3 data-i18n="admin.krw_requests_title" style="margin:56px 0 16px;">원화(KRW) 구매 신청 관리</h3>
+    <div class="admin-toolbar">
+      <button class="filter-chip krw-filter-chip active" data-filter="all" data-i18n="admin.filter_all">전체</button>
+      <button class="filter-chip krw-filter-chip" data-filter="pending" data-i18n="admin.filter_pending">신청됨</button>
+      <button class="filter-chip krw-filter-chip" data-filter="deposit_submitted" data-i18n="admin.filter_deposit_submitted">입금자명 제출됨</button>
+      <button class="filter-chip krw-filter-chip" data-filter="completed" data-i18n="admin.filter_completed">완료</button>
+    </div>
+
+    <div id="krwRequestsTable"></div>
   </div>
 </div>
 

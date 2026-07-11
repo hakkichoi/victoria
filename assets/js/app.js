@@ -96,10 +96,36 @@ function renderPartnerMarquee(){
 
 document.addEventListener('DOMContentLoaded', renderPartnerMarquee);
 
+// ---------- admin Tron wallet address (shown wherever users need to send coins) ----------
+async function paintAdminWalletAddress(){
+  const targets = document.querySelectorAll('.admin-wallet-addr');
+  if (targets.length === 0) return;
+  const { data } = await sb.from('site_settings').select('admin_tron_wallet').eq('key', 'main').single();
+  const addr = (data && data.admin_tron_wallet) || '—';
+  targets.forEach(el => el.textContent = addr);
+}
+
+function bindCopyWalletButtons(){
+  document.querySelectorAll('.copy-wallet-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const row = btn.closest('.wallet-address-row');
+      const addr = row ? row.querySelector('code').textContent : '';
+      try {
+        await navigator.clipboard.writeText(addr);
+        const original = btn.textContent;
+        btn.textContent = i18n.t('exchange.copied');
+        setTimeout(()=> btn.textContent = original, 1500);
+      } catch (e) { /* clipboard API unavailable — silently ignore */ }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   paintSeals();
   refreshNavAuthState();
   bindLogoutButtons();
+  paintAdminWalletAddress();
+  bindCopyWalletButtons();
   document.querySelectorAll('[data-lang-select]').forEach(sw=>{
     sw.addEventListener('change', (e)=> i18n.setLang(e.target.value));
   });

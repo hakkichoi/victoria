@@ -12,6 +12,16 @@ function statusBadge(status){
   return `<span class="badge ${s.cls}">${i18n.t(s.key)}</span>`;
 }
 
+function krwStatusBadge(status){
+  const map = {
+    pending:            { cls: 'badge-pending',   key: 'mypage.status_pending' },
+    deposit_submitted:  { cls: 'badge-submitted', key: 'mypage.status_deposit_submitted' },
+    completed:          { cls: 'badge-completed', key: 'mypage.status_completed' }
+  };
+  const s = map[status] || map.pending;
+  return `<span class="badge ${s.cls}">${i18n.t(s.key)}</span>`;
+}
+
 function switchTab(tab){
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   document.querySelectorAll('.tab-panel').forEach(p => p.style.display = (p.id === 'panel-' + tab) ? '' : 'none');
@@ -49,7 +59,7 @@ async function loadRequests(){
     return;
   }
 
-  el.innerHTML = `<div class="table-scroll"><table class="data">
+  el.innerHTML = `<table class="data">
     <thead><tr>
       <th>${i18n.t('admin.date_col')}</th><th>${i18n.t('admin.detail_col')}</th>
       <th>${i18n.t('admin.status_col')}</th><th></th>
@@ -64,7 +74,7 @@ async function loadRequests(){
               : `<span class="muted" style="font-size:12.5px;">${r.tx_hash ? r.tx_hash.slice(0,10)+'…' : ''}</span>`}</td>
       </tr>`).join('')}
     </tbody>
-  </table></div>`;
+  </table>`;
 
   el.querySelectorAll('[data-submit-tx]').forEach(btn=>{
     btn.addEventListener('click', ()=> openTxModal(btn.getAttribute('data-submit-tx')));
@@ -99,12 +109,55 @@ async function loadCompleted(){
   <p class="muted" style="font-size:12.5px; margin-top:14px;">${i18n.t('mypage.locked_note')}</p>`;
 }
 
+async function loadKrwRequests(){
+  const { data, error } = await sb.from('krw_purchase_requests')
+    .select('*').eq('user_id', CURRENT_USER.id)
+    .order('created_at', { ascending: false });
+
+  const el = document.getElementById('krwList');
+  if (error) console.error('mypage: failed to load krw requests', error);
+  if (error || !data || data.length === 0){
+    el.innerHTML = `<div class="empty-state">${i18n.t('mypage.no_krw')}</div>`;
+    return;
+  }
+
+  el.innerHTML = `<table class="data">
+    <thead><tr>
+      <th>${i18n.t('admin.date_col')}</th><th>${i18n.t('buyvict.breakdown_vict')}</th>
+      <th>${i18n.t('buyvict.breakdown_total_krw')}</th><th>${i18n.t('admin.status_col')}</th><th></th>
+    </tr></thead>
+    <tbody>${data.map(r => `
+      <tr>
+        <td>${fmtDate(r.created_at)}</td>
+        <td>${fmtNum(r.vict_amount)} VICT</td>
+        <td>₩${fmtNum(r.krw_amount)}</td>
+        <td>${krwStatusBadge(r.status)}</td>
+        <td>${r.status === 'pending'
+              ? `<button class="btn btn-outline btn-sm" data-submit-deposit="${r.id}">${i18n.t('mypage.submit_deposit_button')}</button>`
+              : (r.depositor_name ? `<span class="muted" style="font-size:12.5px;">${r.depositor_name}</span>` : '')}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>`;
+
+  el.querySelectorAll('[data-submit-deposit]').forEach(btn=>{
+    btn.addEventListener('click', ()=> openDepositModal(btn.getAttribute('data-submit-deposit')));
+  });
+}
+
 function openTxModal(requestId){
   document.getElementById('txRequestId').value = requestId;
   document.getElementById('txHash').value = '';
   document.getElementById('txNote').value = '';
   document.getElementById('txMsg').textContent = '';
   document.getElementById('txModal').classList.add('open');
+}
+
+function openDepositModal(requestId){
+  document.getElementById('depositRequestId').value = requestId;
+  document.getElementById('depositorName').value = '';
+  document.getElementById('depositorNote').value = '';
+  document.getElementById('depositMsg').textContent = '';
+  document.getElementById('depositModal').classList.add('open');
 }
 
 // If the person just confirmed their email from the signup flow, the extra
@@ -132,6 +185,7 @@ document.addEventListener('DOMContentLoaded', async ()=>{
   await loadProfile();
   await loadRequests();
   await loadCompleted();
+  await loadKrwRequests();
 
   document.querySelectorAll('.tab-btn').forEach(b=>{
     b.addEventListener('click', ()=> switchTab(b.dataset.tab));
@@ -178,5 +232,29 @@ document.addEventListener('DOMContentLoaded', async ()=>{
     }
     document.getElementById('txModal').classList.remove('open');
     await loadRequests();
+  });
+
+  document.getElementById('depositCancel').addEventListener('click', ()=>{
+    document.getElementById('depositModal').classList.remove('open');
+  });
+
+  document.getElementById('depositForm').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const msg = document.getElementById('depositMsg');
+    const id = document.getElementById('depositRequestId').value;
+    const { error } = await sb.from('krw_purchase_requests').update({
+      depositor_name: document.getElementById('depositorName').value.trim(),
+      depositor_note: document.getElementById('depositorNote').value.trim() || null,
+      status: 'deposit_submitted',
+      deposit_submitted_at: new Date().toISOString()
+    }).eq('id', id).eq('user_id', CURRENT_USER.id);
+
+    if (error){
+      msg.textContent = error.message;
+      msg.className = 'form-msg error';
+      return;
+    }
+    document.getElementById('depositModal').classList.remove('open');
+    await loadKrwRequests();
   });
 });
